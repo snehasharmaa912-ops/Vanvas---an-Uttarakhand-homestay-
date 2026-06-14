@@ -1,5 +1,4 @@
 import { Link } from 'react-router-dom'
-
 const footerLinks = {
   Explore: [
     { label: 'All Homestays',    to: '/explore' },
