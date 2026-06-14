@@ -3,18 +3,6 @@ const TEAM = [
   { name: 'TBI GEU',     role: 'Mentors & Incubator',  initials: 'TG', color: 'bg-[#faeeda] text-[#a96f2b]' },
   { name: 'Graphic Era', role: 'University Partner',   initials: 'GE', color: 'bg-[#e6f1fb] text-[#185fa5]' },
 ]
-const MILESTONES = [
-  { week: 'Week 1',  label: 'Project setup & planning',        done: true  },
-  { week: 'Week 2',  label: 'Frontend skeleton with React',    done: true  },
-  { week: 'Week 3',  label: 'UI/UX & component design',        done: false },
-  { week: 'Week 4',  label: 'Backend API with Node + Express', done: false },
-  { week: 'Week 5',  label: 'Database design with MongoDB',    done: false },
-  { week: 'Week 6',  label: 'Authentication & security',       done: false },
-  { week: 'Week 7',  label: 'AI API integration',              done: false },
-  { week: 'Week 8',  label: 'Frontend integration & polish',   done: false },
-  { week: 'Week 9',  label: 'Deployment & go-live',            done: false },
-  { week: 'Week 10', label: 'Capstone & portfolio',            done: false },
-]
 export default function About() {
   return (
     <div className="py-16 bg-[#fdf8f2] min-h-screen">
