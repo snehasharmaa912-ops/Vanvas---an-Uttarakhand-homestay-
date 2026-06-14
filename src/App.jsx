@@ -6,7 +6,6 @@ import Home from './pages/Home'
 import Explore from './pages/Explore'
 import About from './pages/About'
 import Login from './pages/Login'
-
 export default function App() {
   const { pathname } = useLocation()
 
