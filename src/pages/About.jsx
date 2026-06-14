@@ -15,7 +15,6 @@ const MILESTONES = [
   { week: 'Week 9',  label: 'Deployment & go-live',            done: false },
   { week: 'Week 10', label: 'Capstone & portfolio',            done: false },
 ]
-
 export default function About() {
   return (
     <div className="py-16 bg-[#fdf8f2] min-h-screen">
