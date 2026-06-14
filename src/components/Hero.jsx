@@ -12,7 +12,6 @@ export default function Hero() {
   const [deleting, setDeleting] = useState(false)
   const [showCursor, setShowCursor] = useState(true)
   const navigate = useNavigate()
-
   useEffect(() => {
     const word = WORDS[wordIdx]
     let timeout
