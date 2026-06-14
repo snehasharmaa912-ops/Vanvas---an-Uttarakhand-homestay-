@@ -1,6 +1,5 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
-
 export default function HomestayCard({ stay }) {
   const {
     id       = 1,
