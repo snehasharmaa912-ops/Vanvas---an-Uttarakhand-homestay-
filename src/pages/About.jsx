@@ -1,5 +1,5 @@
 const TEAM = [
-  { name: 'Your Name',   role: 'Full Stack Developer', initials: 'YN', color: 'bg-[#e8f5ee] text-[#2d7a4f]' },
+  { name: 'Sneha Sharma ',   role: 'Full Stack Developer', initials: 'SS', color: 'bg-[#e8f5ee] text-[#2d7a4f]' },
   { name: 'TBI GEU',     role: 'Mentors & Incubator',  initials: 'TG', color: 'bg-[#faeeda] text-[#a96f2b]' },
   { name: 'Graphic Era', role: 'University Partner',   initials: 'GE', color: 'bg-[#e6f1fb] text-[#185fa5]' },
 ]
