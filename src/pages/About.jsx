@@ -44,32 +44,6 @@ export default function About() {
           </div>
         </div>
 
-        {/* Build timeline */}
-        <div className="mb-14">
-          <h2 className="display-font text-2xl font-bold text-[#1c1c1c] mb-6">10-week build roadmap</h2>
-          <div className="space-y-3">
-            {MILESTONES.map(({ week, label, done }) => (
-              <div
-                key={week}
-                className={`flex items-center gap-4 p-4 rounded-xl border transition-colors
-                  ${done
-                    ? 'bg-[#e8f5ee] border-[#2d7a4f]/20'
-                    : 'bg-white border-[#e8dfc8]'}`}
-              >
-                <div className={`w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 text-sm font-bold
-                  ${done ? 'bg-[#2d7a4f] text-white' : 'bg-[#f0e8d8] text-[#a96f2b]'}`}>
-                  {done ? '✓' : '○'}
-                </div>
-                <div className="flex-1 min-w-0">
-                  <span className="text-xs font-semibold text-[#888] mr-2">{week}</span>
-                  <span className={`text-sm ${done ? 'text-[#2d7a4f] font-medium' : 'text-[#555]'}`}>{label}</span>
-                </div>
-                {done && <span className="text-xs bg-[#2d7a4f] text-white px-2 py-0.5 rounded-full flex-shrink-0">Done</span>}
-              </div>
-            ))}
-          </div>
-        </div>
-
         {/* Team */}
         <div>
           <h2 className="display-font text-2xl font-bold text-[#1c1c1c] mb-6">Built by</h2>
