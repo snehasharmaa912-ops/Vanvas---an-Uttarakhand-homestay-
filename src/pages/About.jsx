@@ -43,7 +43,7 @@ export default function About() {
           </div>
           <div className="bg-[#e8f5ee] rounded-2xl border border-[#2d7a4f]/20 p-6">
             <div className="text-2xl mb-3">✨</div>
-            <h3 className="font-semibold text-[#1c1c1c] text-lg mb-2">Our solution</h3>
+            <h3 className="font-semibold text-[#1c1c1c] text-lg mb-2">My solution</h3>
             <p className="text-sm text-[#444] leading-relaxed">
               A simple, bilingual (Hindi + English) platform where hosts list their stay in minutes
               with AI-assisted description writing — and travelers find, compare, and book directly.
