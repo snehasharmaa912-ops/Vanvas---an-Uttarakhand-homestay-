@@ -10,7 +10,6 @@ const TEAM = [
   { name: 'TBI GEU',     role: 'Mentors & Incubator',  initials: 'TG', color: 'bg-[#faeeda] text-[#a96f2b]' },
   { name: 'Graphic Era', role: 'University Partner',   initials: 'GE', color: 'bg-[#e6f1fb] text-[#185fa5]' },
 ]
-
 export default function About() {
   return (
     <div className="py-16 bg-[#fdf8f2] min-h-screen">
