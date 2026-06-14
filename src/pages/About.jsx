@@ -1,8 +1,16 @@
 const TEAM = [
-  { name: 'Sneha Sharma ',   role: 'Full Stack Developer', initials: 'SS', color: 'bg-[#e8f5ee] text-[#2d7a4f]' },
+  { 
+    name: 'Sneha Sharma', 
+    role: 'Full Stack Developer', 
+    initials: 'SS', 
+    color: 'bg-[#e8f5ee] text-[#2d7a4f]',
+    instagram: 'https://www.instagram.com/_snehasharma_._?igsh=bGF6eGoxcGUxMmV',
+    linkedin: 'https://www.linkedin.com/in/snehasharmaa2006'
+  },
   { name: 'TBI GEU',     role: 'Mentors & Incubator',  initials: 'TG', color: 'bg-[#faeeda] text-[#a96f2b]' },
   { name: 'Graphic Era', role: 'University Partner',   initials: 'GE', color: 'bg-[#e6f1fb] text-[#185fa5]' },
 ]
+
 export default function About() {
   return (
     <div className="py-16 bg-[#fdf8f2] min-h-screen">
@@ -48,7 +56,7 @@ export default function About() {
         <div>
           <h2 className="display-font text-2xl font-bold text-[#1c1c1c] mb-6">Built by</h2>
           <div className="flex flex-wrap gap-4">
-            {TEAM.map(({ name, role, initials, color }) => (
+            {TEAM.map(({ name, role, initials, color, instagram, linkedin }) => (
               <div key={name} className="flex items-center gap-3 bg-white border border-[#e8dfc8] rounded-2xl px-5 py-4">
                 <div className={`w-10 h-10 rounded-full ${color} flex items-center justify-center font-bold text-sm flex-shrink-0`}>
                   {initials}
@@ -56,12 +64,19 @@ export default function About() {
                 <div>
                   <p className="font-semibold text-[#1c1c1c] text-sm">{name}</p>
                   <p className="text-xs text-[#888]">{role}</p>
+                  {instagram && linkedin && (
+                    <div className="flex gap-3 mt-1.5">
+                      <a href={instagram} target="_blank" rel="noreferrer" className="text-xs text-[#a96f2b] hover:underline">Instagram</a>
+                      <a href={linkedin} target="_blank" rel="noreferrer" className="text-xs text-[#2d7a4f] hover:underline">LinkedIn</a>
+                    </div>
+                  )}
                 </div>
               </div>
             ))}
           </div>
         </div>
       </div>
+
     </div>
   )
 }
