@@ -13,7 +13,6 @@ export default function HomestayCard({ stay }) {
     host     = 'Ramesh Ji',
     eco      = true,
   } = stay || {}
-
   const [wishlist, setWishlist] = useState(false)
 
   // Gradient placeholder instead of broken image
