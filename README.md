@@ -1,7 +1,7 @@
 # VanaVas 🏔️
 ### Uttarakhand Homestay & Eco-stay Platform
 
-A full-stack web platform connecting rural homestay owners across Uttarakhand with eco-conscious travelers. Built as part of the TBI-GEU AI-Assisted Full Stack Internship (Summer 2025).
+A full-stack web platform connecting rural homestay owners across Uttarakhand with eco-conscious travelers. Built as part of the TBI-GEU AI-Assisted Full Stack Internship (Summer 2026).
 
 ---
 
