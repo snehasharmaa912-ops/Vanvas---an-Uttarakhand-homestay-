@@ -52,4 +52,4 @@ Open [http://localhost:5173](http://localhost:5173)
 
 ---
 
-Built with ♥ in Dehradun · TBI-GEU Summer Internship 2026 | SNEHA SHARMA
+Built with ♥ in Dehradun | SNEHA SHARMA
