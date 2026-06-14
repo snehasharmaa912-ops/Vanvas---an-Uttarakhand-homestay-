@@ -1,12 +1,12 @@
 import Hero from '../components/Hero'
 import HomestayCard from '../components/HomestayCard'
 const SAMPLE_STAYS = [
-  { id: 1, title: 'Himalayan Pine Cottage',      location: 'Chopta, Rudraprayag',     price: 1400, rating: 4.9, reviews: 38, tags: ['Forest view', 'Trekking', 'Bonfire'], host: 'Ramesh Ji',   eco: true,  image: 'https://picsum.photos/seed/1/400/300' },
-  { id: 2, title: 'Valley View Family Stay',      location: 'Munsiyari, Pithoragarh',  price: 1100, rating: 4.7, reviews: 21, tags: ['Mountain view', 'Farm fresh meals'],  host: 'Sunita Devi', eco: true,  image: 'https://picsum.photos/seed/2/400/300' },
-  { id: 3, title: 'Riverside Bamboo Cottage',     location: 'Lansdowne, Pauri Garhwal',price: 950,  rating: 4.6, reviews: 15, tags: ['Riverside', 'Bird watching'],          host: 'Mohan Das',   eco: false, image: 'https://picsum.photos/seed/3/400/300' },
-  { id: 4, title: 'Deodar Forest Homestay',       location: 'Chakrata, Dehradun',      price: 1250, rating: 4.8, reviews: 29, tags: ['Dense forest', 'Waterfall nearby'],   host: 'Geeta Ji',    eco: true,  image: 'https://picsum.photos/seed/4/400/300' },
-  { id: 5, title: 'Old Tehri Heritage Bungalow',  location: 'Tehri, Uttarakhand',      price: 1600, rating: 5.0, reviews: 12, tags: ['Heritage', 'Lake view', 'Kayaking'],  host: 'Arjun Singh', eco: false, image: 'https://picsum.photos/seed/5/400/300' },
-  { id: 6, title: 'Kumaoni Village Farmstay',     location: 'Binsar, Almora',          price: 800,  rating: 4.5, reviews: 44, tags: ['Farm stay', 'Village walk', 'Organic'],host: 'Rekha Ji',    eco: true,  image: 'https://picsum.photos/seed/6/400/300' },
+  { id: 1, title: 'Himalayan Pine Cottage',      location: 'Chopta, Rudraprayag',     price: 1400, rating: 4.9, reviews: 38, tags: ['Forest view', 'Trekking', 'Bonfire'], host: 'Ramesh Ji',   eco: true,  image: 'https://picsum.photos/seed/chopta/400/300' },
+  { id: 2, title: 'Valley View Family Stay',      location: 'Munsiyari, Pithoragarh',  price: 1100, rating: 4.7, reviews: 21, tags: ['Mountain view', 'Farm fresh meals'],  host: 'Sunita Devi', eco: true,  image: 'https://picsum.photos/seed/munsiyari/400/300' },
+  { id: 3, title: 'Riverside Bamboo Cottage',     location: 'Lansdowne, Pauri Garhwal',price: 950,  rating: 4.6, reviews: 15, tags: ['Riverside', 'Bird watching'],          host: 'Mohan Das',   eco: false, image: 'https://picsum.photos/seed/lansdowne/400/300' },
+  { id: 4, title: 'Deodar Forest Homestay',       location: 'Chakrata, Dehradun',      price: 1250, rating: 4.8, reviews: 29, tags: ['Dense forest', 'Waterfall nearby'],   host: 'Geeta Ji',    eco: true,  image: 'https://picsum.photos/seed/chakrata/400/300' },
+  { id: 5, title: 'Old Tehri Heritage Bungalow',  location: 'Tehri, Uttarakhand',      price: 1600, rating: 5.0, reviews: 12, tags: ['Heritage', 'Lake view', 'Kayaking'],  host: 'Arjun Singh', eco: false, image: 'https://picsum.photos/seed/tehri/400/300' },
+  { id: 6, title: 'Kumaoni Village Farmstay',     location: 'Binsar, Almora',          price: 800,  rating: 4.5, reviews: 44, tags: ['Farm stay', 'Village walk', 'Organic'],host: 'Rekha Ji',    eco: true,  image: 'https://picsum.photos/seed/almora/400/300' },
 ]
 
 const WHY = [
