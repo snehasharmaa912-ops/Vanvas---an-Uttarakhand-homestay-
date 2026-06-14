@@ -1,6 +1,5 @@
 import { useState } from 'react'
 import HomestayCard from '../components/HomestayCard'
-
 const ALL_STAYS = [
   { id: 1, title: 'Himalayan Pine Cottage',     location: 'Chopta, Rudraprayag',     price: 1400, rating: 4.9, reviews: 38, tags: ['Forest view', 'Trekking'],      host: 'Ramesh Ji',   eco: true  },
   { id: 2, title: 'Valley View Family Stay',     location: 'Munsiyari, Pithoragarh',  price: 1100, rating: 4.7, reviews: 21, tags: ['Mountain view', 'Farm meals'],  host: 'Sunita Devi', eco: true  },
