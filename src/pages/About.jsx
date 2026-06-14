@@ -3,7 +3,6 @@ const TEAM = [
   { name: 'TBI GEU',     role: 'Mentors & Incubator',  initials: 'TG', color: 'bg-[#faeeda] text-[#a96f2b]' },
   { name: 'Graphic Era', role: 'University Partner',   initials: 'GE', color: 'bg-[#e6f1fb] text-[#185fa5]' },
 ]
-
 const MILESTONES = [
   { week: 'Week 1',  label: 'Project setup & planning',        done: true  },
   { week: 'Week 2',  label: 'Frontend skeleton with React',    done: true  },
