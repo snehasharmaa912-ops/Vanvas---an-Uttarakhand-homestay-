@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react'
 import { Link, NavLink, useLocation } from 'react-router-dom'
-
 function VanaVasLogo() {
   return (
     <Link to="/" className="flex items-center gap-2.5 group">
