@@ -118,8 +118,8 @@ export default function Footer() {
       {/* Bottom bar */}
       <div className="border-t border-white/10">
         <div className="section-pad py-4 flex flex-col sm:flex-row justify-between items-center gap-2">
-          <p className="text-white/40 text-xs">© 2025 VanaVas. Built with ♥ in Dehradun, Uttarakhand.</p>
-          <p className="text-white/30 text-xs">TBI-GEU · AI-Assisted Full Stack Internship</p>
+          <p className="text-white/40 text-xs">© 2026 VanaVas. Built with ♥ in Dehradun, Uttarakhand.</p>
+          <p className="text-white/30 text-xs">TBI-GEU </p>
         </div>
       </div>
     </footer>
