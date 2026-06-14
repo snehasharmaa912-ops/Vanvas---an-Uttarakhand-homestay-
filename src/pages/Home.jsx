@@ -15,7 +15,6 @@ const WHY = [
   { icon: '🌿', title: 'Eco-certified',       desc: 'Stays rated on sustainability — waste, energy, local sourcing.' },
   { icon: '🗣️', title: 'Local experiences', desc: 'Trek, cook, farm — genuine Uttarakhand culture, not touristy.' },
 ]
-
 export default function Home() {
   return (
     <>
