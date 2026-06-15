@@ -3,6 +3,8 @@ import ReactDOM from 'react-dom/client'
 import { BrowserRouter } from 'react-router-dom'
 import App from './App'
 import './index.css'
+import { ThemeProvider } from './context/ThemeContext'
+
 function SplashScreen() {
   return (
     <div className="splash-screen">
@@ -29,25 +31,21 @@ function SplashScreen() {
     </div>
   )
 }
-
 function Root() {
   const [showSplash, setShowSplash] = useState(true)
-
   useEffect(() => {
     const timer = setTimeout(() => setShowSplash(false), 3400)
     return () => clearTimeout(timer)
   }, [])
-
   return (
-    <>
+    <ThemeProvider>
       {showSplash && <SplashScreen />}
       <BrowserRouter>
         <App />
       </BrowserRouter>
-    </>
+    </ThemeProvider>
   )
 }
-
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <Root />
