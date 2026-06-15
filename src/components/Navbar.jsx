@@ -1,3 +1,4 @@
+import { useTheme } from '../context/ThemeContext'
 import { useState, useEffect } from 'react'
 import { Link, NavLink, useLocation } from 'react-router-dom'
 function VanaVasLogo() {
@@ -35,6 +36,7 @@ const links = [
 export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
+  const { dark, setDark } = useTheme()
   const { pathname } = useLocation()
 
   useEffect(() => setMenuOpen(false), [pathname])
@@ -75,14 +77,21 @@ export default function Navbar() {
           </div>
           {/* Desktop CTA */}
           <div className="hidden md:flex items-center gap-3">
-            <Link to="/login" className="text-sm font-medium text-[#444] hover:text-[#2d7a4f] transition-colors">
-              Sign in
-            </Link>
-            <Link to="/login" className="btn-primary text-sm py-2 px-5">
-              List your stay
-            </Link>
-          </div>
-
+  {/* Dark mode toggle */}
+  <button
+    onClick={() => setDark(d => !d)}
+    className="w-9 h-9 flex items-center justify-center rounded-full border border-[#e8dfc8] hover:bg-[#e8f5ee] transition-all duration-200"
+    aria-label="Toggle dark mode"
+  >
+    {dark ? '☀️' : '🌙'}
+  </button>
+  <Link to="/login" className="text-sm font-medium text-[#444] hover:text-[#2d7a4f] transition-colors">
+    Sign in
+  </Link>
+  <Link to="/login" className="btn-primary text-sm py-2 px-5">
+    List your stay
+  </Link>
+</div>
           {/* Mobile hamburger */}
           <button
             onClick={() => setMenuOpen(o => !o)}
