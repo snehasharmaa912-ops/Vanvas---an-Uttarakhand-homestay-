@@ -21,12 +21,12 @@ export default function Home() {
       <Hero />
 
       {/* Featured stays */}
-      <section className="py-16 bg-white">
+      <section className="py-16 bg-white dark:bg-[#0d2b1a]">
         <div className="section-pad">
           <div className="flex items-end justify-between mb-8">
             <div>
               <p className="text-xs font-semibold text-[#2d7a4f] uppercase tracking-widest mb-1">Handpicked for you</p>
-              <h2 className="display-font text-3xl font-bold text-[#1c1c1c]">Featured Homestays</h2>
+              <h2 className="display-font text-3xl font-bold text-[#1c1c1c] dark:text-white">Featured Homestays</h2>
             </div>
             <a href="/explore" className="text-sm font-medium text-[#2d7a4f] hover:underline hidden sm:block">
               View all →
@@ -42,7 +42,7 @@ export default function Home() {
       </section>
 
       {/* Why VanaVas */}
-      <section className="py-16 bg-[#fdf8f2]">
+      <section className="py-16 bg-[#fdf8f2] dark:bg-[#0a1f14]">
         <div className="section-pad">
           <div className="text-center mb-12">
             <p className="text-xs font-semibold text-[#2d7a4f] uppercase tracking-widest mb-1">Why travelers love us</p>
