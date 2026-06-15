@@ -27,12 +27,12 @@ export default function Explore() {
     .sort((a, b) => sort === 'price' ? a.price - b.price : b.rating - a.rating)
 
   return (
-    <div className="py-12 bg-[#fdf8f2] min-h-screen">
+    <div className="py-12 bg-[#fdf8f2] dark:bg-[#0a1f14] min-h-screen">
       <div className="section-pad">
 
         {/* Header */}
         <div className="mb-8">
-          <h1 className="display-font text-3xl font-bold text-[#1c1c1c] mb-1">Explore Homestays</h1>
+          <h1 className="display-font text-3xl font-bold text-[#1c1c1c] dark:text-white mb-1">Explore Homestays</h1>
           <p className="text-[#777] text-sm">{filtered.length} stays found across Uttarakhand</p>
         </div>
 
@@ -46,7 +46,7 @@ export default function Explore() {
                 className={`text-sm px-4 py-1.5 rounded-full border font-medium transition-all duration-150
                   ${active === f
                     ? 'bg-[#2d7a4f] border-[#2d7a4f] text-white'
-                    : 'bg-white border-[#e8dfc8] text-[#555] hover:border-[#2d7a4f] hover:text-[#2d7a4f]'}`}
+                    : 'bg-white dark:bg-[#1a4a31] border-[#e8dfc8] dark:border-[#2d7a4f]/30 text-[#555] dark:text-white/70 hover:border-[#2d7a4f] hover:text-[#2d7a4f]'}`}
               >
                 {f}
               </button>
@@ -55,7 +55,7 @@ export default function Explore() {
           <select
             value={sort}
             onChange={e => setSort(e.target.value)}
-            className="text-sm border border-[#e8dfc8] bg-white text-[#555] px-4 py-1.5 rounded-full outline-none focus:border-[#2d7a4f] cursor-pointer"
+            className="text-sm border border-[#e8dfc8] dark:border-[#2d7a4f]/30 bg-white dark:bg-[#1a4a31] text-[#555] dark:text-white px-4 py-1.5 rounded-full outline-none focus:border-[#2d7a4f] cursor-pointer"
           >
             <option value="rating">Sort: Top rated</option>
             <option value="price">Sort: Price low to high</option>
