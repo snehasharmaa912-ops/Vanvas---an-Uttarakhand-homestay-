@@ -10,7 +10,7 @@
     --text:       #1c1c1c;
   }
   html { scroll-behavior: smooth; }
-  body { @apply bg-[#fdf8f2] text-[#1c1c1c] font-sans antialiased; }
+  body { @apply bg-[#fdf8f2] dark:bg-[#0a1f14] text-[#1c1c1c] dark:text-white font-sans antialiased; }
 }
 
 @layer components {
