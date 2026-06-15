@@ -14,11 +14,11 @@ export default function Login() {
   }
 
   return (
-    <div className="min-h-[calc(100vh-64px)] bg-[#fdf8f2] flex items-center justify-center py-12 px-4">
+    <div className="min-h-[calc(100vh-64px)] bg-[#fdf8f2] dark:bg-[#0a1f14] flex items-center justify-center py-12 px-4">
       <div className="w-full max-w-md">
 
         {/* Card */}
-        <div className="bg-white rounded-2xl border border-[#e8dfc8] shadow-sm overflow-hidden">
+        <div className="bg-white dark:bg-[#1a4a31] rounded-2xl border border-[#e8dfc8] dark:border-[#2d7a4f]/30 shadow-sm overflow-hidden">
 
           {/* Tab switcher */}
           <div className="flex border-b border-[#e8dfc8]">
@@ -39,7 +39,7 @@ export default function Login() {
           <div className="p-8">
 
             {/* Heading */}
-            <h1 className="display-font text-2xl font-bold text-[#1c1c1c] mb-1">
+            <h1 className="display-font text-2xl font-bold text-[#1c1c1c] dark:text-white mb-1">
               {isSignup ? 'Create account' : 'Welcome back'}
             </h1>
             <p className="text-sm text-[#888] mb-7">
@@ -89,7 +89,7 @@ export default function Login() {
                     onChange={handleChange}
                     placeholder="••••••••"
                     required
-                    className="w-full border border-[#e8dfc8] focus:border-[#2d7a4f] outline-none rounded-xl px-4 py-3 pr-10 text-sm text-[#1c1c1c] placeholder-[#ccc] bg-[#fafaf8]"
+                    className="w-full border border-[#e8dfc8] dark:border-[#2d7a4f]/30 focus:border-[#2d7a4f] outline-none rounded-xl px-4 py-3 text-sm text-[#1c1c1c] dark:text-white placeholder-[#ccc] bg-[#fafaf8] dark:bg-[#0d2b1a]"
                   />
                   <button
                     type="button"
