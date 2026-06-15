@@ -10,13 +10,13 @@ const TEAM = [
 ]
 export default function About() {
   return (
-    <div className="py-16 bg-[#fdf8f2] min-h-screen">
+    <div className="py-16 bg-[#fdf8f2] dark:bg-[#0a1f14] dark:text-white min-h-screen">
       <div className="section-pad max-w-4xl">
 
         {/* Hero */}
         <div className="mb-14">
           <p className="text-xs font-semibold text-[#2d7a4f] uppercase tracking-widest mb-2">About VanaVas</p>
-          <h1 className="display-font text-4xl font-bold text-[#1c1c1c] mb-5 leading-tight">
+          <h1 className="display-font text-4xl font-bold text-[#1c1c1c] dark:text-white mb-5 leading-tight">
             Built for the hills.<br />Built for the people in them.
           </h1>
           <p className="text-[#555] text-lg leading-relaxed max-w-2xl">
@@ -29,7 +29,7 @@ export default function About() {
 
         {/* Problem + Solution */}
         <div className="grid sm:grid-cols-2 gap-6 mb-14">
-          <div className="bg-white rounded-2xl border border-[#e8dfc8] p-6">
+          <div className="bg-white dark:bg-[#1a4a31] rounded-2xl border border-[#e8dfc8] dark:border-[#2d7a4f]/30 p-6">
             <div className="text-2xl mb-3">🔍</div>
             <h3 className="font-semibold text-[#1c1c1c] text-lg mb-2">The problem</h3>
             <p className="text-sm text-[#666] leading-relaxed">
@@ -54,7 +54,7 @@ export default function About() {
           <h2 className="display-font text-2xl font-bold text-[#1c1c1c] mb-6">Built by</h2>
           <div className="flex flex-wrap gap-4">
             {TEAM.map(({ name, role, initials, color, instagram, linkedin }) => (
-              <div key={name} className="flex items-center gap-3 bg-white border border-[#e8dfc8] rounded-2xl px-5 py-4">
+              <div key={name} className="flex items-center gap-3 bg-white dark:bg-[#1a4a31] border border-[#e8dfc8] dark:border-[#2d7a4f]/30 rounded-2xl px-5 py-4">
                 <div className={`w-10 h-10 rounded-full ${color} flex items-center justify-center font-bold text-sm flex-shrink-0`}>
                   {initials}
                 </div>
