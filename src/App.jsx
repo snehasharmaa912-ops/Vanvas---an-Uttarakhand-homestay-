@@ -8,14 +8,13 @@ import About from './pages/About'
 import Login from './pages/Login'
 export default function App() {
   const { pathname } = useLocation()
-
-  // Scroll to top on route change
+  
   useEffect(() => {
     window.scrollTo(0, 0)
   }, [pathname])
 
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="min-h-screen flex flex-col bg-[#fdf8f2] dark:bg-[#0a1f14] dark:text-white transition-colors duration-300">
       <Navbar />
       <main className="flex-1 page-enter">
         <Routes>
