@@ -64,7 +64,7 @@ export default function Home() {
       <section className="py-16 bg-[#1a4a31] text-white">
         <div className="section-pad text-center">
           <span className="inline-block bg-white/10 text-white/80 text-xs font-semibold px-4 py-1.5 rounded-full mb-4 uppercase tracking-widest">
-            Coming in Week 7
+            Currently in progess 
           </span>
           <h2 className="display-font text-3xl font-bold mb-4">
             Let AI plan your perfect Uttarakhand trip ✨
