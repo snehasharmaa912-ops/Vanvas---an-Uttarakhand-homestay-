@@ -27,33 +27,27 @@ export default function Hero() {
     }
     return () => clearTimeout(timeout)
   }, [displayed, deleting, wordIdx])
-
   useEffect(() => {
     const interval = setInterval(() => setShowCursor(c => !c), 530)
     return () => clearInterval(interval)
   }, [])
-
   const handleSearch = (e) => {
-    e.preventDefault()
-    navigate('/explore')
+  e.preventDefault()
+  navigate(query.trim() ? `/explore?q=${encodeURIComponent(query.trim())}` : '/explore')
   }
-
   return (
     <section className="relative min-h-screen flex flex-col justify-center overflow-hidden bg-[#0a1f14]">
-
       {/* Background */}
       <div className="absolute inset-0 z-0">
         <div className="absolute inset-0 bg-gradient-to-br from-[#0a1f14] via-[#1a4a31] to-[#0d2b1a]" />
         <div className="absolute top-[-10%] right-[-5%] w-[600px] h-[600px] rounded-full bg-[#2d7a4f]/20 blur-[120px] animate-pulse" />
         <div className="absolute bottom-[-10%] left-[-5%] w-[500px] h-[500px] rounded-full bg-[#a96f2b]/15 blur-[100px] animate-pulse" style={{animationDelay:'1s'}} />
         <div className="absolute top-[40%] left-[30%] w-[300px] h-[300px] rounded-full bg-[#2d7a4f]/10 blur-[80px] animate-pulse" style={{animationDelay:'2s'}} />
-
         {/* Mountain silhouette */}
         <svg className="absolute bottom-0 left-0 w-full opacity-20" viewBox="0 0 1440 320" preserveAspectRatio="none">
           <path fill="#2d7a4f" d="M0,320 L0,200 L120,120 L240,180 L360,80 L480,160 L600,60 L720,140 L840,40 L960,130 L1080,70 L1200,150 L1320,90 L1440,160 L1440,320 Z"/>
           <path fill="#1a4a31" d="M0,320 L0,240 L180,160 L300,220 L420,140 L540,200 L660,120 L780,190 L900,110 L1020,180 L1140,130 L1260,200 L1380,150 L1440,180 L1440,320 Z" opacity="0.7"/>
         </svg>
-
         {/* Floating particles */}
         {[...Array(20)].map((_, i) => (
           <div key={i} className="absolute rounded-full bg-white/10"
@@ -67,22 +61,18 @@ export default function Hero() {
             }}
           />
         ))}
-
         {/* Grid */}
         <div className="absolute inset-0 opacity-5"
           style={{backgroundImage:'linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px)', backgroundSize:'60px 60px'}} />
       </div>
-
       {/* Main Content */}
       <div className="relative z-10 section-pad py-24 text-center">
-
         {/* Badge */}
         <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm border border-white/20 text-white/90 text-xs font-semibold px-5 py-2 rounded-full mb-8 hf1">
           <span className="w-2 h-2 rounded-full bg-[#4aab72] animate-pulse" />
           Uttarakhand's #1 Homestay Platform
           <span className="w-2 h-2 rounded-full bg-[#4aab72] animate-pulse" />
         </div>
-
         {/* Headline */}
         <h1 className="display-font text-5xl sm:text-6xl lg:text-7xl font-bold text-white leading-tight mb-6 hf2">
           Sleep where the
@@ -95,7 +85,6 @@ export default function Hero() {
           <br />
           <span className="text-white">are your hosts</span>
         </h1>
-
         {/* Subtext */}
         <p className="text-white/60 text-lg sm:text-xl max-w-2xl mx-auto mb-10 leading-relaxed hf3">
           Discover handpicked rural homestays across Uttarakhand —
@@ -103,7 +92,6 @@ export default function Hero() {
           <span className="text-[#a8e6c1]"> real experiences</span>,
           <span className="text-[#a8e6c1]"> zero middlemen</span>.
         </p>
-
         {/* Search */}
         <form onSubmit={handleSearch}
           className={`max-w-2xl mx-auto flex items-center gap-2 backdrop-blur-md border-2 rounded-2xl px-4 py-3 transition-all duration-300 hf4
@@ -120,18 +108,16 @@ export default function Hero() {
             Search →
           </button>
         </form>
-
         {/* Pills */}
         <div className="flex flex-wrap justify-center gap-2 mt-5 hf5">
           <span className="text-xs text-white/40 self-center">Popular:</span>
           {destinations.map(d => (
-            <button key={d} onClick={() => navigate('/explore')}
+  <button key={d} onClick={() => navigate(`/explore?q=${encodeURIComponent(d)}`)}
               className="text-xs bg-white/10 hover:bg-[#2d7a4f]/60 border border-white/20 hover:border-[#4aab72] text-white/70 hover:text-white px-3 py-1.5 rounded-full transition-all duration-200">
               {d}
             </button>
           ))}
         </div>
-
         {/* Stats */}
         <div className="flex flex-wrap justify-center gap-12 mt-16 hf5">
           {[
@@ -146,14 +132,12 @@ export default function Hero() {
             </div>
           ))}
         </div>
-
         {/* Scroll indicator */}
         <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-white/30 hf5">
           <span className="text-xs tracking-widest uppercase">Scroll</span>
           <div className="w-[1px] h-8 bg-gradient-to-b from-white/30 to-transparent animate-pulse" />
         </div>
       </div>
-
       <style>{`
         @keyframes floatP {
           0%, 100% { transform: translateY(0px); }
