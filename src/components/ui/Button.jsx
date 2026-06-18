@@ -4,6 +4,8 @@
  * @param {string} size - sm | md | lg
  * @param {boolean} disabled - disables the button
  * @param {function} onClick - click handler
+ * @param {string} type - button | submit | reset
+ * @param {string} className - additional custom classes
  * @param {ReactNode} children - button text
  */
 
@@ -12,6 +14,8 @@ export default function Button({
   size = 'md',
   disabled = false,
   onClick,
+  type = 'button',
+  className = '',
   children,
 }) {
   const base = 'inline-flex items-center justify-center font-medium rounded-full transition-all duration-200'
@@ -30,9 +34,10 @@ export default function Button({
 
   return (
     <button
+      type={type}
       onClick={onClick}
       disabled={disabled}
-      className={`${base} ${variants[variant]} ${sizes[size]} ${disabled ? 'opacity-50 cursor-not-allowed' : 'hover:-translate-y-0.5 active:translate-y-0'}`}
+      className={`${base} ${variants[variant]} ${sizes[size]} ${disabled ? 'opacity-50 cursor-not-allowed' : 'hover:-translate-y-0.5 active:translate-y-0'} ${className}`}
     >
       {children}
     </button>
