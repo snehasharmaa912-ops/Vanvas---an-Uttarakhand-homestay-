@@ -1,3 +1,6 @@
+import { useEffect } from 'react'
+import { useLocation } from 'react-router-dom'
+
 const TEAM = [
   { 
     name: 'Sneha Sharma', 
@@ -8,13 +11,29 @@ const TEAM = [
     linkedin: 'https://www.linkedin.com/in/snehasharmaa2006'
   },
 ]
+const STEPS = [
+  { number: '01', title: 'Search & discover', desc: 'Browse verified rural homestays by district, budget, and eco-rating.' },
+  { number: '02', title: 'Connect directly', desc: 'Message the host directly — no agents, no commission, no middlemen.' },
+  { number: '03', title: 'Book & stay', desc: 'Confirm your stay and experience genuine Uttarakhand hospitality.' },
+  { number: '04', title: 'Share feedback', desc: 'Rate your experience to help other travelers and support the host.' },
+]
 export default function About() {
+  const { hash } = useLocation()
+
+  useEffect(() => {
+    if (hash) {
+      const el = document.querySelector(hash)
+      if (el) {
+        setTimeout(() => el.scrollIntoView({ behavior: 'smooth', block: 'start' }), 50)
+      }
+    }
+  }, [hash])
   return (
     <div className="py-16 bg-[#fdf8f2] dark:bg-[#0a1f14] dark:text-white min-h-screen">
       <div className="section-pad max-w-4xl">
 
         {/* Hero */}
-        <div className="mb-14">
+        <div id="about" className="mb-14">
           <p className="text-xs font-semibold text-[#2d7a4f] uppercase tracking-widest mb-2">About VanaVas</p>
           <h1 className="display-font text-4xl font-bold text-[#1c1c1c] dark:text-white mb-5 leading-tight">
             Built for the hills.<br />Built for the people in them.
@@ -49,9 +68,44 @@ export default function About() {
           </div>
         </div>
 
+        {/* How it works */}
+        <div id="how-it-works" className="mb-14 pt-4">
+          <h2 className="display-font text-2xl font-bold text-[#1c1c1c] dark:text-white mb-6">How it works</h2>
+          <div className="grid sm:grid-cols-2 gap-5">
+            {STEPS.map(({ number, title, desc }) => (
+              <div key={number} className="flex gap-4 bg-white dark:bg-[#1a4a31] border border-[#e8dfc8] dark:border-[#2d7a4f]/30 rounded-2xl p-5">
+                <span className="text-2xl font-bold text-[#2d7a4f]/30 display-font">{number}</span>
+                <div>
+                  <h3 className="font-semibold text-[#1c1c1c] dark:text-white text-sm mb-1">{title}</h3>
+                  <p className="text-xs text-[#777] dark:text-white/60 leading-relaxed">{desc}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Contact us */}
+        <div id="contact" className="mb-14 pt-4">
+          <h2 className="display-font text-2xl font-bold text-[#1c1c1c] dark:text-white mb-6">Contact us</h2>
+          <div className="bg-white dark:bg-[#1a4a31] border border-[#e8dfc8] dark:border-[#2d7a4f]/30 rounded-2xl p-6 flex flex-col sm:flex-row gap-6 justify-between">
+            <div>
+              <p className="text-sm text-[#666] dark:text-white/70 leading-relaxed mb-3">
+                Have a question, partnership idea, or want to list your homestay? Reach out — I'd love to hear from you.
+              </p>
+              <p className="text-sm text-[#1c1c1c] dark:text-white font-medium">📧 sharmasnehaa08@gmail.com</p>
+              <p className="text-sm text-[#1c1c1c] dark:text-white font-medium">📍 Dehradun, Uttarakhand</p>
+            </div>
+          
+              href="mailto: sharmasnehaa08@gmail.com"
+              className="btn-primary self-start sm:self-center whitespace-nowrap"
+            >
+              Email us →
+            </a>
+          </div>
+        </div>
         {/* Team */}
         <div>
-          <h2 className="display-font text-2xl font-bold text-[#1c1c1c] mb-6">Built by</h2>
+          <h2 className="display-font text-2xl font-bold text-[#1c1c1c] dark:text-white mb-6">Built by</h2>
           <div className="flex flex-wrap gap-4">
             {TEAM.map(({ name, role, initials, color, instagram, linkedin }) => (
               <div key={name} className="flex items-center gap-3 bg-white dark:bg-[#1a4a31] border border-[#e8dfc8] dark:border-[#2d7a4f]/30 rounded-2xl px-5 py-4">
