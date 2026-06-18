@@ -7,11 +7,11 @@ const footerLinks = {
     { label: 'Forest Retreats',  to: '/explore' },
   ],
   Company: [
-    { label: 'About VanaVas', to: '/about' },
-    { label: 'How it works',  to: '/about' },
-    { label: 'For Hosts',     to: '/login'  },
-    { label: 'Contact us',    to: '/about'  },
-  ],
+  { label: 'About VanaVas', to: '/about' },
+  { label: 'How it works',  to: '/about#how-it-works' },
+  { label: 'For Hosts',     to: '/login'  },
+  { label: 'Contact us',    to: '/about#contact'  },
+],
   Support: [
     { label: 'FAQs',            to: '/' },
     { label: 'Booking policy',  to: '/' },
