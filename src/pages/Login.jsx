@@ -1,16 +1,41 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
+import { Input, Button, Toast } from '../components/ui'
+
 export default function Login() {
   const [tab,      setTab]      = useState('traveler') // 'traveler' | 'host'
   const [isSignup, setIsSignup] = useState(false)
   const [form,     setForm]     = useState({ name: '', email: '', password: '' })
+  const [errors,   setErrors]   = useState({})
   const [show,     setShow]     = useState(false)
+  const [toast,    setToast]    = useState({ visible: false, message: '', type: 'success' })
 
-  const handleChange = e => setForm(f => ({ ...f, [e.target.name]: e.target.value }))
+  const handleChange = e => {
+    const { name, value } = e.target
+    setForm(f => ({ ...f, [name]: value }))
+    setErrors(err => ({ ...err, [name]: '' }))
+  }
+
+  const validate = () => {
+    const newErrors = {}
+    if (isSignup && !form.name.trim()) newErrors.name = 'Please enter your full name'
+    if (!form.email.includes('@')) newErrors.email = 'Please enter a valid email'
+    if (form.password.length < 6) newErrors.password = 'Password must be at least 6 characters'
+    return newErrors
+  }
 
   const handleSubmit = e => {
     e.preventDefault()
-    alert(`${isSignup ? 'Sign up' : 'Sign in'} as ${tab} — backend coming in Week 4!`)
+    const newErrors = validate()
+    if (Object.keys(newErrors).length > 0) {
+      setErrors(newErrors)
+      return
+    }
+    setToast({
+      visible: true,
+      message: `${isSignup ? 'Account created' : 'Signed in'} as ${tab} — backend coming in Week 4!`,
+      type: 'success',
+    })
   }
 
   return (
@@ -52,53 +77,43 @@ export default function Login() {
             <form onSubmit={handleSubmit} className="space-y-4">
 
               {isSignup && (
-                <div>
-                  <label className="block text-xs font-semibold text-[#555] mb-1.5">Full name</label>
-                  <input
-                    type="text"
-                    name="name"
-                    value={form.name}
-                    onChange={handleChange}
-                    placeholder="Ramesh Rawat"
-                    required
-                    className="w-full border border-[#e8dfc8] focus:border-[#2d7a4f] outline-none rounded-xl px-4 py-3 text-sm text-[#1c1c1c] placeholder-[#ccc] bg-[#fafaf8]"
-                  />
-                </div>
+                <Input
+                  label="Full name"
+                  name="name"
+                  value={form.name}
+                  onChange={handleChange}
+                  placeholder="Ramesh Rawat"
+                  error={errors.name}
+                />
               )}
 
-              <div>
-                <label className="block text-xs font-semibold text-[#555] mb-1.5">Email address</label>
-                <input
-                  type="email"
-                  name="email"
-                  value={form.email}
-                  onChange={handleChange}
-                  placeholder="you@example.com"
-                  required
-                  className="w-full border border-[#e8dfc8] focus:border-[#2d7a4f] outline-none rounded-xl px-4 py-3 text-sm text-[#1c1c1c] placeholder-[#ccc] bg-[#fafaf8]"
-                />
-              </div>
+              <Input
+                label="Email address"
+                type="email"
+                name="email"
+                value={form.email}
+                onChange={handleChange}
+                placeholder="you@example.com"
+                error={errors.email}
+              />
 
               <div>
-                <label className="block text-xs font-semibold text-[#555] mb-1.5">Password</label>
-                <div className="relative">
-                  <input
-                    type={show ? 'text' : 'password'}
-                    name="password"
-                    value={form.password}
-                    onChange={handleChange}
-                    placeholder="••••••••"
-                    required
-                    className="w-full border border-[#e8dfc8] dark:border-[#2d7a4f]/30 focus:border-[#2d7a4f] outline-none rounded-xl px-4 py-3 text-sm text-[#1c1c1c] dark:text-white placeholder-[#ccc] bg-[#fafaf8] dark:bg-[#0d2b1a]"
-                  />
-                  <button
-                    type="button"
-                    onClick={() => setShow(s => !s)}
-                    className="absolute right-3 top-1/2 -translate-y-1/2 text-[#aaa] hover:text-[#555] text-xs"
-                  >
-                    {show ? 'Hide' : 'Show'}
-                  </button>
-                </div>
+                <Input
+                  label="Password"
+                  type={show ? 'text' : 'password'}
+                  name="password"
+                  value={form.password}
+                  onChange={handleChange}
+                  placeholder="••••••••"
+                  error={errors.password}
+                />
+                <button
+                  type="button"
+                  onClick={() => setShow(s => !s)}
+                  className="text-xs text-[#aaa] hover:text-[#555] mt-1"
+                >
+                  {show ? 'Hide password' : 'Show password'}
+                </button>
               </div>
 
               {/* Host extra note */}
@@ -108,9 +123,9 @@ export default function Login() {
                 </div>
               )}
 
-              <button type="submit" className="btn-primary w-full justify-center mt-2">
+              <Button variant="primary" size="lg" type="submit" className="w-full">
                 {isSignup ? 'Create account' : 'Sign in'} →
-              </button>
+              </Button>
             </form>
 
             {/* Toggle signup/login */}
@@ -131,6 +146,13 @@ export default function Login() {
           <Link to="/" className="hover:text-[#555] transition-colors">← Back to VanaVas</Link>
         </p>
       </div>
+
+      <Toast
+        message={toast.message}
+        type={toast.type}
+        isVisible={toast.visible}
+        onClose={() => setToast(t => ({ ...t, visible: false }))}
+      />
     </div>
   )
-}
+                }
