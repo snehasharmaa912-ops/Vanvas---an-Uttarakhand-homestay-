@@ -96,7 +96,7 @@ export default function About() {
               <p className="text-sm text-[#1c1c1c] dark:text-white font-medium">📍 Dehradun, Uttarakhand</p>
             </div>
           
-              href="mailto: sharmasnehaa08@gmail.com"
+              href="mailto:sharmasnehaa08@gmail.com"
               className="btn-primary self-start sm:self-center whitespace-nowrap"
             >
               Email us →
