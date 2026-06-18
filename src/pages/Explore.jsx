@@ -1,5 +1,7 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import HomestayCard from '../components/HomestayCard'
+import { Loader } from '../components/ui'
+
 const ALL_STAYS = [
   { id: 1, title: 'Himalayan Pine Cottage',      location: 'Chopta, Rudraprayag',     price: 1400, rating: 4.9, reviews: 38, tags: ['Forest view', 'Trekking'],      host: 'Ramesh Ji',   eco: true,  image: 'https://picsum.photos/seed/chopta/400/300' },
   { id: 2, title: 'Valley View Family Stay',      location: 'Munsiyari, Pithoragarh',  price: 1100, rating: 4.7, reviews: 21, tags: ['Mountain view', 'Farm meals'],  host: 'Sunita Devi', eco: true,  image: 'https://picsum.photos/seed/munsiyari/400/300' },
@@ -10,12 +12,16 @@ const ALL_STAYS = [
   { id: 7, title: 'Auli Ski Chalet',              location: 'Auli, Chamoli',           price: 2200, rating: 4.9, reviews: 18, tags: ['Snow view', 'Skiing nearby'],   host: 'Deepak Ji',   eco: false, image: 'https://picsum.photos/seed/auli/400/300' },
   { id: 8, title: 'Jim Corbett Edge Cottage',     location: 'Ramnagar, Nainital',      price: 1350, rating: 4.6, reviews: 31, tags: ['Jungle safari', 'Wildlife'],    host: 'Priya Devi',  eco: true,  image: 'https://picsum.photos/seed/corbett/400/300' },
 ]
-
 const FILTERS = ['All', 'Eco-certified', 'Under ₹1000', 'Mountain view', 'Forest', 'Farm stay']
-
 export default function Explore() {
-  const [active, setActive]   = useState('All')
-  const [sort,   setSort]     = useState('rating')
+  const [active,  setActive]  = useState('All')
+  const [sort,    setSort]    = useState('rating')
+  const [loading, setLoading] = useState(false)
+  useEffect(() => {
+    setLoading(true)
+    const timer = setTimeout(() => setLoading(false), 500)
+    return () => clearTimeout(timer)
+  }, [active, sort])
 
   const filtered = ALL_STAYS
     .filter(s => {
@@ -62,8 +68,14 @@ export default function Explore() {
           </select>
         </div>
 
-        {/* Grid */}
-        {filtered.length > 0 ? (
+        {/* Grid / Loader / Empty state */}
+        {loading ? (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+            {[...Array(4)].map((_, i) => (
+              <Loader key={i} type="skeleton" />
+            ))}
+          </div>
+        ) : filtered.length > 0 ? (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
             {filtered.map(stay => (
               <HomestayCard key={stay.id} stay={stay} />
@@ -81,4 +93,4 @@ export default function Explore() {
       </div>
     </div>
   )
-}
+   }
