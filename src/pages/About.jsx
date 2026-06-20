@@ -11,12 +11,14 @@ const TEAM = [
     linkedin: 'https://www.linkedin.com/in/snehasharmaa2006'
   },
 ]
+
 const STEPS = [
   { number: '01', title: 'Search & discover', desc: 'Browse verified rural homestays by district, budget, and eco-rating.' },
   { number: '02', title: 'Connect directly', desc: 'Message the host directly — no agents, no commission, no middlemen.' },
   { number: '03', title: 'Book & stay', desc: 'Confirm your stay and experience genuine Uttarakhand hospitality.' },
   { number: '04', title: 'Share feedback', desc: 'Rate your experience to help other travelers and support the host.' },
 ]
+
 export default function About() {
   const { hash } = useLocation()
 
@@ -28,6 +30,7 @@ export default function About() {
       }
     }
   }, [hash])
+
   return (
     <div className="py-16 bg-[#fdf8f2] dark:bg-[#0a1f14] dark:text-white min-h-screen">
       <div className="section-pad max-w-4xl">
@@ -95,7 +98,7 @@ export default function About() {
               <p className="text-sm text-[#1c1c1c] dark:text-white font-medium">📧 sharmasnehaa08@gmail.com</p>
               <p className="text-sm text-[#1c1c1c] dark:text-white font-medium">📍 Dehradun, Uttarakhand</p>
             </div>
-          
+            
               href="mailto:sharmasnehaa08@gmail.com"
               className="btn-primary self-start sm:self-center whitespace-nowrap"
             >
@@ -103,6 +106,7 @@ export default function About() {
             </a>
           </div>
         </div>
+
         {/* Team */}
         <div>
           <h2 className="display-font text-2xl font-bold text-[#1c1c1c] dark:text-white mb-6">Built by</h2>
@@ -130,4 +134,4 @@ export default function About() {
 
     </div>
   )
-}
+    }
