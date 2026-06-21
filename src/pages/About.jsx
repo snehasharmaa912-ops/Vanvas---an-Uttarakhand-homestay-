@@ -50,7 +50,7 @@ export default function About() {
 
         <div className="grid sm:grid-cols-2 gap-6 mb-14">
           <div className="bg-white dark:bg-[#1a4a31] rounded-2xl border border-[#e8dfc8] dark:border-[#2d7a4f]/30 p-6">
-            <div className="text-2xl mb-3">A</div>
+            <div className="text-2xl mb-3">🔍</div>
             <h3 className="font-semibold text-[#1c1c1c] text-lg mb-2">The problem</h3>
             <p className="text-sm text-[#666] leading-relaxed">
               Rural homestay owners in Uttarakhand rely on word-of-mouth or pay 30 to 40 percent commissions to
@@ -59,7 +59,7 @@ export default function About() {
             </p>
           </div>
           <div className="bg-[#e8f5ee] rounded-2xl border border-[#2d7a4f]/20 p-6">
-            <div className="text-2xl mb-3">B</div>
+            <div className="text-2xl mb-3">🎯</div>
             <h3 className="font-semibold text-[#1c1c1c] text-lg mb-2">My solution</h3>
             <p className="text-sm text-[#444] leading-relaxed">
               A simple, bilingual Hindi and English platform where hosts list their stay in minutes
