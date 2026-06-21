@@ -6,6 +6,8 @@ import Home from './pages/Home'
 import Explore from './pages/Explore'
 import About from './pages/About'
 import Login from './pages/Login'
+import NotFound from './pages/NotFound'
+
 export default function App() {
   const { pathname } = useLocation()
   
@@ -22,6 +24,7 @@ export default function App() {
           <Route path="/explore" element={<Explore />} />
           <Route path="/about"   element={<About />} />
           <Route path="/login"   element={<Login />} />
+          <Route path="*"         element={<NotFound />} />
         </Routes>
       </main>
       <Footer />
