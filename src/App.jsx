@@ -10,6 +10,7 @@ import FAQs from './pages/FAQs'
 import BookingPolicy from './pages/BookingPolicy'
 import Cancellations from './pages/Cancellations'
 import PrivacyPolicy from './pages/PrivacyPolicy'
+import Wishlist from './pages/Wishlist'
 import NotFound from './pages/NotFound'
 
 export default function App() {
@@ -32,7 +33,8 @@ export default function App() {
           <Route path="/booking-policy" element={<BookingPolicy />} />
           <Route path="/cancellations"  element={<Cancellations />} />
           <Route path="/privacy-policy" element={<PrivacyPolicy />} />
-          <Route path="*"                element={<NotFound />} />
+          <Route path="/wishlist"       element={<Wishlist />} />
+         <Route path="*"                element={<NotFound />} />
         </Routes>
       </main>
       <Footer />
