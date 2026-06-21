@@ -5,12 +5,20 @@ import { Loader } from '../components/ui'
 import { ALL_STAYS } from '../data/stays'
 
 const FILTERS = ['All', 'Eco-certified', 'Under ₹1000', 'Mountain view', 'Forest', 'Farm stay']
+
 export default function Explore() {
   const [searchParams] = useSearchParams()
   const searchQuery = searchParams.get('q') || ''
-  const [active,  setActive]  = useState('All')
+  const filterParam = searchParams.get('filter')
+  const [active,  setActive]  = useState(filterParam && FILTERS.includes(filterParam) ? filterParam : 'All')
   const [sort,    setSort]    = useState('rating')
   const [loading, setLoading] = useState(false)
+  useEffect(() => {
+    if (filterParam && FILTERS.includes(filterParam)) {
+      setActive(filterParam)
+    }
+  }, [filterParam])
+
   useEffect(() => {
     setLoading(true)
     const timer = setTimeout(() => setLoading(false), 500)
@@ -68,7 +76,7 @@ export default function Explore() {
             <option value="price">Sort: Price low to high</option>
           </select>
         </div>
-        {/* Grid / Loader / Empty state */}
+        
         {loading ? (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
             {[...Array(4)].map((_, i) => (
@@ -93,4 +101,4 @@ export default function Explore() {
       </div>
     </div>
   )
-}
+            }
