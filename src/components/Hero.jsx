@@ -121,7 +121,7 @@ export default function Hero() {
         {/* Stats */}
         <div className="flex flex-wrap justify-center gap-12 mt-16 hf5">
           {[
-            { value: '120+', label: 'Verified Homestays', icon: '🏡' },
+            { value: '30+', label: 'Verified Homestays', icon: '🏡' },
             { value: '4.8★', label: 'Average Rating', icon: '⭐' },
             { value: '12', label: 'Districts Covered', icon: '🗺️' },
           ].map(({ value, label, icon }) => (
