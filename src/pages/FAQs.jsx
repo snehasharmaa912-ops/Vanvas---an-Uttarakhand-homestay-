@@ -5,7 +5,6 @@ const FAQ_ITEMS = [
   { q: 'Do hosts pay any commission?', a: 'No. VanaVas charges zero commission for the first three months to help rural hosts get started without losing income to middlemen.' },
   { q: 'Can I list my own homestay?', a: 'Yes! Click List your stay in the navbar or footer to start the host signup process.' },
 ]
-
 export default function FAQs() {
   return (
     <div className="py-16 bg-[#fdf8f2] dark:bg-[#0a1f14] dark:text-white min-h-screen">
