@@ -1,6 +1,7 @@
 import { useTheme } from '../context/ThemeContext'
 import { useState, useEffect } from 'react'
 import { Link, NavLink, useLocation } from 'react-router-dom'
+
 function VanaVasLogo() {
   return (
     <Link to="/" className="flex items-center gap-2.5 group">
@@ -77,22 +78,34 @@ export default function Navbar() {
           </div>
           {/* Desktop CTA */}
           <div className="hidden md:flex items-center gap-3">
-  {/* Dark mode toggle */}
-  <button
-    onClick={() => setDark(d => !d)}
-    className="w-9 h-9 flex items-center justify-center rounded-full border border-[#e8dfc8] hover:bg-[#e8f5ee] transition-all duration-200"
-    aria-label="Toggle dark mode"
-  >
-    {dark ? '☀️' : '🌙'}
-  </button>
-  <Link to="/login" className="text-sm font-medium text-[#444] hover:text-[#2d7a4f] transition-colors">
-    Sign in
-  </Link>
-  <Link to="/login" className="btn-primary text-sm py-2 px-5">
-    List your stay
-  </Link>
-</div>
-          {/* Mobile hamburger */}
+            {/* Dark mode toggle */}
+            <button
+              onClick={() => setDark(d => !d)}
+              className="w-9 h-9 flex items-center justify-center rounded-full border border-[#e8dfc8] hover:bg-[#e8f5ee] transition-all duration-200"
+              aria-label="Toggle dark mode"
+            >
+              {dark ? '☀️' : '🌙'}
+            </button>
+
+            {/* Wishlist link */}
+            <Link
+              to="/wishlist"
+              aria-label="Wishlist"
+              className="w-9 h-9 flex items-center justify-center rounded-full border border-[#e8dfc8] hover:bg-[#e8f5ee] transition-all duration-200"
+            >
+              <svg className="w-4 h-4 fill-none stroke-[#444]" viewBox="0 0 24 24" strokeWidth={2}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+              </svg>
+            </Link>
+
+            <Link to="/login" className="text-sm font-medium text-[#444] hover:text-[#2d7a4f] transition-colors">
+              Sign in
+            </Link>
+            <Link to="/login" className="btn-primary text-sm py-2 px-5">
+              List your stay
+            </Link>
+          </div>
+          
           <button
             onClick={() => setMenuOpen(o => !o)}
             aria-label="Toggle menu"
@@ -120,6 +133,15 @@ export default function Navbar() {
                 {label}
               </NavLink>
             ))}
+            <NavLink
+              to="/wishlist"
+              className={({ isActive }) =>
+                `px-4 py-2.5 rounded-lg text-sm font-medium transition-colors
+                ${isActive ? 'bg-[#2d7a4f] text-white' : 'text-[#444] hover:bg-[#e8f5ee]'}`
+              }
+            >
+              Wishlist
+            </NavLink>
             <div className="pt-2 border-t border-[#e8dfc8] flex flex-col gap-2">
               <Link to="/login" className="px-4 py-2.5 text-sm font-medium text-[#444]">Sign in</Link>
               <Link to="/login" className="btn-primary text-sm justify-center">List your stay</Link>
@@ -129,4 +151,4 @@ export default function Navbar() {
       </nav>
     </header>
   )
-}
+                  }
