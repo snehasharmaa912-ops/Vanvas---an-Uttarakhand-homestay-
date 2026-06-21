@@ -13,6 +13,7 @@ export default function Explore() {
   const [active,  setActive]  = useState(filterParam && FILTERS.includes(filterParam) ? filterParam : 'All')
   const [sort,    setSort]    = useState('rating')
   const [loading, setLoading] = useState(false)
+
   useEffect(() => {
     if (filterParam && FILTERS.includes(filterParam)) {
       setActive(filterParam)
@@ -76,7 +77,7 @@ export default function Explore() {
             <option value="price">Sort: Price low to high</option>
           </select>
         </div>
-        
+        {/* Grid / Loader / Empty state */}
         {loading ? (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
             {[...Array(4)].map((_, i) => (
@@ -101,4 +102,4 @@ export default function Explore() {
       </div>
     </div>
   )
-            }
+}
