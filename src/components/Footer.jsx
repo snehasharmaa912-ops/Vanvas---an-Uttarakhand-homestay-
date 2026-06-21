@@ -1,23 +1,24 @@
 import { Link } from 'react-router-dom'
+
 const footerLinks = {
   Explore: [
     { label: 'All Homestays',    to: '/explore' },
-    { label: 'Eco Stays',        to: '/explore' },
-    { label: 'Farm Stays',       to: '/explore' },
-    { label: 'Forest Retreats',  to: '/explore' },
+    { label: 'Eco Stays',        to: '/explore?filter=Eco-certified' },
+    { label: 'Farm Stays',       to: '/explore?filter=Farm stay' },
+    { label: 'Forest Retreats',  to: '/explore?filter=Forest' },
   ],
   Company: [
-  { label: 'About VanaVas', to: '/about' },
-  { label: 'How it works',  to: '/about#how-it-works' },
-  { label: 'For Hosts',     to: '/login'  },
-  { label: 'Contact us',    to: '/about#contact'  },
-],
+    { label: 'About VanaVas', to: '/about' },
+    { label: 'How it works',  to: '/about#how-it-works' },
+    { label: 'For Hosts',     to: '/login'  },
+    { label: 'Contact us',    to: '/about#contact'  },
+  ],
   Support: [
-  { label: 'FAQs',            to: '/faqs' },
-  { label: 'Booking policy',  to: '/booking-policy' },
-  { label: 'Cancellations',   to: '/cancellations' },
-  { label: 'Privacy policy',  to: '/privacy-policy' },
-],
+    { label: 'FAQs',            to: '/faqs' },
+    { label: 'Booking policy',  to: '/booking-policy' },
+    { label: 'Cancellations',   to: '/cancellations' },
+    { label: 'Privacy policy',  to: '/privacy-policy' },
+  ],
 }
 
 const socials = [
@@ -59,7 +60,7 @@ export default function Footer() {
         <div className="section-pad py-10 flex flex-col sm:flex-row items-center justify-between gap-4">
           <div>
             <h3 className="display-font text-xl font-bold mb-1">Own a homestay in Uttarakhand?</h3>
-            <p className="text-white/60 text-sm">Join 120+ hosts earning directly from travelers. Zero commission for first 3 months.</p>
+            <p className="text-white/60 text-sm">Join 30+ hosts earning directly from travelers. Zero commission for first 3 months.</p>
           </div>
           <Link to="/login" className="btn-outline border-white text-white hover:bg-white hover:text-[#1a4a31] flex-shrink-0">
             List your property →
@@ -82,7 +83,7 @@ export default function Footer() {
             </p>
             <div className="flex gap-3">
               {socials.map(({ label, href, icon }) => (
-                <a
+                
                   key={label}
                   href={href}
                   aria-label={label}
@@ -123,4 +124,4 @@ export default function Footer() {
       </div>
     </footer>
   )
-}
+          }
