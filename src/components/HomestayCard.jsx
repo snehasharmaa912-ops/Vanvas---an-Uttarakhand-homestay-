@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { Modal, Button } from './ui'
+import { useWishlist } from '../hooks/useWishlist'
 
 export default function HomestayCard({ stay }) {
   const {
@@ -15,10 +16,8 @@ export default function HomestayCard({ stay }) {
     host     = 'Ramesh Ji',
     eco      = true,
   } = stay || {}
-  const [wishlist, setWishlist] = useState(false)
+  const { isWishlisted, toggle } = useWishlist(id)
   const [quickView, setQuickView] = useState(false)
-
-  // Gradient placeholder instead of broken image
   const gradients = [
     'from-[#2d7a4f]/30 to-[#a96f2b]/20',
     'from-[#a96f2b]/30 to-[#2d7a4f]/20',
@@ -55,12 +54,12 @@ export default function HomestayCard({ stay }) {
 
           {/* Wishlist button */}
           <button
-            onClick={() => setWishlist(w => !w)}
+            onClick={toggle}
             aria-label="Add to wishlist"
             className="absolute top-3 right-3 w-8 h-8 bg-white/90 hover:bg-white rounded-full flex items-center justify-center shadow-sm transition-all duration-150"
           >
             <svg
-              className={`w-4 h-4 transition-colors ${wishlist ? 'fill-red-500 stroke-red-500' : 'fill-none stroke-[#666]'}`}
+              className={`w-4 h-4 transition-colors ${isWishlisted ? 'fill-red-500 stroke-red-500' : 'fill-none stroke-[#666]'}`}
               viewBox="0 0 24 24" strokeWidth={2}
             >
               <path strokeLinecap="round" strokeLinejoin="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
