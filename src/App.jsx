@@ -6,6 +6,10 @@ import Home from './pages/Home'
 import Explore from './pages/Explore'
 import About from './pages/About'
 import Login from './pages/Login'
+import FAQs from './pages/FAQs'
+import BookingPolicy from './pages/BookingPolicy'
+import Cancellations from './pages/Cancellations'
+import PrivacyPolicy from './pages/PrivacyPolicy'
 import NotFound from './pages/NotFound'
 
 export default function App() {
@@ -20,11 +24,15 @@ export default function App() {
       <Navbar />
       <main className="flex-1 page-enter">
         <Routes>
-          <Route path="/"        element={<Home />} />
-          <Route path="/explore" element={<Explore />} />
-          <Route path="/about"   element={<About />} />
-          <Route path="/login"   element={<Login />} />
-          <Route path="*"         element={<NotFound />} />
+          <Route path="/"               element={<Home />} />
+          <Route path="/explore"        element={<Explore />} />
+          <Route path="/about"          element={<About />} />
+          <Route path="/login"          element={<Login />} />
+          <Route path="/faqs"           element={<FAQs />} />
+          <Route path="/booking-policy" element={<BookingPolicy />} />
+          <Route path="/cancellations"  element={<Cancellations />} />
+          <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+          <Route path="*"                element={<NotFound />} />
         </Routes>
       </main>
       <Footer />
