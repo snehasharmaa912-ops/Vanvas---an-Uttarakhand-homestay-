@@ -1,5 +1,7 @@
+import { Link } from 'react-router-dom'
 import Hero from '../components/Hero'
 import HomestayCard from '../components/HomestayCard'
+
 const SAMPLE_STAYS = [
   { id: 1, title: 'Himalayan Pine Cottage',      location: 'Chopta, Rudraprayag',     price: 1400, rating: 4.9, reviews: 38, tags: ['Forest view', 'Trekking', 'Bonfire'], host: 'Ramesh Ji',   eco: true,  image: 'https://picsum.photos/seed/chopta/400/300' },
   { id: 2, title: 'Valley View Family Stay',      location: 'Munsiyari, Pithoragarh',  price: 1100, rating: 4.7, reviews: 21, tags: ['Mountain view', 'Farm fresh meals'],  host: 'Sunita Devi', eco: true,  image: 'https://picsum.photos/seed/munsiyari/400/300' },
@@ -15,6 +17,7 @@ const WHY = [
   { icon: '🌿', title: 'Eco-certified',       desc: 'Stays rated on sustainability — waste, energy, local sourcing.' },
   { icon: '🗣️', title: 'Local experiences', desc: 'Trek, cook, farm — genuine Uttarakhand culture, not touristy.' },
 ]
+
 export default function Home() {
   return (
     <>
@@ -28,9 +31,9 @@ export default function Home() {
               <p className="text-xs font-semibold text-[#2d7a4f] uppercase tracking-widest mb-1">Handpicked for you</p>
               <h2 className="display-font text-3xl font-bold text-[#1c1c1c] dark:text-white">Featured Homestays</h2>
             </div>
-            <a href="/explore" className="text-sm font-medium text-[#2d7a4f] hover:underline hidden sm:block">
+            <Link to="/explore" className="text-sm font-medium text-[#2d7a4f] hover:underline hidden sm:block">
               View all →
-            </a>
+            </Link>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
