@@ -13,11 +13,22 @@ import PrivacyPolicy from './pages/PrivacyPolicy'
 import Wishlist from './pages/Wishlist'
 import NotFound from './pages/NotFound'
 
+const PAGE_TITLES = {
+  '/':               'VanaVas — Uttarakhand Homestays',
+  '/explore':        'Explore Homestays | VanaVas',
+  '/about':          'About | VanaVas',
+  '/login':          'Sign In | VanaVas',
+  '/faqs':           'FAQs | VanaVas',
+  '/booking-policy': 'Booking Policy | VanaVas',
+  '/cancellations':  'Cancellations | VanaVas',
+  '/privacy-policy': 'Privacy Policy | VanaVas',
+  '/wishlist':       'Your Wishlist | VanaVas',
+}
 export default function App() {
   const { pathname } = useLocation()
-  
   useEffect(() => {
     window.scrollTo(0, 0)
+    document.title = PAGE_TITLES[pathname] || 'Page Not Found | VanaVas'
   }, [pathname])
 
   return (
@@ -34,7 +45,7 @@ export default function App() {
           <Route path="/cancellations"  element={<Cancellations />} />
           <Route path="/privacy-policy" element={<PrivacyPolicy />} />
           <Route path="/wishlist"       element={<Wishlist />} />
-         <Route path="*"                element={<NotFound />} />
+          <Route path="*"                element={<NotFound />} />
         </Routes>
       </main>
       <Footer />
