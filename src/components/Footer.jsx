@@ -13,11 +13,11 @@ const footerLinks = {
   { label: 'Contact us',    to: '/about#contact'  },
 ],
   Support: [
-    { label: 'FAQs',            to: '/' },
-    { label: 'Booking policy',  to: '/' },
-    { label: 'Cancellations',   to: '/' },
-    { label: 'Privacy policy',  to: '/' },
-  ],
+  { label: 'FAQs',            to: '/faqs' },
+  { label: 'Booking policy',  to: '/booking-policy' },
+  { label: 'Cancellations',   to: '/cancellations' },
+  { label: 'Privacy policy',  to: '/privacy-policy' },
+],
 }
 
 const socials = [
