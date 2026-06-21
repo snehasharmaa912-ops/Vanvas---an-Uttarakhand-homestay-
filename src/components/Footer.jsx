@@ -54,8 +54,6 @@ const socials = [
 export default function Footer() {
   return (
     <footer className="bg-[#1a4a31] text-white mt-auto">
-
-      {/* CTA band */}
       <div className="border-b border-white/10">
         <div className="section-pad py-10 flex flex-col sm:flex-row items-center justify-between gap-4">
           <div>
@@ -68,60 +66,63 @@ export default function Footer() {
         </div>
       </div>
 
-      {/* Main footer */}
       <div className="section-pad py-12">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10">
-
-          {/* Brand */}
           <div>
             <div className="flex items-center gap-2 mb-4">
               <span className="w-8 h-8 rounded-full bg-white/15 flex items-center justify-center text-white font-bold text-sm">V</span>
               <span className="font-semibold text-lg">VanaVas</span>
             </div>
             <p className="text-white/50 text-sm leading-relaxed mb-5">
-              Connecting travelers with real rural Uttarakhand — one homestay at a time.
+              Connecting travelers with real rural Uttarakhand, one homestay at a time.
             </p>
             <div className="flex gap-3">
-              {socials.map(({ label, href, icon }) => (
-                
-                  key={label}
-                  href={href}
-                  aria-label={label}
-                  className="w-8 h-8 bg-white/10 hover:bg-white/20 rounded-full flex items-center justify-center text-white/70 hover:text-white transition-all duration-150"
-                >
-                  {icon}
-                </a>
-              ))}
+              {socials.map(function (social) {
+                return (
+                  
+                    key={social.label}
+                    href={social.href}
+                    aria-label={social.label}
+                    className="w-8 h-8 bg-white/10 hover:bg-white/20 rounded-full flex items-center justify-center text-white/70 hover:text-white transition-all duration-150"
+                  >
+                    {social.icon}
+                  </a>
+                )
+              })}
             </div>
           </div>
 
-          {/* Link columns */}
-          {Object.entries(footerLinks).map(([heading, links]) => (
-            <div key={heading}>
-              <h4 className="text-xs font-semibold text-white/40 uppercase tracking-widest mb-4">{heading}</h4>
-              <ul className="space-y-2.5">
-                {links.map(({ label, to }) => (
-                  <li key={label}>
-                    <Link
-                      to={to}
-                      className="text-sm text-white/60 hover:text-white transition-colors duration-150"
-                    >
-                      {label}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ))}
+          {Object.entries(footerLinks).map(function (entry) {
+            const heading = entry[0]
+            const links = entry[1]
+            return (
+              <div key={heading}>
+                <h4 className="text-xs font-semibold text-white/40 uppercase tracking-widest mb-4">{heading}</h4>
+                <ul className="space-y-2.5">
+                  {links.map(function (link) {
+                    return (
+                      <li key={link.label}>
+                        <Link
+                          to={link.to}
+                          className="text-sm text-white/60 hover:text-white transition-colors duration-150"
+                        >
+                          {link.label}
+                        </Link>
+                      </li>
+                    )
+                  })}
+                </ul>
+              </div>
+            )
+          })}
         </div>
       </div>
 
-      {/* Bottom bar */}
       <div className="border-t border-white/10">
         <div className="section-pad py-4 flex flex-col sm:flex-row justify-between items-center gap-2">
-          <p className="text-white/40 text-xs">© 2026 VanaVas. Built with ♥ in Dehradun, Uttarakhand.</p>
+          <p className="text-white/40 text-xs">© 2026 VanaVas. Built with love in Dehradun, Uttarakhand.</p>
         </div>
       </div>
     </footer>
   )
-          }
+     }
