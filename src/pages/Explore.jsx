@@ -2,17 +2,8 @@ import { useState, useEffect } from 'react'
 import { useSearchParams } from 'react-router-dom'
 import HomestayCard from '../components/HomestayCard'
 import { Loader } from '../components/ui'
+import { ALL_STAYS } from '../data/stays'
 
-const ALL_STAYS = [
-  { id: 1, title: 'Himalayan Pine Cottage',      location: 'Chopta, Rudraprayag',     price: 1400, rating: 4.9, reviews: 38, tags: ['Forest view', 'Trekking'],      host: 'Ramesh Ji',   eco: true,  image: 'https://picsum.photos/seed/chopta/400/300' },
-  { id: 2, title: 'Valley View Family Stay',      location: 'Munsiyari, Pithoragarh',  price: 1100, rating: 4.7, reviews: 21, tags: ['Mountain view', 'Farm meals'],  host: 'Sunita Devi', eco: true,  image: 'https://picsum.photos/seed/munsiyari/400/300' },
-  { id: 3, title: 'Riverside Bamboo Cottage',     location: 'Lansdowne, Pauri',        price: 950,  rating: 4.6, reviews: 15, tags: ['Riverside', 'Bird watching'],   host: 'Mohan Das',   eco: false, image: 'https://picsum.photos/seed/lansdowne/400/300' },
-  { id: 4, title: 'Deodar Forest Homestay',       location: 'Chakrata, Dehradun',      price: 1250, rating: 4.8, reviews: 29, tags: ['Forest', 'Waterfall'],          host: 'Geeta Ji',    eco: true,  image: 'https://picsum.photos/seed/chakrata/400/300' },
-  { id: 5, title: 'Old Tehri Heritage Bungalow',  location: 'Tehri, Uttarakhand',      price: 1600, rating: 5.0, reviews: 12, tags: ['Heritage', 'Lake view'],        host: 'Arjun Singh', eco: false, image: 'https://picsum.photos/seed/tehri/400/300' },
-  { id: 6, title: 'Kumaoni Village Farmstay',     location: 'Binsar, Almora',          price: 800,  rating: 4.5, reviews: 44, tags: ['Farm stay', 'Village walk'],    host: 'Rekha Ji',    eco: true,  image: 'https://picsum.photos/seed/almora/400/300' },
-  { id: 7, title: 'Auli Ski Chalet',              location: 'Auli, Chamoli',           price: 2200, rating: 4.9, reviews: 18, tags: ['Snow view', 'Skiing nearby'],   host: 'Deepak Ji',   eco: false, image: 'https://picsum.photos/seed/auli/400/300' },
-  { id: 8, title: 'Jim Corbett Edge Cottage',     location: 'Ramnagar, Nainital',      price: 1350, rating: 4.6, reviews: 31, tags: ['Jungle safari', 'Wildlife'],    host: 'Priya Devi',  eco: true,  image: 'https://picsum.photos/seed/corbett/400/300' },
-]
 const FILTERS = ['All', 'Eco-certified', 'Under ₹1000', 'Mountain view', 'Forest', 'Farm stay']
 export default function Explore() {
   const [searchParams] = useSearchParams()
@@ -25,6 +16,7 @@ export default function Explore() {
     const timer = setTimeout(() => setLoading(false), 500)
     return () => clearTimeout(timer)
   }, [active, sort, searchQuery])
+
   const filtered = ALL_STAYS
     .filter(s => {
       if (searchQuery) {
@@ -39,6 +31,7 @@ export default function Explore() {
       return s.tags.some(t => t.toLowerCase().includes(active.toLowerCase()))
     })
     .sort((a, b) => sort === 'price' ? a.price - b.price : b.rating - a.rating)
+
   return (
     <div className="py-12 bg-[#fdf8f2] dark:bg-[#0a1f14] min-h-screen">
       <div className="section-pad">
@@ -99,5 +92,5 @@ export default function Explore() {
         )}
       </div>
     </div>
-    )
+  )
 }
