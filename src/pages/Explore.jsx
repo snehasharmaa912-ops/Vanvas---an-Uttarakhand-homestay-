@@ -3,9 +3,9 @@ import { useSearchParams } from 'react-router-dom'
 import HomestayCard from '../components/HomestayCard'
 import { Loader } from '../components/ui'
 import { ALL_STAYS } from '../data/stays'
-
+ 
 const FILTERS = ['All', 'Eco-certified', 'Under ₹1000', 'Mountain view', 'Forest', 'Farm stay']
-
+ 
 export default function Explore() {
   const [searchParams] = useSearchParams()
   const searchQuery = searchParams.get('q') || ''
@@ -13,19 +13,19 @@ export default function Explore() {
   const [active, setActive] = useState(filterParam && FILTERS.includes(filterParam) ? filterParam : 'All')
   const [sort, setSort] = useState('rating')
   const [loading, setLoading] = useState(false)
-
+ 
   useEffect(() => {
     if (filterParam && FILTERS.includes(filterParam)) {
       setActive(filterParam)
     }
   }, [filterParam])
-
+ 
   useEffect(() => {
     setLoading(true)
     const timer = setTimeout(() => setLoading(false), 500)
     return () => clearTimeout(timer)
   }, [active, sort, searchQuery])
-
+ 
   const filtered = ALL_STAYS
     .filter(s => {
       if (searchQuery) {
@@ -40,7 +40,7 @@ export default function Explore() {
       return s.tags.some(t => t.toLowerCase().includes(active.toLowerCase()))
     })
     .sort((a, b) => sort === 'price' ? a.price - b.price : b.rating - a.rating)
-
+ 
   return (
     <div className="py-12 bg-[#fdf8f2] dark:bg-[#0a1f14] min-h-screen">
       <div className="section-pad">
@@ -51,7 +51,7 @@ export default function Explore() {
             {searchQuery && <span> for "<span className="font-medium text-[#2d7a4f]">{searchQuery}</span>"</span>}
           </p>
         </div>
-
+ 
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-8">
           <div className="flex flex-wrap gap-2">
             {FILTERS.map(f => (
@@ -76,7 +76,7 @@ export default function Explore() {
             <option value="price">Sort: Price low to high</option>
           </select>
         </div>
-
+ 
         {loading ? (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
             {[...Array(4)].map((_, i) => (
