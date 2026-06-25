@@ -27,21 +27,43 @@ Travelers get a curated, verified, and genuinely local experience — searchable
 
 ---
 
-## 🚀 Getting Started
+## 🚀 Getting Started (Frontend)
 
 ```bash
-# Clone the repo
+
 git clone https://github.com/snehasharmaa912-ops/anavas.git
 cd vanavas
-
-# Install dependencies
 npm install
-
-# Start dev server
 npm run dev
 ```
 
 Open [http://localhost:5173](http://localhost:5173)
+
+---
+
+## 🖥️ How to Run the Backend Locally
+
+The backend is a separate Express server located in the `/backend` folder.
+
+```bash
+
+cd backend
+npm install
+npm run dev
+```
+
+The API will be running at [http://localhost:5000](http://localhost:5000)
+
+### Available Endpoints
+
+| Method | Endpoint                | Description                  |
+|--------|--------------------------|-------------------------------|
+| GET    | `/api/stays`             | List all homestays            |
+| GET    | `/api/stays/search?q=`   | Search homestays by keyword   |
+| GET    | `/api/stays/:id`         | Get a single homestay by ID   |
+| POST   | `/api/stays`             | Create a new homestay listing |
+| PUT    | `/api/stays/:id`         | Update an existing homestay   |
+| DELETE | `/api/stays/:id`         | Delete a homestay             |
 
 ---
 
