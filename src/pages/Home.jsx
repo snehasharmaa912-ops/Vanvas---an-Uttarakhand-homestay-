@@ -4,7 +4,7 @@ import Hero from '../components/Hero'
 import HomestayCard from '../components/HomestayCard'
 import { Loader, Toast } from '../components/ui'
 
-const API_URL = 'https://vanavas-an-uttarakhand-homestay.onrender.com/api/stays'
+const API_URL = 'https://vanvas-an-uttarakhand-homestay.onrender.com/api/stays'
 
 const WHY = [
   { icon: '🏡', title: 'Direct from host',   desc: 'No middlemen. Book directly and support local families.' },
