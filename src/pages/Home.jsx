@@ -86,7 +86,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* AI Trip Planner teaser */}
       <section className="py-16 bg-[#1a4a31] text-white">
         <div className="section-pad text-center">
           <span className="inline-block bg-white/10 text-white/80 text-xs font-semibold px-4 py-1.5 rounded-full mb-4 uppercase tracking-widest">
