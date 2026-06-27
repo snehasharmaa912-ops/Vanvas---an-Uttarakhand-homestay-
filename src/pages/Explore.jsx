@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react'
 import { useSearchParams } from 'react-router-dom'
 import HomestayCard from '../components/HomestayCard'
 import { Loader, Toast } from '../components/ui'
-
 const API_URL = 'https://vanvas-an-uttarakhand-homestay.onrender.com/api/stays'
 
 const FILTERS = ['All', 'Eco-certified', 'Under ₹1000', 'Mountain view', 'Forest', 'Farm stay']
