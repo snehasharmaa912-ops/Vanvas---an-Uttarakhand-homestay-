@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom'
 import Hero from '../components/Hero'
 import HomestayCard from '../components/HomestayCard'
 import { Loader, Toast } from '../components/ui'
-
 const API_URL = 'https://vanvas-an-uttarakhand-homestay.onrender.com/api/stays'
 
 const WHY = [
