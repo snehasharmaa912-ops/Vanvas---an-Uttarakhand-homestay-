@@ -1,16 +1,39 @@
+import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import Hero from '../components/Hero'
 import HomestayCard from '../components/HomestayCard'
-import { ALL_STAYS } from '../data/stays'
+import { Loader, Toast } from '../components/ui'
 
-const FEATURED_STAYS = ALL_STAYS.slice(0, 6)
+const API_URL = 'https://vanavas-an-uttarakhand-homestay.onrender.com/api/stays'
+
 const WHY = [
   { icon: '🏡', title: 'Direct from host',   desc: 'No middlemen. Book directly and support local families.' },
   { icon: '✅', title: 'Verified stays',      desc: 'Every listing is personally reviewed for quality and safety.' },
   { icon: '🌿', title: 'Eco-certified',       desc: 'Stays rated on sustainability — waste, energy, local sourcing.' },
   { icon: '🗣️', title: 'Local experiences', desc: 'Trek, cook, farm — genuine Uttarakhand culture, not touristy.' },
 ]
+
 export default function Home() {
+  const [featuredStays, setFeaturedStays] = useState([])
+  const [loading, setLoading] = useState(true)
+  const [toast, setToast] = useState({ visible: false, message: '', type: 'error' })
+  useEffect(() => {
+    fetch(API_URL)
+      .then(res => {
+        if (!res.ok) throw new Error('Failed to fetch stays')
+        return res.json()
+      })
+      .then(data => {
+        setFeaturedStays(data.slice(0, 6))
+        setLoading(false)
+      })
+      .catch(err => {
+        console.error(err)
+        setLoading(false)
+        setToast({ visible: true, message: 'Could not load featured stays. Please try again.', type: 'error' })
+      })
+  }, [])
+
   return (
     <>
       <Hero />
@@ -28,11 +51,19 @@ export default function Home() {
             </Link>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {FEATURED_STAYS.map(stay => (
-              <HomestayCard key={stay.id} stay={stay} />
-            ))}
-          </div>
+          {loading ? (
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+              {[...Array(6)].map((_, i) => (
+                <Loader key={i} type="skeleton" />
+              ))}
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+              {featuredStays.map(stay => (
+                <HomestayCard key={stay.id} stay={stay} />
+              ))}
+            </div>
+          )}
         </div>
       </section>
 
@@ -75,6 +106,13 @@ export default function Home() {
           </button>
         </div>
       </section>
+
+      <Toast
+        message={toast.message}
+        type={toast.type}
+        isVisible={toast.visible}
+        onClose={() => setToast(t => ({ ...t, visible: false }))}
+      />
     </>
   )
 }
