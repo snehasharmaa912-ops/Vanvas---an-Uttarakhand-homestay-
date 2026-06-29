@@ -87,6 +87,19 @@ app.delete('/api/stays/:id', async (req, res) => {
 app.get('/', (req, res) => {
   res.status(200).json({ message: 'VanaVas API is running' })
 })
+
+
+app.get('/api/seed', async (req, res) => {
+  try {
+    const staysData = (await import('./data/stays.js')).default
+    await Stay.deleteMany({})
+    const staysWithoutId = staysData.map(({ id, ...rest }) => rest)
+    await Stay.insertMany(staysWithoutId)
+    res.status(200).json({ message: `Seeded ${staysWithoutId.length} stays successfully` })
+  } catch (err) {
+    res.status(500).json({ error: 'Seeding failed', details: err.message })
+  }
+})
 app.use((req, res) => {
   res.status(404).json({ error: 'Route not found' })
 })
