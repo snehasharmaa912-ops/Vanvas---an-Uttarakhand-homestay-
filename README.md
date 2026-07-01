@@ -67,6 +67,32 @@ The API will be running at [http://localhost:5000](http://localhost:5000)
 
 ---
 
+---
+
+## 🗄️ Database
+
+VanaVas uses **MongoDB Atlas** (cloud-hosted, free M0 tier) as its database, chosen because the homestay data is naturally document-shaped — flexible fields like `tags` (an array) and optional properties fit cleanly into a NoSQL document model without needing rigid relational tables. Mongoose is used as the ODM to define schemas and interact with the database from Express.
+
+### Schema Diagram
+
+
+![VanaVas Database Schema](./W5_SchemaDiagram_%5BTBI-26100445%5D.png)
+
+
+The platform currently has one core entity, `Stay`, representing a single homestay listing with fields for title, location, price, rating, tags, host name, eco-certification status, and an image URL.
+
+### Set up the database
+
+1. Create a free account at [mongodb.com/cloud/atlas](https://www.mongodb.com/cloud/atlas)
+2. Create a new project and an M0 (free tier) cluster
+3. Under **Database Access**, create a database user with a username and password
+4. Under **Network Access**, add `0.0.0.0/0` to allow connections from anywhere
+5. Click **Connect → Drivers → Node.js** to get your connection string
+6. Add it to your backend environment variables as `MONGO_URI`:
+ MONGO_URI=mongodb+srv://:@/vanavas?appName=VanaVas
+7. The backend connects automatically via Mongoose on startup
+   
+
 ## ✨ AI Features
 
 1. **AI Trip Planner** — Traveler describes their ideal stay and AI recommends top 3 homestays with a 3-day itinerary
