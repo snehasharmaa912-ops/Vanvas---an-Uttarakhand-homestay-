@@ -1,4 +1,5 @@
 import Admin from './pages/Admin'
+import AdminLogin from './pages/AdminLogin'
 import { Routes, Route, useLocation } from 'react-router-dom'
 import { useEffect } from 'react'
 import Navbar from './components/Navbar'
@@ -24,6 +25,8 @@ const PAGE_TITLES = {
   '/cancellations':  'Cancellations | VanaVas',
   '/privacy-policy': 'Privacy Policy | VanaVas',
   '/wishlist':       'Your Wishlist | VanaVas',
+  '/admin':       'Admin Panel | VanaVas',
+  '/admin-login': 'Admin Login | VanaVas',
 }
 export default function App() {
   const { pathname } = useLocation()
@@ -46,7 +49,8 @@ export default function App() {
           <Route path="/cancellations"  element={<Cancellations />} />
           <Route path="/privacy-policy" element={<PrivacyPolicy />} />
           <Route path="/wishlist"       element={<Wishlist />} />
-          <Route path="/admin" element={<Admin />} />
+          <Route path="/admin"       element={<Admin />} />
+          <Route path="/admin-login" element={<AdminLogin />} />
           <Route path="*"                element={<NotFound />} />
         </Routes>
       </main>
