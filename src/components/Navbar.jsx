@@ -1,6 +1,7 @@
 import { useTheme } from '../context/ThemeContext'
+import { useAuth } from '../context/AuthContext'
 import { useState, useEffect } from 'react'
-import { Link, NavLink, useLocation } from 'react-router-dom'
+import { Link, NavLink, useLocation, useNavigate } from 'react-router-dom'
 
 function VanaVasLogo() {
   return (
@@ -37,7 +38,9 @@ export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
   const { dark, setDark } = useTheme()
+  const { user, logout } = useAuth()
   const { pathname } = useLocation()
+  const navigate = useNavigate()
 
   useEffect(() => setMenuOpen(false), [pathname])
 
@@ -46,6 +49,11 @@ export default function Navbar() {
     window.addEventListener('scroll', onScroll)
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
+
+  const handleLogout = () => {
+    logout()
+    navigate('/')
+  }
 
   return (
     <header
@@ -97,12 +105,20 @@ export default function Navbar() {
               </svg>
             </Link>
 
-            <Link to="/login" className="text-sm font-medium text-[#444] hover:text-[#2d7a4f] transition-colors">
-              Sign in
-            </Link>
-            <Link to="/login" className="btn-primary text-sm py-2 px-5">
-              List your stay
-            </Link>
+            {user?.role === 'admin' && (
+              <Link to="/admin" className="text-sm font-medium text-[#444] hover:text-[#2d7a4f] transition-colors">
+                Admin panel
+              </Link>
+            )}
+            <span className="text-xs text-[#999] hidden lg:block max-w-[140px] truncate">
+              {user?.name}
+            </span>
+            <button
+              onClick={handleLogout}
+              className="text-sm font-medium text-[#444] hover:text-red-500 transition-colors"
+            >
+              Log out
+            </button>
           </div>
           
           <button
@@ -142,8 +158,15 @@ export default function Navbar() {
               Wishlist
             </NavLink>
             <div className="pt-2 border-t border-[#e8dfc8] flex flex-col gap-2">
-              <Link to="/login" className="px-4 py-2.5 text-sm font-medium text-[#444]">Sign in</Link>
-              <Link to="/login" className="btn-primary text-sm justify-center">List your stay</Link>
+              {user?.role === 'admin' && (
+                <Link to="/admin" className="px-4 py-2.5 text-sm font-medium text-[#444]">Admin panel</Link>
+              )}
+              <button
+                onClick={handleLogout}
+                className="px-4 py-2.5 text-sm font-medium text-left text-red-500"
+              >
+                Log out
+              </button>
             </div>
           </div>
         )}
