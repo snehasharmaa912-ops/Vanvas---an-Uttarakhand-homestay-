@@ -27,11 +27,11 @@ function VanaVasLogo() {
     </Link>
   )
 }
-
 const links = [
   { to: '/',        label: 'Home' },
   { to: '/explore', label: 'Explore' },
   { to: '/about',   label: 'About' },
+  { to: '/admin',   label: 'Admin' },
 ]
 
 export default function Navbar() {
