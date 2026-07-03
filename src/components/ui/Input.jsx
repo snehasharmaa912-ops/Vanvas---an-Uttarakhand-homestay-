@@ -3,6 +3,7 @@
  * @param {string} label - input label text
  * @param {string} placeholder - placeholder text
  * @param {string} type - text | email | password | number
+ * @param {string} name - input name attribute
  * @param {string} value - input value
  * @param {function} onChange - change handler
  * @param {string} error - error message to display
@@ -12,6 +13,7 @@ export default function Input({
   label,
   placeholder = '',
   type = 'text',
+  name,
   value,
   onChange,
   error,
@@ -25,6 +27,7 @@ export default function Input({
       )}
       <input
         type={type}
+        name={name}
         value={value}
         onChange={onChange}
         placeholder={placeholder}
