@@ -20,17 +20,15 @@ export default function Admin() {
   const showToast = (message, type = 'success') => {
     setToast({ visible: true, message, type })
   }
-
   useEffect(() => {
-    if (!user) navigate('/admin-login')
+    if (!user || user.role !== 'admin') navigate('/')
   }, [user])
 
   useEffect(() => {
     fetchStays()
   }, [])
 
-  if (!user) return null
-
+  if (!user || user.role !== 'admin') return null
   const fetchStays = () => {
     setLoading(true)
     fetch(API_URL)
@@ -122,7 +120,7 @@ export default function Admin() {
           <div className="flex gap-3 items-center">
             <span className="text-xs text-[#888] dark:text-white/50 hidden sm:block">{user.email}</span>
             <button
-              onClick={() => { logout(); navigate('/admin-login') }}
+              onClick={() => { logout(); navigate('/') }}
               className="text-xs font-semibold text-red-500 border border-red-400 px-4 py-2 rounded-full hover:bg-red-500 hover:text-white transition-all"
             >
               Logout
