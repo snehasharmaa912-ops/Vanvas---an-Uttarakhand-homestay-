@@ -1,15 +1,17 @@
 import { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { Input, Button, Toast } from '../components/ui'
-
+import { useAuth } from '../context/AuthContext'
 export default function Login() {
-  const [tab,      setTab]      = useState('traveler') // 'traveler' | 'host'
-  const [isSignup, setIsSignup] = useState(false)
-  const [form,     setForm]     = useState({ name: '', email: '', password: '' })
-  const [errors,   setErrors]   = useState({})
-  const [show,     setShow]     = useState(false)
-  const [toast,    setToast]    = useState({ visible: false, message: '', type: 'success' })
-
+  const { login, register } = useAuth()
+  const navigate = useNavigate()
+  const [tab,       setTab]       = useState('traveler') // 'traveler' | 'host'
+  const [isSignup,  setIsSignup]  = useState(false)
+  const [form,      setForm]      = useState({ name: '', email: '', password: '' })
+  const [errors,    setErrors]    = useState({})
+  const [show,      setShow]      = useState(false)
+  const [submitting, setSubmitting] = useState(false)
+  const [toast,     setToast]     = useState({ visible: false, message: '', type: 'success' })
   const handleChange = e => {
     const { name, value } = e.target
     setForm(f => ({ ...f, [name]: value }))
@@ -24,22 +26,39 @@ export default function Login() {
     return newErrors
   }
 
-  const handleSubmit = e => {
+  const routeByRole = user => {
+    navigate(user.role === 'admin' ? '/admin' : '/')
+  }
+
+  const handleSubmit = async e => {
     e.preventDefault()
     const newErrors = validate()
     if (Object.keys(newErrors).length > 0) {
       setErrors(newErrors)
       return
     }
+
+    setSubmitting(true)
+    const result = isSignup
+      ? await register({ name: form.name, email: form.email, password: form.password, userType: tab })
+      : await login(form.email, form.password)
+    setSubmitting(false)
+
+    if (!result.success) {
+      setToast({ visible: true, message: result.error, type: 'error' })
+      return
+    }
+
     setToast({
       visible: true,
-      message: `${isSignup ? 'Account created' : 'Signed in'} as ${tab} — backend coming in Week 4!`,
+      message: `${isSignup ? 'Account created' : 'Signed in'}! Welcome${result.user.role === 'admin' ? ', admin' : ''}.`,
       type: 'success',
     })
+    routeByRole(result.user)
   }
 
   return (
-    <div className="min-h-[calc(100vh-64px)] bg-[#fdf8f2] dark:bg-[#0a1f14] flex items-center justify-center py-12 px-4">
+    <div className="min-h-screen bg-[#fdf8f2] dark:bg-[#0a1f14] flex items-center justify-center py-12 px-4">
       <div className="w-full max-w-md">
 
         {/* Card */}
@@ -123,8 +142,8 @@ export default function Login() {
                 </div>
               )}
 
-              <Button variant="primary" size="lg" type="submit" className="w-full">
-                {isSignup ? 'Create account' : 'Sign in'} →
+              <Button variant="primary" size="lg" type="submit" disabled={submitting} className="w-full">
+                {submitting ? 'Please wait...' : `${isSignup ? 'Create account' : 'Sign in'} →`}
               </Button>
             </form>
 
@@ -140,11 +159,6 @@ export default function Login() {
             </p>
           </div>
         </div>
-
-        {/* Back link */}
-        <p className="text-center text-xs text-[#aaa] mt-4">
-          <Link to="/" className="hover:text-[#555] transition-colors">← Back to VanaVas</Link>
-        </p>
       </div>
 
       <Toast
@@ -155,4 +169,4 @@ export default function Login() {
       />
     </div>
   )
-                }
+}
