@@ -3,6 +3,7 @@ import cors from 'cors'
 import dotenv from 'dotenv'
 import mongoose from 'mongoose'
 import Stay from './models/Stay.js'
+import authRoutes from './routes/auth.js'
 
 dotenv.config()
 const app = express()
@@ -12,6 +13,9 @@ app.use(express.json())
 mongoose.connect(process.env.MONGO_URI)
   .then(() => console.log('✅ Connected to MongoDB successfully'))
   .catch(err => console.error('❌ MongoDB connection error:', err.message))
+
+app.use('/api/auth', authRoutes)
+
 app.get('/api/stays', async (req, res) => {
   try {
     const { q } = req.query
