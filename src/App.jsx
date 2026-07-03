@@ -1,3 +1,4 @@
+import Admin from './pages/Admin'
 import { Routes, Route, useLocation } from 'react-router-dom'
 import { useEffect } from 'react'
 import Navbar from './components/Navbar'
@@ -45,6 +46,7 @@ export default function App() {
           <Route path="/cancellations"  element={<Cancellations />} />
           <Route path="/privacy-policy" element={<PrivacyPolicy />} />
           <Route path="/wishlist"       element={<Wishlist />} />
+          <Route path="/admin" element={<Admin />} />
           <Route path="*"                element={<NotFound />} />
         </Routes>
       </main>
