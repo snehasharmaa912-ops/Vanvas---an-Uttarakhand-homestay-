@@ -1,3 +1,5 @@
+import { useAuth } from '../context/AuthContext'
+import { useNavigate } from 'react-router-dom'
 import { useState, useEffect } from 'react'
 import { Toast } from '../components/ui'
 const API_URL = 'https://vanvas-an-uttarakhand-homestay.onrender.com/api/stays'
@@ -6,6 +8,13 @@ const EMPTY_FORM = {
   rating: '', reviews: '', eco: false, image: '', tags: ''
 }
 export default function Admin() {
+  const { user, logout } = useAuth()
+  const navigate = useNavigate()
+
+  useEffect(() => {
+    if (!user) navigate('/admin-login')
+  }, [user])
+  if (!user) return null
   const [stays, setStays] = useState([])
   const [loading, setLoading] = useState(true)
   const [form, setForm] = useState(EMPTY_FORM)
@@ -119,10 +128,20 @@ export default function Admin() {
         </div>
 
         {/* Create / Edit Form */}
-        {showForm && (
-          <div className="bg-white dark:bg-[#1a4a31] border border-[#e8dfc8] dark:border-[#2d7a4f]/30 rounded-2xl p-6 mb-10">
-            <h2 className="display-font text-xl font-bold text-[#1c1c1c] dark:text-white mb-6">
-              {editingId ? 'Edit Stay' : 'Add New Stay'}
+        <div className="flex gap-3 items-center">
+           <span className="text-xs text-[#888] dark:text-white/50 hidden sm:block">{user.email}</span>
+           <button
+            onClick={() => { logout(); navigate('/admin-login') }}
+            className="text-xs font-semibold text-red-500 border border-red-400 px-4 py-2 rounded-full hover:bg-red-500 hover:text-white transition-all"
+           >
+            Logout
+           </button>
+           {!showForm && (
+             <button onClick={() => setShowForm(true)} className="btn-primary text-sm py-2 px-5">
+                + Add new stay
+             </button>
+          )}
+       </div>
             </h2>
             <form onSubmit={handleSubmit} className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               {[
