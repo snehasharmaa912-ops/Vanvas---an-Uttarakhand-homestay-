@@ -1,3 +1,4 @@
+import { AuthProvider } from './context/AuthContext'
 import React, { useEffect, useState } from 'react'
 import ReactDOM from 'react-dom/client'
 import { BrowserRouter } from 'react-router-dom'
@@ -38,14 +39,15 @@ function Root() {
     return () => clearTimeout(timer)
   }, [])
   return (
-    <ThemeProvider>
-      {showSplash && <SplashScreen />}
-      <BrowserRouter>
-        <App />
-      </BrowserRouter>
-    </ThemeProvider>
-  )
-}
+    <AuthProvider>
+  <ThemeProvider>
+    {showSplash && <SplashScreen />}
+    <BrowserRouter>
+      <App />
+    </BrowserRouter>
+  </ThemeProvider>
+</AuthProvider>
+)}
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <Root />
