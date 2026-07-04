@@ -49,6 +49,37 @@ export function AuthProvider({ children }) {
     }
   }
 
+  const requestAdminOtp = async email => {
+    try {
+      const res = await fetch(`${API_URL}/admin/request-otp`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email }),
+      })
+      const data = await res.json()
+      if (!res.ok) return { success: false, error: data.error || 'Could not send code' }
+      return { success: true, message: data.message }
+    } catch {
+      return { success: false, error: 'Could not reach the server. Please try again.' }
+    }
+  }
+
+  const verifyAdminOtp = async (email, otp) => {
+    try {
+      const res = await fetch(`${API_URL}/admin/verify-otp`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, otp }),
+      })
+      const data = await res.json()
+      if (!res.ok) return { success: false, error: data.error || 'Verification failed' }
+      persist(data.user, data.token)
+      return { success: true, user: data.user }
+    } catch {
+      return { success: false, error: 'Could not reach the server. Please try again.' }
+    }
+  }
+
   const logout = () => {
     localStorage.removeItem('vanavas_user')
     localStorage.removeItem('vanavas_token')
@@ -57,7 +88,7 @@ export function AuthProvider({ children }) {
   }
 
   return (
-    <AuthContext.Provider value={{ user, token, register, login, logout }}>
+    <AuthContext.Provider value={{ user, token, register, login, requestAdminOtp, verifyAdminOtp, logout }}>
       {children}
     </AuthContext.Provider>
   )
