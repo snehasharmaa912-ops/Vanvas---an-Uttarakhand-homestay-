@@ -1,3 +1,4 @@
+import passport from '../config/passport.js'
 import { Router } from 'express'
 import bcrypt from 'bcryptjs'
 import jwt from 'jsonwebtoken'
@@ -174,4 +175,23 @@ router.post('/admin/verify-otp', authLimiter, validate(verifyOtpSchema), async (
   }
 })
 
+router.get('/google', (req, res, next) => {
+  const state = req.query.userType === 'host' ? 'host' : 'traveler'
+  passport.authenticate('google', {
+    scope: ['profile', 'email'],
+    session: false,
+    state,
+  })(req, res, next)
+})
+
+router.get('/google/callback', (req, res, next) => {
+  const frontendBase = (process.env.FRONTEND_URL || 'http://localhost:5173').split(',')[0].trim()
+  passport.authenticate('google', { session: false, failureRedirect: `${frontendBase}/login?error=oauth_failed` }, (err, user) => {
+    if (err || !user) {
+      return res.redirect(`${frontendBase}/login?error=oauth_failed`)
+    }
+    const token = signToken(user)
+    res.redirect(`${frontendBase}/oauth/callback?token=${token}`)
+  })(req, res, next)
+})
 export default router
