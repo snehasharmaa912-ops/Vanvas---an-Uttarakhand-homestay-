@@ -1,4 +1,5 @@
 import express from 'express'
+import passport from './config/passport.js'
 import cors from 'cors'
 import dotenv from 'dotenv'
 import mongoose from 'mongoose'
@@ -24,6 +25,7 @@ app.use(cors({
   credentials: true,
 }))
 app.use(express.json())
+app.use(passport.initialize())
 mongoose.connect(process.env.MONGO_URI)
   .then(() => console.log('✅ Connected to MongoDB successfully'))
   .catch(err => console.error('❌ MongoDB connection error:', err.message))
