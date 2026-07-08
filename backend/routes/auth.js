@@ -3,6 +3,8 @@ import bcrypt from 'bcryptjs'
 import jwt from 'jsonwebtoken'
 import User from '../models/User.js'
 import { requireAuth } from '../middleware/auth.js'
+import { authLimiter } from '../middleware/rateLimiter.js'
+import { validate, registerSchema, loginSchema, requestOtpSchema, verifyOtpSchema } from '../middleware/validate.js'
 
 const router = Router()
 
@@ -52,20 +54,14 @@ async function sendOtpEmail(email, otp) {
   }
 }
 
-router.post('/register', async (req, res) => {
+router.post('/register', authLimiter, validate(registerSchema), async (req, res) => {
   try {
     const { name, email, password, userType } = req.body
-    if (!name || !email || !password) {
-      return res.status(400).json({ error: 'Name, email and password are required' })
-    }
-    if (password.length < 6) {
-      return res.status(400).json({ error: 'Password must be at least 6 characters' })
-    }
     const normalizedEmail = email.toLowerCase().trim()
 
     const existing = await User.findOne({ email: normalizedEmail })
     if (existing) {
-      return res.status(409).json({ error: 'An account with this email already exists' })
+      return res.status(400).json({ error: 'An account with this email already exists' })
     }
 
     const hashed = await bcrypt.hash(password, 10)
@@ -85,12 +81,9 @@ router.post('/register', async (req, res) => {
   }
 })
 
-router.post('/login', async (req, res) => {
+router.post('/login', authLimiter, validate(loginSchema), async (req, res) => {
   try {
     const { email, password } = req.body
-    if (!email || !password) {
-      return res.status(400).json({ error: 'Email and password are required' })
-    }
     const normalizedEmail = email.toLowerCase().trim()
     const user = await User.findOne({ email: normalizedEmail })
     if (!user || !user.password) {
@@ -117,7 +110,7 @@ router.get('/me', requireAuth, async (req, res) => {
   }
 })
 
-router.post('/admin/request-otp', async (req, res) => {
+router.post('/admin/request-otp', authLimiter, validate(requestOtpSchema), async (req, res) => {
   try {
     const { email } = req.body
     const normalizedEmail = (email || '').toLowerCase().trim()
@@ -152,14 +145,10 @@ router.post('/admin/request-otp', async (req, res) => {
   }
 })
 
-router.post('/admin/verify-otp', async (req, res) => {
+router.post('/admin/verify-otp', authLimiter, validate(verifyOtpSchema), async (req, res) => {
   try {
     const { email, otp } = req.body
     const normalizedEmail = (email || '').toLowerCase().trim()
-
-    if (!normalizedEmail || !otp) {
-      return res.status(400).json({ error: 'Email and code are required' })
-    }
 
     const user = await User.findOne({ email: normalizedEmail, role: 'admin' })
     if (!user || !user.otpCodeHash || !user.otpExpires) {
@@ -186,4 +175,3 @@ router.post('/admin/verify-otp', async (req, res) => {
 })
 
 export default router
-
