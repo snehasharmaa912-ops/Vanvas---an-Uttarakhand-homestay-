@@ -1,4 +1,5 @@
 import Admin from './pages/Admin'
+import OAuthCallback from './pages/OAuthCallback'
 import { Routes, Route, useLocation } from 'react-router-dom'
 import { useEffect } from 'react'
 import Navbar from './components/Navbar'
@@ -55,6 +56,7 @@ export default function App() {
           <Route path="/cancellations"  element={<Cancellations />} />
           <Route path="/privacy-policy" element={<PrivacyPolicy />} />
           <Route path="/wishlist"       element={<Wishlist />} />
+          <Route path="/oauth/callback" element={<OAuthCallback />} />
           <Route path="/admin"          element={<Admin />} />
           <Route path="*"                element={<NotFound />} />
         </Routes>
