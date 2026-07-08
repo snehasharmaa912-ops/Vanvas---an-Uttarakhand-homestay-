@@ -1,0 +1,11 @@
+import rateLimit from 'express-rate-limit'
+export const authLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 5,
+  standardHeaders: true,
+  legacyHeaders: false,
+  message: { error: 'Too many attempts. Please try again in a few minutes.' },
+  handler: (req, res, next, options) => {
+    res.status(options.statusCode).json(options.message)
+  },
+})
