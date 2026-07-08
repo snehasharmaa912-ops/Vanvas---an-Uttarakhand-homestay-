@@ -49,6 +49,19 @@ export function AuthProvider({ children }) {
     }
   }
 
+  const loginWithToken = async authToken => {
+  try {
+    const res = await fetch(`${API_URL}/me`, {
+      headers: { Authorization: `Bearer ${authToken}` },
+    })
+    const data = await res.json()
+    if (!res.ok) return { success: false, error: data.error || 'Sign-in failed' }
+    persist(data.user, authToken)
+    return { success: true, user: data.user }
+  } catch {
+    return { success: false, error: 'Could not reach the server. Please try again.' }
+  }
+  }
   const requestAdminOtp = async email => {
     try {
       const res = await fetch(`${API_URL}/admin/request-otp`, {
@@ -88,7 +101,7 @@ export function AuthProvider({ children }) {
   }
 
   return (
-    <AuthContext.Provider value={{ user, token, register, login, requestAdminOtp, verifyAdminOtp, logout }}>
+    <AuthContext.Provider value={{ user, token, register, login, loginWithToken, requestAdminOtp, verifyAdminOtp, logout }}>
       {children}
     </AuthContext.Provider>
   )
