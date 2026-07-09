@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { motion, AnimatePresence } from 'framer-motion'
 import { Link } from 'react-router-dom'
 import { Modal, Button } from './ui'
 import { useWishlist } from '../hooks/useWishlist'
@@ -27,7 +28,14 @@ export default function HomestayCard({ stay }) {
 
   return (
     <>
-      <div className="card-hover bg-white rounded-2xl border border-[#e8dfc8] overflow-hidden group">
+      <motion.div
+        initial={{ opacity: 0, y: 24 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: '-40px' }}
+        whileHover={{ y: -6 }}
+        transition={{ duration: 0.4, ease: 'easeOut' }}
+        className="bg-white rounded-2xl border border-[#e8dfc8] overflow-hidden group"
+      >
 
         {/* Image area */}
         <div className="relative h-52 overflow-hidden">
@@ -52,19 +60,26 @@ export default function HomestayCard({ stay }) {
             </span>
           )}
 
-          {/* Wishlist button */}
-          <button
+          <motion.button
             onClick={toggle}
             aria-label="Add to wishlist"
-            className="absolute top-3 right-3 w-8 h-8 bg-white/90 hover:bg-white rounded-full flex items-center justify-center shadow-sm transition-all duration-150"
+            whileTap={{ scale: 0.85 }}
+            className="absolute top-3 right-3 w-8 h-8 bg-white/90 hover:bg-white rounded-full flex items-center justify-center shadow-sm transition-colors duration-150"
           >
-            <svg
-              className={`w-4 h-4 transition-colors ${isWishlisted ? 'fill-red-500 stroke-red-500' : 'fill-none stroke-[#666]'}`}
-              viewBox="0 0 24 24" strokeWidth={2}
-            >
-              <path strokeLinecap="round" strokeLinejoin="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
-            </svg>
-          </button>
+            <AnimatePresence mode="wait" initial={false}>
+              <motion.svg
+                key={isWishlisted ? 'filled' : 'empty'}
+                initial={{ scale: 0.6, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                exit={{ scale: 0.6, opacity: 0 }}
+                transition={{ duration: 0.18 }}
+                className={`w-4 h-4 ${isWishlisted ? 'fill-red-500 stroke-red-500' : 'fill-none stroke-[#666]'}`}
+                viewBox="0 0 24 24" strokeWidth={2}
+              >
+                <path strokeLinecap="round" strokeLinejoin="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+              </motion.svg>
+            </AnimatePresence>
+          </motion.button>
         </div>
 
         {/* Content */}
@@ -128,7 +143,7 @@ export default function HomestayCard({ stay }) {
           </div>
         </div>
       </div>
-
+    </motion.div>
       {/* Quick view modal */}
       <Modal isOpen={quickView} onClose={() => setQuickView(false)} title={title}>
         <div className="space-y-3">
