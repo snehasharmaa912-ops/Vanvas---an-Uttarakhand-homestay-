@@ -91,7 +91,6 @@ export default function Navbar() {
               )
             })}
           </div>
-          
           {/* Desktop CTA */}
           <div className="hidden md:flex items-center gap-3">
             {/* Dark mode toggle */}
@@ -129,7 +128,7 @@ export default function Navbar() {
               Log out
             </button>
           </div>
-          
+
           <button
             onClick={() => setMenuOpen(o => !o)}
             aria-label="Toggle menu"
@@ -181,4 +180,5 @@ export default function Navbar() {
         )}
       </nav>
     </header>
-  )}
+  )
+}
