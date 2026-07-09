@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { motion } from 'framer-motion'
 import { Input, Button, Toast } from '../components/ui'
 import { useAuth } from '../context/AuthContext'
 const API_BASE = 'https://vanvas-an-uttarakhand-homestay.onrender.com/api/auth'
@@ -16,6 +17,7 @@ export default function Login() {
   const [adminEmail, setAdminEmail] = useState('')
   const [otp, setOtp] = useState('')
   const [otpSent, setOtpSent] = useState(false)
+  const [shakeKey, setShakeKey] = useState(0)
 
   const handleChange = e => {
     const { name, value } = e.target
@@ -47,6 +49,7 @@ export default function Login() {
     const newErrors = validate()
     if (Object.keys(newErrors).length > 0) {
       setErrors(newErrors)
+      setShakeKey(k => k + 1)
       return
     }
 
@@ -58,6 +61,7 @@ export default function Login() {
 
     if (!result.success) {
       setToast({ visible: true, message: result.error, type: 'error' })
+      setShakeKey(k => k + 1)
       return
     }
 
@@ -69,6 +73,7 @@ export default function Login() {
     e.preventDefault()
     if (!adminEmail.includes('@')) {
       setErrors({ adminEmail: 'Please enter a valid email' })
+      setShakeKey(k => k + 1)
       return
     }
     setSubmitting(true)
@@ -77,6 +82,7 @@ export default function Login() {
 
     if (!result.success) {
       setToast({ visible: true, message: result.error, type: 'error' })
+      setShakeKey(k => k + 1)
       return
     }
     setOtpSent(true)
@@ -87,6 +93,7 @@ export default function Login() {
     e.preventDefault()
     if (otp.trim().length !== 6) {
       setErrors({ otp: 'Enter the 6-digit code' })
+      setShakeKey(k => k + 1)
       return
     }
     setSubmitting(true)
@@ -95,6 +102,7 @@ export default function Login() {
 
     if (!result.success) {
       setToast({ visible: true, message: result.error, type: 'error' })
+      setShakeKey(k => k + 1)
       return
     }
     setToast({ visible: true, message: 'Welcome, admin!', type: 'success' })
@@ -106,10 +114,15 @@ export default function Login() {
       <div className="w-full max-w-md">
 
         {/* Card */}
-        <div className="bg-white dark:bg-[#1a4a31] rounded-2xl border border-[#e8dfc8] dark:border-[#2d7a4f]/30 shadow-sm overflow-hidden">
+        <motion.div
+          key={shakeKey}
+          animate={shakeKey > 0 ? { x: [0, -8, 8, -6, 6, 0] } : {}}
+          transition={{ duration: 0.4 }}
+          className="bg-white dark:bg-[#1a4a31] rounded-2xl border border-[#e8dfc8] dark:border-[#2d7a4f]/30 shadow-sm overflow-hidden"
+        >
 
           {/* Tab switcher */}
-          <div className="flex border-b border-[#e8dfc8]">
+          <div className="flex border-b border-[#e8dfc8] relative">
             {[
               { key: 'traveler', label: 'Traveler Login', icon: '🧳' },
               { key: 'host',     label: 'Host Login',     icon: '🏡' },
@@ -118,12 +131,19 @@ export default function Login() {
               <button
                 key={key}
                 onClick={() => switchTab(key)}
-                className={`flex-1 py-4 text-xs sm:text-sm font-semibold transition-colors
+                className={`relative flex-1 py-4 text-xs sm:text-sm font-semibold transition-colors
                   ${tab === key
-                    ? 'text-[#2d7a4f] border-b-2 border-[#2d7a4f] -mb-px bg-[#f7fdf9]'
+                    ? 'text-[#2d7a4f] bg-[#f7fdf9]'
                     : 'text-[#999] hover:text-[#555]'}`}
               >
                 {icon} {label}
+                {tab === key && (
+                  <motion.span
+                    layoutId="loginTabIndicator"
+                    className="absolute left-0 right-0 bottom-0 h-0.5 bg-[#2d7a4f]"
+                    transition={{ type: 'spring', stiffness: 380, damping: 30 }}
+                  />
+                )}
               </button>
             ))}
           </div>
@@ -214,7 +234,7 @@ export default function Login() {
                   </svg>
                   Continue with Google
                 </a>
-                
+
                 <p className="text-center text-xs text-[#888] mt-5">
                   {isSignup ? 'Already have an account?' : "Don't have an account?"}{' '}
                   <button
@@ -277,7 +297,7 @@ export default function Login() {
               </>
             )}
           </div>
-        </div>
+        </motion.div>
       </div>
 
       <Toast
@@ -288,4 +308,4 @@ export default function Login() {
       />
     </div>
   )
-}
+  }
