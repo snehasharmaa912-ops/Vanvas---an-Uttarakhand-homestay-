@@ -1,6 +1,7 @@
 import { useTheme } from '../context/ThemeContext'
 import { useAuth } from '../context/AuthContext'
 import { useState, useEffect } from 'react'
+import { motion } from 'framer-motion'
 import { Link, NavLink, useLocation, useNavigate } from 'react-router-dom'
 
 function VanaVasLogo() {
@@ -66,23 +67,31 @@ export default function Navbar() {
           <VanaVasLogo />
 
           {/* Desktop links */}
-          <div className="hidden md:flex items-center gap-1">
-            {links.map(({ to, label }) => (
-              <NavLink
-                key={to}
-                to={to}
-                end={to === '/'}
-                className={({ isActive }) =>
-                  `px-4 py-2 rounded-full text-sm font-medium transition-all duration-150
-                  ${isActive
-                    ? 'bg-[#2d7a4f] text-white'
-                    : 'text-[#444] hover:bg-[#e8f5ee] hover:text-[#2d7a4f]'}`
-                }
-              >
-                {label}
-              </NavLink>
-            ))}
+          <div className="hidden md:flex items-center gap-1 relative">
+            {links.map(({ to, label }) => {
+              const isActive = to === '/' ? pathname === '/' : pathname.startsWith(to)
+              return (
+                <NavLink
+                  key={to}
+                  to={to}
+                  end={to === '/'}
+                  className="relative px-4 py-2 rounded-full text-sm font-medium"
+                >
+                  {isActive && (
+                    <motion.span
+                      layoutId="navPill"
+                      className="absolute inset-0 bg-[#2d7a4f] rounded-full"
+                      transition={{ type: 'spring', stiffness: 380, damping: 30 }}
+                    />
+                  )}
+                  <span className={`relative z-10 transition-colors duration-150 ${isActive ? 'text-white' : 'text-[#444] hover:text-[#2d7a4f]'}`}>
+                    {label}
+                  </span>
+                </NavLink>
+              )
+            })}
           </div>
+          
           {/* Desktop CTA */}
           <div className="hidden md:flex items-center gap-3">
             {/* Dark mode toggle */}
