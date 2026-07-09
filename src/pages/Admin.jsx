@@ -20,15 +20,11 @@ export default function Admin() {
   const showToast = (message, type = 'success') => {
     setToast({ visible: true, message, type })
   }
-  useEffect(() => {
-    if (!user || user.role !== 'admin') navigate('/')
-  }, [user])
-
+  
   useEffect(() => {
     fetchStays()
   }, [])
 
-  if (!user || user.role !== 'admin') return null
   const fetchStays = () => {
     setLoading(true)
     fetch(API_URL)
