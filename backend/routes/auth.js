@@ -15,7 +15,7 @@ const OTP_FROM_EMAIL = process.env.OTP_FROM_EMAIL || 'VanaVas <onboarding@resend
 const OTP_TTL_MINUTES = 10
 
 function signToken(user) {
-  return jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: '30d' })
+  return jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: '7d' })
 }
 
 function toPublicUser(user) {
