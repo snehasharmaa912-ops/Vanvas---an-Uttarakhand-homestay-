@@ -1,6 +1,6 @@
 import { useState } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
 import { Link } from 'react-router-dom'
+import { motion, AnimatePresence } from 'framer-motion'
 import { Modal, Button } from './ui'
 import { useWishlist } from '../hooks/useWishlist'
 
@@ -60,6 +60,7 @@ export default function HomestayCard({ stay }) {
             </span>
           )}
 
+          {/* Wishlist button */}
           <motion.button
             onClick={toggle}
             aria-label="Add to wishlist"
@@ -142,8 +143,8 @@ export default function HomestayCard({ stay }) {
             </Link>
           </div>
         </div>
-      </div>
-    </motion.div>
+      </motion.div>
+
       {/* Quick view modal */}
       <Modal isOpen={quickView} onClose={() => setQuickView(false)} title={title}>
         <div className="space-y-3">
@@ -172,4 +173,4 @@ export default function HomestayCard({ stay }) {
       </Modal>
     </>
   )
-              }
+ }
