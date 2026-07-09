@@ -1,6 +1,4 @@
 import Admin from './pages/Admin'
-import { AnimatePresence } from 'framer-motion'
-import PageTransition from './components/PageTransition'
 import OAuthCallback from './pages/OAuthCallback'
 import { Routes, Route, useLocation } from 'react-router-dom'
 import { useEffect } from 'react'
@@ -16,7 +14,7 @@ import Cancellations from './pages/Cancellations'
 import PrivacyPolicy from './pages/PrivacyPolicy'
 import Wishlist from './pages/Wishlist'
 import NotFound from './pages/NotFound'
-import { useAuth } from './context/AuthContext'
+import ProtectedRoute from './components/ProtectedRoute'
 
 const PAGE_TITLES = {
   '/':               'VanaVas — Uttarakhand Homestays',
@@ -33,44 +31,36 @@ const PAGE_TITLES = {
 
 export default function App() {
   const { pathname } = useLocation()
-  const { user } = useAuth()
 
   useEffect(() => {
     window.scrollTo(0, 0)
     document.title = PAGE_TITLES[pathname] || 'Page Not Found | VanaVas'
   }, [pathname])
 
-  // Whole app is gated: nobody sees anything until they sign up or sign in.
-  if (!user) {
-    return <Login />
-  }
-
   return (
     <div className="min-h-screen flex flex-col bg-[#fdf8f2] dark:bg-[#0a1f14] dark:text-white transition-colors duration-300">
       <Navbar />
-      <main className="flex-1">
-        <AnimatePresence mode="wait">
-          <Routes location={pathname} key={pathname}>
-            <Route path="/"               element={<PageTransition><Home /></PageTransition>} />
-            <Route path="/explore"        element={<PageTransition><Explore /></PageTransition>} />
-            <Route path="/about"          element={<PageTransition><About /></PageTransition>} />
-            <Route path="/login"          element={<PageTransition><Login /></PageTransition>} />
-            <Route path="/faqs"           element={<PageTransition><FAQs /></PageTransition>} />
-            <Route path="/booking-policy" element={<PageTransition><BookingPolicy /></PageTransition>} />
-            <Route path="/cancellations"  element={<PageTransition><Cancellations /></PageTransition>} />
-            <Route path="/privacy-policy" element={<PageTransition><PrivacyPolicy /></PageTransition>} />
-            <Route path="/oauth/callback" element={<PageTransition><OAuthCallback /></PageTransition>} />
-            <Route
-              path="/wishlist"
-              element={<ProtectedRoute><PageTransition><Wishlist /></PageTransition></ProtectedRoute>}
-            />
-            <Route
-              path="/admin"
-              element={<ProtectedRoute adminOnly><PageTransition><Admin /></PageTransition></ProtectedRoute>}
-            />
-            <Route path="*" element={<PageTransition><NotFound /></PageTransition>} />
-          </Routes>
-        </AnimatePresence>
+      <main className="flex-1 page-enter">
+        <Routes>
+          <Route path="/"               element={<Home />} />
+          <Route path="/explore"        element={<Explore />} />
+          <Route path="/about"          element={<About />} />
+          <Route path="/login"          element={<Login />} />
+          <Route path="/faqs"           element={<FAQs />} />
+          <Route path="/booking-policy" element={<BookingPolicy />} />
+          <Route path="/cancellations"  element={<Cancellations />} />
+          <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+          <Route path="/oauth/callback" element={<OAuthCallback />} />
+          <Route
+            path="/wishlist"
+            element={<ProtectedRoute><Wishlist /></ProtectedRoute>}
+          />
+          <Route
+            path="/admin"
+            element={<ProtectedRoute adminOnly><Admin /></ProtectedRoute>}
+          />
+          <Route path="*" element={<NotFound />} />
+        </Routes>
       </main>
       <Footer />
     </div>
