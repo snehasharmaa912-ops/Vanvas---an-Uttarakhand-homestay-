@@ -20,7 +20,7 @@ export default function Admin() {
   const showToast = (message, type = 'success') => {
     setToast({ visible: true, message, type })
   }
-  
+
   useEffect(() => {
     fetchStays()
   }, [])
@@ -231,4 +231,5 @@ export default function Admin() {
         onClose={() => setToast(t => ({ ...t, visible: false }))}
       />
     </div>
-  )}
+  )
+}
