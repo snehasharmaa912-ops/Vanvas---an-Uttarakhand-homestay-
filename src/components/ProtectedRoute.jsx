@@ -15,3 +15,4 @@ export default function ProtectedRoute({ children, adminOnly = false }) {
 
   return children
 }
+
