@@ -1,8 +1,7 @@
 import Admin from './pages/Admin'
-import { AnimatePresence } from 'framer-motion'
-import PageTransition from './components/PageTransition'
 import OAuthCallback from './pages/OAuthCallback'
 import { Routes, Route, useLocation } from 'react-router-dom'
+import { AnimatePresence } from 'framer-motion'
 import { useEffect } from 'react'
 import Navbar from './components/Navbar'
 import Footer from './components/Footer'
@@ -17,6 +16,7 @@ import PrivacyPolicy from './pages/PrivacyPolicy'
 import Wishlist from './pages/Wishlist'
 import NotFound from './pages/NotFound'
 import ProtectedRoute from './components/ProtectedRoute'
+import PageTransition from './components/PageTransition'
 
 const PAGE_TITLES = {
   '/':               'VanaVas — Uttarakhand Homestays',
@@ -42,7 +42,7 @@ export default function App() {
   return (
     <div className="min-h-screen flex flex-col bg-[#fdf8f2] dark:bg-[#0a1f14] dark:text-white transition-colors duration-300">
       <Navbar />
-      <<main className="flex-1">
+      <main className="flex-1">
         <AnimatePresence mode="wait">
           <Routes location={pathname} key={pathname}>
             <Route path="/"               element={<PageTransition><Home /></PageTransition>} />
