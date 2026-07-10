@@ -3,15 +3,17 @@ import { useNavigate } from 'react-router-dom'
 import { useState, useEffect } from 'react'
 import { Toast } from '../components/ui'
 const API_URL = 'https://vanvas-an-uttarakhand-homestay.onrender.com/api/stays'
+const HOSTS_URL = 'https://vanvas-an-uttarakhand-homestay.onrender.com/api/auth/hosts'
 const EMPTY_FORM = {
-  title: '', location: '', price: '', host: '',
+  title: '', location: '', price: '', host: '', hostId: '',
   rating: '', reviews: '', eco: false, image: '', tags: ''
 }
 export default function Admin() {
-  const { user, logout } = useAuth()
+  const { user, token, logout } = useAuth()
   const navigate = useNavigate()
 
   const [stays, setStays] = useState([])
+  const [hosts, setHosts] = useState([])
   const [loading, setLoading] = useState(true)
   const [form, setForm] = useState(EMPTY_FORM)
   const [editingId, setEditingId] = useState(null)
@@ -23,6 +25,7 @@ export default function Admin() {
 
   useEffect(() => {
     fetchStays()
+    fetchHosts()
   }, [])
 
   const fetchStays = () => {
@@ -33,9 +36,26 @@ export default function Admin() {
       .catch(() => { showToast('Failed to load stays', 'error'); setLoading(false) })
   }
 
+  const fetchHosts = () => {
+    fetch(HOSTS_URL, { headers: { Authorization: `Bearer ${token}` } })
+      .then(res => res.json())
+      .then(data => setHosts(Array.isArray(data) ? data : []))
+      .catch(() => showToast('Failed to load hosts list', 'error'))
+  }
+
   const handleChange = e => {
     const { name, value, type, checked } = e.target
     setForm(f => ({ ...f, [name]: type === 'checkbox' ? checked : value }))
+  }
+
+  const handleHostSelect = e => {
+    const selectedId = e.target.value
+    const selectedHost = hosts.find(h => h._id === selectedId)
+    setForm(f => ({
+      ...f,
+      hostId: selectedId,
+      host: selectedHost ? selectedHost.name : f.host,
+    }))
   }
 
   const handleSubmit = async e => {
@@ -46,6 +66,7 @@ export default function Admin() {
       rating: Number(form.rating) || 0,
       reviews: Number(form.reviews) || 0,
       tags: form.tags.split(',').map(t => t.trim()).filter(Boolean),
+      hostId: form.hostId || null,
     }
 
     const url = editingId ? `${API_URL}/${editingId}` : API_URL
@@ -54,7 +75,7 @@ export default function Admin() {
     try {
       const res = await fetch(url, {
         method,
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
         body: JSON.stringify(payload),
       })
       if (!res.ok) throw new Error('Request failed')
@@ -74,6 +95,7 @@ export default function Admin() {
       location: stay.location || '',
       price: stay.price || '',
       host: stay.host || '',
+      hostId: stay.hostId || '',
       rating: stay.rating || '',
       reviews: stay.reviews || '',
       eco: stay.eco || false,
@@ -88,7 +110,10 @@ export default function Admin() {
   const handleDelete = async id => {
     if (!window.confirm('Delete this stay?')) return
     try {
-      const res = await fetch(`${API_URL}/${id}`, { method: 'DELETE' })
+      const res = await fetch(`${API_URL}/${id}`, {
+        method: 'DELETE',
+        headers: { Authorization: `Bearer ${token}` },
+      })
       if (res.status !== 204) throw new Error('Delete failed')
       showToast('Stay deleted successfully')
       fetchStays()
@@ -140,7 +165,7 @@ export default function Admin() {
                 { name: 'title', label: 'Title', placeholder: 'Himalayan Pine Cottage' },
                 { name: 'location', label: 'Location', placeholder: 'Chopta, Rudraprayag' },
                 { name: 'price', label: 'Price per night (₹)', placeholder: '1400', type: 'number' },
-                { name: 'host', label: 'Host name', placeholder: 'Ramesh Ji' },
+                { name: 'host', label: 'Host display name', placeholder: 'Ramesh Ji' },
                 { name: 'rating', label: 'Rating', placeholder: '4.9', type: 'number' },
                 { name: 'reviews', label: 'Reviews count', placeholder: '38', type: 'number' },
                 { name: 'image', label: 'Image URL', placeholder: 'https://picsum.photos/seed/name/400/300' },
@@ -158,6 +183,29 @@ export default function Admin() {
                   />
                 </div>
               ))}
+
+              {/* Linked host account — required for booking requests to reach a host */}
+              <div>
+                <label className="block text-xs font-semibold text-[#555] dark:text-white/70 mb-1">
+                  Linked host account
+                </label>
+                <select
+                  name="hostId"
+                  value={form.hostId}
+                  onChange={handleHostSelect}
+                  className="w-full border border-[#e8dfc8] dark:border-[#2d7a4f]/30 rounded-xl px-4 py-2.5 text-sm bg-white dark:bg-[#0d2b1a] text-[#1c1c1c] dark:text-white outline-none focus:border-[#2d7a4f]"
+                >
+                  <option value="">— Not linked (bookings disabled) —</option>
+                  {hosts.map(h => (
+                    <option key={h._id} value={h._id}>{h.name} ({h.email})</option>
+                  ))}
+                </select>
+                {hosts.length === 0 && (
+                  <p className="text-[10px] text-[#a96f2b] mt-1">
+                    No host accounts registered yet — ask a host to sign up first.
+                  </p>
+                )}
+              </div>
 
               <div className="flex items-center gap-3 mt-2">
                 <input
@@ -202,6 +250,9 @@ export default function Admin() {
                     <p className="font-semibold text-[#1c1c1c] dark:text-white text-sm truncate">{stay.title}</p>
                     <p className="text-xs text-[#888] dark:text-white/50 truncate">{stay.location}</p>
                     <p className="text-xs text-[#2d7a4f] font-medium">₹{stay.price?.toLocaleString()}/night</p>
+                    {!stay.hostId && (
+                      <p className="text-[10px] text-[#a96f2b] font-medium mt-0.5">⚠ No host linked — bookings disabled</p>
+                    )}
                   </div>
                 </div>
                 <div className="flex gap-2 flex-shrink-0">
