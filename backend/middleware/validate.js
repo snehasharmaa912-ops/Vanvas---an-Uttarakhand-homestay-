@@ -21,6 +21,18 @@ export const verifyOtpSchema = z.object({
   otp: z.string().trim().length(6, 'Code must be 6 digits'),
 })
 
+export const bookingSchema = z.object({
+  stayId: z.string().trim().min(1, 'stayId is required'),
+  checkIn: z.string().trim().min(1, 'Check-in date is required'),
+  checkOut: z.string().trim().min(1, 'Check-out date is required'),
+  guests: z.number().int().min(1).max(20).optional(),
+  message: z.string().trim().max(500).optional(),
+})
+
+export const bookingStatusSchema = z.object({
+  status: z.enum(['confirmed', 'declined', 'cancelled']),
+})
+
 export function validate(schema) {
   return (req, res, next) => {
     const result = schema.safeParse(req.body)
