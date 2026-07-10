@@ -113,6 +113,16 @@ export default function Navbar() {
               </svg>
             </Link>
 
+            {user?.userType === 'host' && (
+              <Link to="/host-dashboard" className="text-sm font-medium text-[#444] hover:text-[#2d7a4f] transition-colors">
+                Host dashboard
+              </Link>
+            )}
+            {user && user.userType !== 'host' && user.role !== 'admin' && (
+              <Link to="/my-bookings" className="text-sm font-medium text-[#444] hover:text-[#2d7a4f] transition-colors">
+                My bookings
+              </Link>
+            )}
             {user?.role === 'admin' && (
               <Link to="/admin" className="text-sm font-medium text-[#444] hover:text-[#2d7a4f] transition-colors">
                 Admin panel
@@ -121,12 +131,14 @@ export default function Navbar() {
             <span className="text-xs text-[#999] hidden lg:block max-w-[140px] truncate">
               {user?.name}
             </span>
-            <button
-              onClick={handleLogout}
-              className="text-sm font-medium text-[#444] hover:text-red-500 transition-colors"
-            >
-              Log out
-            </button>
+            {user && (
+              <button
+                onClick={handleLogout}
+                className="text-sm font-medium text-[#444] hover:text-red-500 transition-colors"
+              >
+                Log out
+              </button>
+            )}
           </div>
 
           <button
@@ -165,16 +177,40 @@ export default function Navbar() {
             >
               Wishlist
             </NavLink>
+            {user?.userType === 'host' && (
+              <NavLink
+                to="/host-dashboard"
+                className={({ isActive }) =>
+                  `px-4 py-2.5 rounded-lg text-sm font-medium transition-colors
+                  ${isActive ? 'bg-[#2d7a4f] text-white' : 'text-[#444] hover:bg-[#e8f5ee]'}`
+                }
+              >
+                Host dashboard
+              </NavLink>
+            )}
+            {user && user.userType !== 'host' && user.role !== 'admin' && (
+              <NavLink
+                to="/my-bookings"
+                className={({ isActive }) =>
+                  `px-4 py-2.5 rounded-lg text-sm font-medium transition-colors
+                  ${isActive ? 'bg-[#2d7a4f] text-white' : 'text-[#444] hover:bg-[#e8f5ee]'}`
+                }
+              >
+                My bookings
+              </NavLink>
+            )}
             <div className="pt-2 border-t border-[#e8dfc8] flex flex-col gap-2">
               {user?.role === 'admin' && (
                 <Link to="/admin" className="px-4 py-2.5 text-sm font-medium text-[#444]">Admin panel</Link>
               )}
-              <button
-                onClick={handleLogout}
-                className="px-4 py-2.5 text-sm font-medium text-left text-red-500"
-              >
-                Log out
-              </button>
+              {user && (
+                <button
+                  onClick={handleLogout}
+                  className="px-4 py-2.5 text-sm font-medium text-left text-red-500"
+                >
+                  Log out
+                </button>
+              )}
             </div>
           </div>
         )}
