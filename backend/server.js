@@ -1,14 +1,18 @@
 import express from 'express'
+import { createServer } from 'http'
+import { Server } from 'socket.io'
 import passport from './config/passport.js'
 import cors from 'cors'
 import dotenv from 'dotenv'
 import mongoose from 'mongoose'
 import Stay from './models/Stay.js'
 import authRoutes from './routes/auth.js'
+import bookingRoutes from './routes/bookings.js'
 import { requireAuth } from './middleware/auth.js'
 
 dotenv.config()
 const app = express()
+const httpServer = createServer(app)
 const PORT = process.env.PORT || 5000
 const allowedOrigins = (process.env.FRONTEND_URL || 'http://localhost:5173')
   .split(',')
@@ -30,7 +34,30 @@ mongoose.connect(process.env.MONGO_URI)
   .then(() => console.log('✅ Connected to MongoDB successfully'))
   .catch(err => console.error('❌ MongoDB connection error:', err.message))
 
+// --- Socket.io setup ---
+const io = new Server(httpServer, {
+  cors: {
+    origin: allowedOrigins,
+    credentials: true,
+  },
+})
+
+io.on('connection', socket => {
+  socket.on('join:host', hostId => {
+    if (hostId) socket.join(`host:${hostId}`)
+  })
+  socket.on('join:guest', guestId => {
+    if (guestId) socket.join(`guest:${guestId}`)
+  })
+  socket.on('disconnect', () => {})
+})
+
+app.set('io', io)
+// --- end Socket.io setup ---
+
 app.use('/api/auth', authRoutes)
+app.use('/api/bookings', bookingRoutes)
+
 app.get('/api/stays', async (req, res) => {
   try {
     const { q } = req.query
@@ -114,6 +141,6 @@ app.use((err, req, res, next) => {
   console.error(err.stack)
   res.status(500).json({ error: 'Something went wrong on the server' })
 })
-app.listen(PORT, () => {
+httpServer.listen(PORT, () => {
   console.log(`VanaVas backend running on port ${PORT}`)
 })
