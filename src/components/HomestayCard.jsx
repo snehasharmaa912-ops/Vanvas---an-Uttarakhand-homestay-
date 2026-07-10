@@ -1,8 +1,10 @@
 import { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Modal, Button } from './ui'
 import { useWishlist } from '../hooks/useWishlist'
+import { useAuth } from '../context/AuthContext'
+import BookingModal from './BookingModal'
 
 export default function HomestayCard({ stay }) {
   const {
@@ -18,13 +20,25 @@ export default function HomestayCard({ stay }) {
     eco      = true,
   } = stay || {}
   const { isWishlisted, toggle } = useWishlist(id)
+  const { user } = useAuth()
+  const navigate = useNavigate()
   const [quickView, setQuickView] = useState(false)
+  const [bookingOpen, setBookingOpen] = useState(false)
   const gradients = [
     'from-[#2d7a4f]/30 to-[#a96f2b]/20',
     'from-[#a96f2b]/30 to-[#2d7a4f]/20',
     'from-[#1a4a31]/30 to-[#c8924a]/20',
   ]
   const grad = gradients[id % gradients.length]
+
+  const handleBookClick = () => {
+    if (!user) {
+      navigate('/login')
+      return
+    }
+    setQuickView(false)
+    setBookingOpen(true)
+  }
 
   return (
     <>
@@ -135,12 +149,12 @@ export default function HomestayCard({ stay }) {
               </div>
               <span className="text-xs text-[#666]">Hosted by {host}</span>
             </div>
-            <Link
-              to="/explore"
+            <button
+              onClick={handleBookClick}
               className="text-xs font-semibold text-[#2d7a4f] hover:underline"
             >
               Book now →
-            </Link>
+            </button>
           </div>
         </div>
       </motion.div>
@@ -164,13 +178,14 @@ export default function HomestayCard({ stay }) {
             ))}
           </div>
           <p className="text-xs text-[#888]">Hosted by {host}</p>
-          <Link to="/explore">
-            <Button variant="primary" size="md" className="w-full">
-              View full details →
-            </Button>
-          </Link>
+          <Button variant="primary" size="md" className="w-full" onClick={handleBookClick}>
+            Request to book →
+          </Button>
         </div>
       </Modal>
+
+      {/* Booking request modal */}
+      <BookingModal stay={stay} isOpen={bookingOpen} onClose={() => setBookingOpen(false)} />
     </>
   )
- }
+}
