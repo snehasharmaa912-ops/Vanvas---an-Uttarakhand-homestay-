@@ -36,19 +36,22 @@ const PAGE_TITLES = {
 }
 
 export default function App() {
-  const { pathname } = useLocation()
+  const location = useLocation()
+  const { pathname, hash } = location
 
   useEffect(() => {
-    window.scrollTo(0, 0)
+    // Only force-scroll to top on an actual page change — not on
+    // same-page hash/query changes like /about#contact or /explore?filter=...
+    if (!hash) window.scrollTo(0, 0)
     document.title = PAGE_TITLES[pathname] || 'Page Not Found | VanaVas'
-  }, [pathname])
+  }, [pathname, hash])
 
   return (
     <div className="min-h-screen flex flex-col bg-[#fdf8f2] dark:bg-[#0a1f14] dark:text-white transition-colors duration-300">
       <Navbar />
       <main className="flex-1">
         <AnimatePresence mode="wait">
-          <Routes location={pathname} key={pathname}>
+          <Routes location={location} key={pathname}>
             <Route path="/"               element={<PageTransition><Home /></PageTransition>} />
             <Route path="/explore"        element={<PageTransition><Explore /></PageTransition>} />
             <Route path="/about"          element={<PageTransition><About /></PageTransition>} />
