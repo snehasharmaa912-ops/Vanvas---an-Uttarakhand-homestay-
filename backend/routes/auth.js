@@ -194,4 +194,14 @@ router.get('/google/callback', (req, res, next) => {
     res.redirect(`${frontendBase}/oauth/callback?token=${token}`)
   })(req, res, next)
 })
+
+router.get('/hosts', requireAuth, async (req, res) => {
+  try {
+    const hosts = await User.find({ userType: 'host' }).select('_id name email')
+    res.status(200).json(hosts)
+  } catch {
+    res.status(500).json({ error: 'Failed to fetch hosts' })
+  }
+})
+
 export default router
