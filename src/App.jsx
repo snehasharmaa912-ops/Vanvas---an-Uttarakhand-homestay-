@@ -17,6 +17,8 @@ import Wishlist from './pages/Wishlist'
 import NotFound from './pages/NotFound'
 import ProtectedRoute from './components/ProtectedRoute'
 import PageTransition from './components/PageTransition'
+import HostDashboard from './pages/HostDashboard'
+import MyBookings from './pages/MyBookings'
 
 const PAGE_TITLES = {
   '/':               'VanaVas — Uttarakhand Homestays',
@@ -29,6 +31,8 @@ const PAGE_TITLES = {
   '/privacy-policy': 'Privacy Policy | VanaVas',
   '/wishlist':       'Your Wishlist | VanaVas',
   '/admin':          'Admin Panel | VanaVas',
+  '/host-dashboard': 'Host Dashboard | VanaVas',
+  '/my-bookings':    'My Bookings | VanaVas',
 }
 
 export default function App() {
@@ -57,6 +61,14 @@ export default function App() {
             <Route
               path="/wishlist"
               element={<ProtectedRoute><PageTransition><Wishlist /></PageTransition></ProtectedRoute>}
+            />
+            <Route
+              path="/my-bookings"
+              element={<ProtectedRoute><PageTransition><MyBookings /></PageTransition></ProtectedRoute>}
+            />
+            <Route
+              path="/host-dashboard"
+              element={<ProtectedRoute hostOnly><PageTransition><HostDashboard /></PageTransition></ProtectedRoute>}
             />
             <Route
               path="/admin"
