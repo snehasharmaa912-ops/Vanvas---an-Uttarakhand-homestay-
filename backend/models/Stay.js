@@ -8,6 +8,7 @@ const staySchema = new mongoose.Schema({
   reviews: { type: Number, default: 0 },
   tags: { type: [String], default: [] },
   host: { type: String, required: true },
+  hostId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', default: null },
   eco: { type: Boolean, default: false },
   image: { type: String, default: '' },
 }, { timestamps: true })
