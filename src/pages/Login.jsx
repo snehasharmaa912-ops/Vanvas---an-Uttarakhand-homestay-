@@ -66,7 +66,7 @@ export default function Login() {
     }
 
     setToast({ visible: true, message: isSignup ? 'Account created!' : 'Signed in!', type: 'success' })
-    routeByRole(result.user)
+    setTimeout(() => routeByRole(result.user), 1200)
   }
 
   const handleSendOtp = async e => {
@@ -106,7 +106,7 @@ export default function Login() {
       return
     }
     setToast({ visible: true, message: 'Welcome, admin!', type: 'success' })
-    routeByRole(result.user)
+    setTimeout(() => routeByRole(result.user), 1200)
   }
 
   return (
