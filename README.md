@@ -84,11 +84,9 @@ Zod schema validation on every auth endpoint, 5-attempts/15-min throttling
 
 | Home | Explore | Host Dashboard |
 |:---:|:---:|:---:|
-| *add screenshot here* | *add screenshot here* | *add screenshot here* |
+| ![Home](docs/screenshots/home.jpg) | ![Explore](docs/screenshots/explore.jpg) | ![Host Dashboard](docs/screenshots/host-dashboard.jpg) |
 
 </div>
-
-> 💡 Replace the placeholders above: drag your screenshots into a GitHub issue or comment first to get a hosted image URL, then swap it in — e.g. `![Home](https://github.com/user-attachments/assets/your-image-id)`. This is the fastest way to embed images without adding files to the repo.
 
 ---
 
