@@ -33,6 +33,14 @@ export const bookingStatusSchema = z.object({
   status: z.enum(['confirmed', 'declined', 'cancelled']),
 })
 
+export const tripPlannerSchema = z.object({
+  description: z.string().trim()
+    .min(10, "Tell us a bit more about what you're looking for (at least 10 characters)")
+    .max(600, 'Please keep your description under 600 characters'),
+  budget: z.number().int().positive().max(50000).optional(),
+  travelers: z.number().int().min(1).max(20).optional(),
+})
+
 export function validate(schema) {
   return (req, res, next) => {
     const result = schema.safeParse(req.body)
