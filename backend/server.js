@@ -9,6 +9,7 @@ import Stay from './models/Stay.js'
 import User from './models/User.js'
 import authRoutes from './routes/auth.js'
 import bookingRoutes from './routes/bookings.js'
+import aiRoutes from './routes/ai.js'
 import { requireAuth } from './middleware/auth.js'
 
 dotenv.config()
@@ -58,6 +59,7 @@ app.set('io', io)
 
 app.use('/api/auth', authRoutes)
 app.use('/api/bookings', bookingRoutes)
+app.use('/api/ai', aiRoutes)
 
 app.get('/api/stays', async (req, res) => {
   try {
