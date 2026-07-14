@@ -41,6 +41,14 @@ export const tripPlannerSchema = z.object({
   travelers: z.number().int().min(1).max(20).optional(),
 })
 
+export const tripRefineSchema = z.object({
+  description: z.string().trim().min(10).max(600),
+  budget: z.number().int().positive().max(50000).optional(),
+  travelers: z.number().int().min(1).max(20).optional(),
+  currentItineraryText: z.string().trim().min(1).max(4000),
+  refinementMessage: z.string().trim().min(2, 'Tell us what to change').max(300),
+})
+
 export function validate(schema) {
   return (req, res, next) => {
     const result = schema.safeParse(req.body)
@@ -54,4 +62,4 @@ export function validate(schema) {
     req.body = result.data
     next()
   }
-}
+      }
