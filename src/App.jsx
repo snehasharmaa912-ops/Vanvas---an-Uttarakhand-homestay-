@@ -19,10 +19,12 @@ import ProtectedRoute from './components/ProtectedRoute'
 import PageTransition from './components/PageTransition'
 import HostDashboard from './pages/HostDashboard'
 import MyBookings from './pages/MyBookings'
+import TripPlanner from './pages/TripPlanner'
 
 const PAGE_TITLES = {
   '/':               'VanaVas — Uttarakhand Homestays',
   '/explore':        'Explore Homestays | VanaVas',
+  '/trip-planner':   'AI Trip Planner | VanaVas',
   '/about':          'About | VanaVas',
   '/login':          'Sign In | VanaVas',
   '/faqs':           'FAQs | VanaVas',
@@ -54,6 +56,7 @@ export default function App() {
           <Routes location={location} key={pathname}>
             <Route path="/"               element={<PageTransition><Home /></PageTransition>} />
             <Route path="/explore"        element={<PageTransition><Explore /></PageTransition>} />
+            <Route path="/trip-planner"   element={<PageTransition><TripPlanner /></PageTransition>} />
             <Route path="/about"          element={<PageTransition><About /></PageTransition>} />
             <Route path="/login"          element={<PageTransition><Login /></PageTransition>} />
             <Route path="/faqs"           element={<PageTransition><FAQs /></PageTransition>} />
