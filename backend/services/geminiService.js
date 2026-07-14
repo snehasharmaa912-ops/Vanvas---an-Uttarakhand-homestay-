@@ -1,5 +1,5 @@
 const GEMINI_MODEL = 'gemini-1.5-flash'
-const GEMINI_URL = `https://generativelanguage.googleapis.com/v1beta/models/${GEMINI_MODEL}:generateContent`
+const GEMINI_BASE = `https://generativelanguage.googleapis.com/v1beta/models/${GEMINI_MODEL}`
 const TIMEOUT_MS = 15000
 const MAX_RETRIES = 2
 
@@ -17,11 +17,6 @@ async function callWithTimeout(url, options, timeoutMs) {
   }
 }
 
-/**
- * Calls Gemini and returns parsed JSON.
- * Retries with exponential backoff on 429 / 5xx / network errors — NOT on
- * other 4xx, since those are request problems that won't fix themselves.
- */
 export async function generateJSON({ systemPrompt, userPrompt, temperature = 0.7 }) {
   const apiKey = process.env.GEMINI_API_KEY
   if (!apiKey) throw new Error('GEMINI_API_KEY is not configured on the server')
@@ -36,7 +31,7 @@ export async function generateJSON({ systemPrompt, userPrompt, temperature = 0.7
   for (let attempt = 0; attempt <= MAX_RETRIES; attempt++) {
     try {
       const res = await callWithTimeout(
-        `${GEMINI_URL}?key=${apiKey}`,
+        `${GEMINI_BASE}:generateContent?key=${apiKey}`,
         { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) },
         TIMEOUT_MS
       )
@@ -67,4 +62,53 @@ export async function generateJSON({ systemPrompt, userPrompt, temperature = 0.7
     }
   }
   throw lastError
+}
+
+export async function* generateStream({ systemPrompt, userPrompt, temperature = 0.8 }) {
+  const apiKey = process.env.GEMINI_API_KEY
+  if (!apiKey) throw new Error('GEMINI_API_KEY is not configured on the server')
+
+  const body = {
+    contents: [{ role: 'user', parts: [{ text: userPrompt }] }],
+    systemInstruction: { parts: [{ text: systemPrompt }] },
+    generationConfig: { temperature },
+  }
+
+  const res = await fetch(`${GEMINI_BASE}:streamGenerateContent?alt=sse&key=${apiKey}`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(body),
+  })
+
+  if (!res.ok || !res.body) {
+    const errBody = await res.json().catch(() => ({}))
+    throw new Error(errBody?.error?.message || `Gemini streaming error (${res.status})`)
+  }
+
+  const reader = res.body.getReader()
+  const decoder = new TextDecoder()
+  let buffer = ''
+
+  while (true) {
+    const { done, value } = await reader.read()
+    if (done) break
+    buffer += decoder.decode(value, { stream: true })
+
+    const frames = buffer.split('\n\n')
+    buffer = frames.pop() // keep the last (possibly incomplete) frame for next read
+
+    for (const frame of frames) {
+      const line = frame.trim()
+      if (!line.startsWith('data:')) continue
+      const jsonStr = line.slice(5).trim()
+      if (!jsonStr) continue
+      try {
+        const parsed = JSON.parse(jsonStr)
+        const text = parsed?.candidates?.[0]?.content?.parts?.[0]?.text
+        if (text) yield text
+      } catch {
+        // partial frame split across chunks — safe to skip, next read completes it
+      }
+    }
+  }
 }
