@@ -109,7 +109,7 @@ export default function Home() {
       <section className="py-16 bg-[#1a4a31] text-white">
         <div className="section-pad text-center">
           <span className="inline-block bg-white/10 text-white/80 text-xs font-semibold px-4 py-1.5 rounded-full mb-4 uppercase tracking-widest">
-            Currently in progess 
+            Now in your service
           </span>
           <h2 className="display-font text-3xl font-bold mb-4">
             Let AI plan your perfect Uttarakhand trip ✨
@@ -117,12 +117,12 @@ export default function Home() {
           <p className="text-white/60 text-lg max-w-xl mx-auto mb-8">
             Just tell us your vibe — budget, duration, what you love — and our AI will suggest the best homestays and a full itinerary.
           </p>
-          <button
-            disabled
-            className="inline-flex items-center gap-2 bg-white/10 text-white/40 border border-white/20 font-medium px-8 py-3 rounded-full cursor-not-allowed"
+          <Link
+            to="/trip-planner"
+            className="inline-flex items-center gap-2 bg-white text-[#1a4a31] font-medium px-8 py-3 rounded-full hover:bg-white/90 transition-colors"
           >
-            Try AI Trip Planner — Coming Soon
-          </button>
+            Try AI Trip Planner Now
+          </Link>
         </div>
       </section>
 
