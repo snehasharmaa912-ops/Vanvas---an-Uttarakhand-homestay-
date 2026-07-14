@@ -30,9 +30,10 @@ function VanaVasLogo() {
   )
 }
 const links = [
-  { to: '/',        label: 'Home' },
-  { to: '/explore', label: 'Explore' },
-  { to: '/about',   label: 'About' },
+  { to: '/',             label: 'Home' },
+  { to: '/explore',      label: 'Explore' },
+  { to: '/trip-planner', label: 'AI Trip Planner' },
+  { to: '/about',        label: 'About' },
 ]
 
 export default function Navbar() {
