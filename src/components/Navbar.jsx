@@ -114,6 +114,12 @@ export default function Navbar() {
               </svg>
             </Link>
 
+            {user && (
+              <Link to="/my-trips" className="text-sm font-medium text-[#444] hover:text-[#2d7a4f] transition-colors">
+                My trips
+              </Link>
+            )}
+
             {user?.userType === 'host' && (
               <Link to="/host-dashboard" className="text-sm font-medium text-[#444] hover:text-[#2d7a4f] transition-colors">
                 Host dashboard
@@ -178,6 +184,17 @@ export default function Navbar() {
             >
               Wishlist
             </NavLink>
+            {user && (
+              <NavLink
+                to="/my-trips"
+                className={({ isActive }) =>
+                  `px-4 py-2.5 rounded-lg text-sm font-medium transition-colors
+                  ${isActive ? 'bg-[#2d7a4f] text-white' : 'text-[#444] hover:bg-[#e8f5ee]'}`
+                }
+              >
+                My trips
+              </NavLink>
+            )}
             {user?.userType === 'host' && (
               <NavLink
                 to="/host-dashboard"
