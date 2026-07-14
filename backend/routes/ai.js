@@ -129,7 +129,7 @@ ${picks.map(p => `- ${p.title} (${p.location})`).join('\n')}`
     }
     res.end()
   } catch (err) {
-    console.error('AI itinerary stream error:', err.message).
+    console.error('AI itinerary stream error:', err.message)
     res.write('\n\n[The AI itinerary could not be completed. Please try again.]')
     res.end()
   }
