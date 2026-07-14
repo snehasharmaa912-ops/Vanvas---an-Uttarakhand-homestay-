@@ -20,11 +20,13 @@ import PageTransition from './components/PageTransition'
 import HostDashboard from './pages/HostDashboard'
 import MyBookings from './pages/MyBookings'
 import TripPlanner from './pages/TripPlanner'
+import MyTrips from './pages/MyTrips'
 
 const PAGE_TITLES = {
   '/':               'VanaVas — Uttarakhand Homestays',
   '/explore':        'Explore Homestays | VanaVas',
   '/trip-planner':   'AI Trip Planner | VanaVas',
+  '/my-trips':       'My Trips | VanaVas',
   '/about':          'About | VanaVas',
   '/login':          'Sign In | VanaVas',
   '/faqs':           'FAQs | VanaVas',
@@ -42,8 +44,6 @@ export default function App() {
   const { pathname, hash } = location
 
   useEffect(() => {
-    // Only force-scroll to top on an actual page change — not on
-    // same-page hash/query changes like /about#contact or /explore?filter=...
     if (!hash) window.scrollTo(0, 0)
     document.title = PAGE_TITLES[pathname] || 'Page Not Found | VanaVas'
   }, [pathname, hash])
@@ -71,6 +71,10 @@ export default function App() {
             <Route
               path="/my-bookings"
               element={<ProtectedRoute><PageTransition><MyBookings /></PageTransition></ProtectedRoute>}
+            />
+            <Route
+              path="/my-trips"
+              element={<ProtectedRoute><PageTransition><MyTrips /></PageTransition></ProtectedRoute>}
             />
             <Route
               path="/host-dashboard"
