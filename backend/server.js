@@ -10,6 +10,7 @@ import User from './models/User.js'
 import authRoutes from './routes/auth.js'
 import bookingRoutes from './routes/bookings.js'
 import aiRoutes from './routes/ai.js'
+import tripRoutes from './routes/trips.js'
 import { requireAuth } from './middleware/auth.js'
 
 dotenv.config()
@@ -60,6 +61,7 @@ app.set('io', io)
 app.use('/api/auth', authRoutes)
 app.use('/api/bookings', bookingRoutes)
 app.use('/api/ai', aiRoutes)
+app.use('/api/trips', tripRoutes)
 
 app.get('/api/stays', async (req, res) => {
   try {
@@ -116,8 +118,6 @@ app.post('/api/stays', requireAuth, async (req, res) => {
 
     let payload = req.body
     if (requester.role !== 'admin') {
-      // Hosts can only ever create a stay linked to themselves —
-      // hostId/host are derived from the account, never trusted from the client.
       payload = { ...req.body, hostId: requester._id, host: requester.name }
     }
 
@@ -149,7 +149,6 @@ app.put('/api/stays/:id', requireAuth, async (req, res) => {
       return res.status(403).json({ error: 'You can only edit your own stays' })
     }
 
-    // Hosts editing their own stay can't reassign it to a different host account.
     const payload = requester.role === 'admin'
       ? req.body
       : { ...req.body, hostId: existing.hostId, host: requester.name }
