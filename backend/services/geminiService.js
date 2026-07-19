@@ -1,4 +1,4 @@
-const GEMINI_MODEL = 'gemini-1.5-flash'
+const GEMINI_MODEL = 'gemini-2.5-flash'
 const GEMINI_BASE = `https://generativelanguage.googleapis.com/v1beta/models/${GEMINI_MODEL}`
 const TIMEOUT_MS = 15000
 const MAX_RETRIES = 2
