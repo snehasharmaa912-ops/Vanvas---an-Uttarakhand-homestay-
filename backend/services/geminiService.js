@@ -2,6 +2,14 @@ const GEMINI_MODEL = 'gemini-3.5-flash'
 const GEMINI_BASE = `https://generativelanguage.googleapis.com/v1beta/models/${GEMINI_MODEL}`
 const TIMEOUT_MS = 15000
 const MAX_RETRIES = 2
+
+const SAFETY_SETTINGS = [
+  { category: 'HARM_CATEGORY_HARASSMENT', threshold: 'BLOCK_ONLY_HIGH' },
+  { category: 'HARM_CATEGORY_HATE_SPEECH', threshold: 'BLOCK_ONLY_HIGH' },
+  { category: 'HARM_CATEGORY_SEXUALLY_EXPLICIT', threshold: 'BLOCK_ONLY_HIGH' },
+  { category: 'HARM_CATEGORY_DANGEROUS_CONTENT', threshold: 'BLOCK_ONLY_HIGH' },
+]
+
 function sleep(ms) {
   return new Promise(resolve => setTimeout(resolve, ms))
 }
@@ -24,6 +32,7 @@ export async function generateJSON({ systemPrompt, userPrompt, temperature = 0.7
     contents: [{ role: 'user', parts: [{ text: userPrompt }] }],
     systemInstruction: { parts: [{ text: systemPrompt }] },
     generationConfig: { temperature, responseMimeType: 'application/json' },
+    safetySettings: SAFETY_SETTINGS,
   }
 
   let lastError
@@ -47,6 +56,9 @@ export async function generateJSON({ systemPrompt, userPrompt, temperature = 0.7
       }
 
       const data = await res.json()
+      if (data.promptFeedback?.blockReason) {
+        throw new Error(`Gemini blocked the prompt: ${data.promptFeedback.blockReason}`)
+      }
       const text = data?.candidates?.[0]?.content?.parts?.[0]?.text
       if (!text) throw new Error('Gemini returned an empty response')
 
@@ -71,6 +83,7 @@ export async function* generateStream({ systemPrompt, userPrompt, temperature = 
     contents: [{ role: 'user', parts: [{ text: userPrompt }] }],
     systemInstruction: { parts: [{ text: systemPrompt }] },
     generationConfig: { temperature },
+    safetySettings: SAFETY_SETTINGS,
   }
 
   const res = await fetch(`${GEMINI_BASE}:streamGenerateContent?alt=sse&key=${apiKey}`, {
@@ -113,6 +126,9 @@ export async function* generateStream({ systemPrompt, userPrompt, temperature = 
         if (!candidate) {
           console.error('Gemini stream: unexpected payload shape:', JSON.stringify(parsed))
           continue
+        }
+        if (candidate.finishReason === 'SAFETY') {
+          throw new Error('Gemini blocked the response for safety reasons')
         }
         const text = candidate?.content?.parts?.[0]?.text
         if (text) {
