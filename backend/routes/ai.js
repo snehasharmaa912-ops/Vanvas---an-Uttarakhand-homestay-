@@ -23,7 +23,7 @@ Rules:
 - Do not wrap the JSON in markdown code fences.`
 
 const ITINERARY_SYSTEM_PROMPT = `You are the trip-planning assistant for VanaVas, a homestay booking platform in Uttarakhand, India.
-Given a traveler's request and their top 3 matched homestays, write a warm, specific 3-day itinerary in plain text (headers like "Day 1: ..." are fine, but no JSON, no code fences).
+Given a traveler's request and their top 3 matched homestays, write a warm, specific itinerary in plain text, matching the number of days the traveler mentions in their request (default to 3 days if they don't specify) (headers like "Day 1: ..." are fine, but no JSON, no code fences).
 Reference the actual homestay names and locations you're given. Keep it concise — 2-4 sentences per day.`
 
 const REFINE_SYSTEM_PROMPT = `You are the trip-planning assistant for VanaVas. A traveler already received trip picks and an itinerary, and is now asking for a refinement (e.g. cheaper, more eco-friendly, different region).
