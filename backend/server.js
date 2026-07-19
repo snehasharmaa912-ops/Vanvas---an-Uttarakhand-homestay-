@@ -14,6 +14,11 @@ import tripRoutes from './routes/trips.js'
 import { requireAuth } from './middleware/auth.js'
 
 dotenv.config()
+
+if (!process.env.GEMINI_API_KEY) {
+  console.error('⚠️  GEMINI_API_KEY is missing — AI trip planner routes will fail until this is set in .env')
+}
+
 const app = express()
 const httpServer = createServer(app)
 const PORT = process.env.PORT || 5000
