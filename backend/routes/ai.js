@@ -102,7 +102,7 @@ ${JSON.stringify(candidateList)}`
     res.status(200).json({ picks })
   } catch (err) {
     console.error('AI picks error:', err.message)
-    res.status(502).json({ error: 'AI service is temporarily unavailable. Please try again shortly.' })
+    res.status(502).json({ error: 'AI service is temporarily unavailable. Please try again shortly.', detail: err.message })
   }
 })
 
@@ -130,7 +130,7 @@ ${picks.map(p => `- ${p.title} (${p.location})`).join('\n')}`
     res.end()
   } catch (err) {
     console.error('AI itinerary stream error:', err.message)
-    res.write('\n\n[The AI itinerary could not be completed. Please try again.]')
+    res.write(`\n\n[AI error: ${err.message}]`)
     res.end()
   }
 })
@@ -180,7 +180,7 @@ ${JSON.stringify(candidateList)}`
     res.status(200).json({ picks, itineraryText: result.itineraryText })
   } catch (err) {
     console.error('AI refine error:', err.message)
-    res.status(502).json({ error: 'AI service is temporarily unavailable. Please try again shortly.' })
+    res.status(502).json({ error: 'AI service is temporarily unavailable. Please try again shortly.', detail: err.message })
   }
 })
 
