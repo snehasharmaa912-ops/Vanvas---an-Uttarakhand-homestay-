@@ -2,7 +2,6 @@ const GEMINI_MODEL = 'gemini-3.5-flash'
 const GEMINI_BASE = `https://generativelanguage.googleapis.com/v1beta/models/${GEMINI_MODEL}`
 const TIMEOUT_MS = 15000
 const MAX_RETRIES = 2
-
 function sleep(ms) {
   return new Promise(resolve => setTimeout(resolve, ms))
 }
