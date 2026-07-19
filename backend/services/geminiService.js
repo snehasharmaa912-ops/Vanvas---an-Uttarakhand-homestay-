@@ -94,7 +94,7 @@ export async function* generateStream({ systemPrompt, userPrompt, temperature = 
     buffer += decoder.decode(value, { stream: true })
 
     const frames = buffer.split('\n\n')
-    buffer = frames.pop() // keep the last (possibly incomplete) frame for next read
+    buffer = frames.pop()
 
     for (const frame of frames) {
       const line = frame.trim()
@@ -103,10 +103,18 @@ export async function* generateStream({ systemPrompt, userPrompt, temperature = 
       if (!jsonStr) continue
       try {
         const parsed = JSON.parse(jsonStr)
-        const text = parsed?.candidates?.[0]?.content?.parts?.[0]?.text
-        if (text) yield text
-      } catch {
-        // partial frame split across chunks — safe to skip, next read completes it
+        if (parsed.error) {
+          throw new Error(parsed.error.message || 'Gemini stream returned an error')
+        }
+        const candidate = parsed?.candidates?.[0]
+        const text = candidate?.content?.parts?.[0]?.text
+        if (text) {
+          yield text
+        } else if (candidate?.finishReason && candidate.finishReason !== 'STOP') {
+          throw new Error(`Gemini stopped generating: ${candidate.finishReason}`)
+        }
+      } catch (parseErr) {
+        if (parseErr.message?.startsWith('Gemini')) throw parseErr
       }
     }
   }
