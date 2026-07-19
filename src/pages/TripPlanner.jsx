@@ -241,7 +241,7 @@ export default function TripPlanner() {
             </div>
 
             <h2 className="text-xl font-semibold text-[#1a4a31] dark:text-white mb-4">
-              Your 3-day itinerary {itineraryStreaming && <span className="inline-block w-2 h-2 rounded-full bg-[#2d7a4f] animate-pulse ml-1" />}
+              Your itinerary {itineraryStreaming && <span className="inline-block w-2 h-2 rounded-full bg-[#2d7a4f] animate-pulse ml-1" />}
             </h2>
             <div className="rounded-2xl bg-[#fdf8f2] dark:bg-[#0a1f14] border border-[#e8dfc8] dark:border-[#1a4a31] p-5 mb-6 whitespace-pre-wrap text-sm text-[#444] dark:text-gray-200 leading-relaxed min-h-[80px]">
               {itineraryText || (itineraryStreaming ? 'Writing your itinerary…' : '')}
