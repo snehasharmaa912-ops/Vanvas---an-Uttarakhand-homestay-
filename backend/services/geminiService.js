@@ -106,7 +106,14 @@ export async function* generateStream({ systemPrompt, userPrompt, temperature = 
         if (parsed.error) {
           throw new Error(parsed.error.message || 'Gemini stream returned an error')
         }
+        if (parsed.promptFeedback?.blockReason) {
+          throw new Error(`Gemini blocked the prompt: ${parsed.promptFeedback.blockReason}`)
+        }
         const candidate = parsed?.candidates?.[0]
+        if (!candidate) {
+          console.error('Gemini stream: unexpected payload shape:', JSON.stringify(parsed))
+          continue
+        }
         const text = candidate?.content?.parts?.[0]?.text
         if (text) {
           yield text
