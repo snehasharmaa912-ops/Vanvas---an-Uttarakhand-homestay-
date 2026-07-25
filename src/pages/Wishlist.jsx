@@ -1,20 +1,26 @@
 import { Link } from 'react-router-dom'
 import { useState, useEffect } from 'react'
 import HomestayCard from '../components/HomestayCard'
-import { ALL_STAYS } from '../data/stays'
+import { useAuth } from '../context/AuthContext'
+import { Loader, Toast } from '../components/ui'
 
-const STORAGE_KEY = 'vanavas_wishlist'
+const API_URL = 'https://vanvas-an-uttarakhand-homestay.onrender.com/api/wishlist'
+
 export default function Wishlist() {
-  const [savedIds, setSavedIds] = useState([])
+  const { token } = useAuth()
+  const [savedStays, setSavedStays] = useState([])
+  const [loading, setLoading] = useState(true)
+  const [toast, setToast] = useState({ visible: false, message: '', type: 'error' })
+
   useEffect(() => {
-    try {
-      const raw = localStorage.getItem(STORAGE_KEY)
-      setSavedIds(raw ? JSON.parse(raw) : [])
-    } catch {
-      setSavedIds([])
-    }
-  }, [])
-  const savedStays = ALL_STAYS.filter(stay => savedIds.includes(stay.id))
+    if (!token) { setLoading(false); return }
+    setLoading(true)
+    fetch(API_URL, { headers: { Authorization: `Bearer ${token}` } })
+      .then(res => res.json())
+      .then(data => setSavedStays(Array.isArray(data) ? data : []))
+      .catch(() => setToast({ visible: true, message: 'Failed to load your wishlist', type: 'error' }))
+      .finally(() => setLoading(false))
+  }, [token])
 
   return (
     <div className="py-12 bg-[#fdf8f2] dark:bg-[#0a1f14] min-h-screen">
@@ -28,10 +34,12 @@ export default function Wishlist() {
           </p>
         </div>
 
-        {savedStays.length > 0 ? (
+        {loading ? (
+          <div className="py-20 flex justify-center"><Loader /></div>
+        ) : savedStays.length > 0 ? (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
             {savedStays.map(stay => (
-              <HomestayCard key={stay.id} stay={stay} />
+              <HomestayCard key={stay._id} stay={{ ...stay, id: stay._id }} />
             ))}
           </div>
         ) : (
@@ -47,6 +55,12 @@ export default function Wishlist() {
           </div>
         )}
       </div>
+      <Toast
+        visible={toast.visible}
+        message={toast.message}
+        type={toast.type}
+        onClose={() => setToast(t => ({ ...t, visible: false }))}
+      />
     </div>
   )
 }
