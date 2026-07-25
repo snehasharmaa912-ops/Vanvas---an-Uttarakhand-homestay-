@@ -5,6 +5,8 @@ import { BrowserRouter } from 'react-router-dom'
 import App from './App'
 import './index.css'
 import { ThemeProvider } from './context/ThemeContext'
+import { WishlistProvider } from './context/WishlistContext'
+import ErrorBoundary from './components/ErrorBoundary'
 
 function SplashScreen() {
   return (
@@ -39,18 +41,22 @@ function Root() {
     return () => clearTimeout(timer)
   }, [])
   return (
-    <AuthProvider>
-  <ThemeProvider>
-    {showSplash && <SplashScreen />}
-    <BrowserRouter>
-      <App />
-    </BrowserRouter>
-  </ThemeProvider>
-</AuthProvider>
-)}
+    <ErrorBoundary>
+      <AuthProvider>
+        <WishlistProvider>
+          <ThemeProvider>
+            {showSplash && <SplashScreen />}
+            <BrowserRouter>
+              <App />
+            </BrowserRouter>
+          </ThemeProvider>
+        </WishlistProvider>
+      </AuthProvider>
+    </ErrorBoundary>
+  )
+}
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <Root />
   </React.StrictMode>
 )
-
