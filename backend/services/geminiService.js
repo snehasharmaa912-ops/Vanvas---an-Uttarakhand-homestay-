@@ -86,13 +86,24 @@ export async function* generateStream({ systemPrompt, userPrompt, temperature = 
     safetySettings: SAFETY_SETTINGS,
   }
 
-  const res = await fetch(`${GEMINI_BASE}:streamGenerateContent?alt=sse&key=${apiKey}`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(body),
-  })
+  const controller = new AbortController()
+  const timeout = setTimeout(() => controller.abort(), TIMEOUT_MS)
+
+  let res
+  try {
+    res = await fetch(`${GEMINI_BASE}:streamGenerateContent?alt=sse&key=${apiKey}`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(body),
+      signal: controller.signal,
+    })
+  } catch (err) {
+    clearTimeout(timeout)
+    throw err.name === 'AbortError' ? new Error('Gemini streaming request timed out') : err
+  }
 
   if (!res.ok || !res.body) {
+    clearTimeout(timeout)
     const errBody = await res.json().catch(() => ({}))
     throw new Error(errBody?.error?.message || `Gemini streaming error (${res.status})`)
   }
@@ -101,44 +112,49 @@ export async function* generateStream({ systemPrompt, userPrompt, temperature = 
   const decoder = new TextDecoder()
   let buffer = ''
 
-  while (true) {
-    const { done, value } = await reader.read()
-    if (done) break
-    buffer += decoder.decode(value, { stream: true })
+  try {
+    while (true) {
+      const { done, value } = await reader.read()
+      if (done) break
+      clearTimeout(timeout) // got data — no longer worried about a stalled connect
+      buffer += decoder.decode(value, { stream: true })
 
-    const frames = buffer.split('\n\n')
-    buffer = frames.pop()
+      const frames = buffer.split('\n\n')
+      buffer = frames.pop()
 
-    for (const frame of frames) {
-      const line = frame.trim()
-      if (!line.startsWith('data:')) continue
-      const jsonStr = line.slice(5).trim()
-      if (!jsonStr) continue
-      try {
-        const parsed = JSON.parse(jsonStr)
-        if (parsed.error) {
-          throw new Error(parsed.error.message || 'Gemini stream returned an error')
+      for (const frame of frames) {
+        const line = frame.trim()
+        if (!line.startsWith('data:')) continue
+        const jsonStr = line.slice(5).trim()
+        if (!jsonStr) continue
+        try {
+          const parsed = JSON.parse(jsonStr)
+          if (parsed.error) {
+            throw new Error(parsed.error.message || 'Gemini stream returned an error')
+          }
+          if (parsed.promptFeedback?.blockReason) {
+            throw new Error(`Gemini blocked the prompt: ${parsed.promptFeedback.blockReason}`)
+          }
+          const candidate = parsed?.candidates?.[0]
+          if (!candidate) {
+            console.error('Gemini stream: unexpected payload shape:', JSON.stringify(parsed))
+            continue
+          }
+          if (candidate.finishReason === 'SAFETY') {
+            throw new Error('Gemini blocked the response for safety reasons')
+          }
+          const text = candidate?.content?.parts?.[0]?.text
+          if (text) {
+            yield text
+          } else if (candidate?.finishReason && candidate.finishReason !== 'STOP') {
+            throw new Error(`Gemini stopped generating: ${candidate.finishReason}`)
+          }
+        } catch (parseErr) {
+          if (parseErr.message?.startsWith('Gemini')) throw parseErr
         }
-        if (parsed.promptFeedback?.blockReason) {
-          throw new Error(`Gemini blocked the prompt: ${parsed.promptFeedback.blockReason}`)
-        }
-        const candidate = parsed?.candidates?.[0]
-        if (!candidate) {
-          console.error('Gemini stream: unexpected payload shape:', JSON.stringify(parsed))
-          continue
-        }
-        if (candidate.finishReason === 'SAFETY') {
-          throw new Error('Gemini blocked the response for safety reasons')
-        }
-        const text = candidate?.content?.parts?.[0]?.text
-        if (text) {
-          yield text
-        } else if (candidate?.finishReason && candidate.finishReason !== 'STOP') {
-          throw new Error(`Gemini stopped generating: ${candidate.finishReason}`)
-        }
-      } catch (parseErr) {
-        if (parseErr.message?.startsWith('Gemini')) throw parseErr
       }
     }
+  } finally {
+    clearTimeout(timeout)
   }
 }
