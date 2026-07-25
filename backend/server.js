@@ -1,4 +1,5 @@
 import express from 'express'
+import wishlistRoutes from './routes/wishlist.js'
 import { createServer } from 'http'
 import { Server } from 'socket.io'
 import passport from './config/passport.js'
