@@ -56,9 +56,9 @@ export default function Wishlist() {
         )}
       </div>
       <Toast
-        visible={toast.visible}
         message={toast.message}
         type={toast.type}
+        isVisible={toast.visible}
         onClose={() => setToast(t => ({ ...t, visible: false }))}
       />
     </div>
