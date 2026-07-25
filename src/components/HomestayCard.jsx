@@ -40,6 +40,14 @@ export default function HomestayCard({ stay }) {
     setBookingOpen(true)
   }
 
+  const handleWishlistClick = () => {
+    if (!user) {
+      navigate('/login')
+      return
+    }
+    toggle()
+  }
+
   return (
     <>
       <motion.div
@@ -76,7 +84,7 @@ export default function HomestayCard({ stay }) {
 
           {/* Wishlist button */}
           <motion.button
-            onClick={toggle}
+            onClick={handleWishlistClick}
             aria-label="Add to wishlist"
             whileTap={{ scale: 0.85 }}
             className="absolute top-3 right-3 w-8 h-8 bg-white/90 hover:bg-white rounded-full flex items-center justify-center shadow-sm transition-colors duration-150"
