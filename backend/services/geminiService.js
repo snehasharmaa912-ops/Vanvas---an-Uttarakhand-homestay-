@@ -1,6 +1,7 @@
 const GEMINI_MODEL = 'gemini-3.5-flash'
 const GEMINI_BASE = `https://generativelanguage.googleapis.com/v1beta/models/${GEMINI_MODEL}`
 const TIMEOUT_MS = 15000
+const STREAM_CONNECT_TIMEOUT_MS = 40000 // Gemini has been observed taking 15-27s to respond; give the stream more room to connect
 const MAX_RETRIES = 2
 
 const SAFETY_SETTINGS = [
@@ -87,7 +88,7 @@ export async function* generateStream({ systemPrompt, userPrompt, temperature = 
   }
 
   const controller = new AbortController()
-  const timeout = setTimeout(() => controller.abort(), TIMEOUT_MS)
+  const timeout = setTimeout(() => controller.abort(), STREAM_CONNECT_TIMEOUT_MS)
 
   let res
   try {
