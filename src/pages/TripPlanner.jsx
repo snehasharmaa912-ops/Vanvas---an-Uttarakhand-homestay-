@@ -38,7 +38,7 @@ export default function TripPlanner() {
     setItineraryStreaming(true)
     setItineraryText('')
     const controller = new AbortController()
-    const timeout = setTimeout(() => controller.abort(), 25000)
+    const timeout = setTimeout(() => controller.abort(), 45000)
     try {
       const res = await fetch(`${API_BASE}/ai/trip-planner/itinerary/stream`, {
         method: 'POST',
@@ -51,7 +51,10 @@ export default function TripPlanner() {
           picks: matchedPicks.map(p => ({ title: p.title, location: p.location })),
         }),
       })
-      if (!res.ok || !res.body) throw new Error('Stream failed')
+      if (!res.ok || !res.body) {
+        const errBody = await res.json().catch(() => ({}))
+        throw new Error(errBody?.error || `Request failed with status ${res.status}`)
+      }
 
       const reader = res.body.getReader()
       const decoder = new TextDecoder()
@@ -63,11 +66,12 @@ export default function TripPlanner() {
         setItineraryText(text)
       }
     } catch (err) {
-      showToast(
+      const message =
         err.name === 'AbortError'
           ? 'The itinerary took too long to generate. Please try again.'
-          : 'Could not stream the itinerary. Please try again.'
-      )
+          : `DEBUG ERROR: ${err.message}`
+      setItineraryText(message)
+      showToast(message)
     } finally {
       clearTimeout(timeout)
       setItineraryStreaming(false)
@@ -326,4 +330,4 @@ export default function TripPlanner() {
       <Toast message={toast.message} type={toast.type} isVisible={toast.visible} onClose={() => setToast(t => ({ ...t, visible: false }))} />
     </div>
   )
-}
+ }
