@@ -12,8 +12,8 @@ export const authLimiter = rateLimit({
 })
 
 export const aiLimiter = rateLimit({
-  windowMs: 60 * 60 * 1000, 
-  max: 50, 
+  windowMs: 60 * 60 * 1000, // 1 hour
+  max: 15,
   standardHeaders: true,
   legacyHeaders: false,
   message: { error: 'AI request limit reached. Please try again in an hour.' },
