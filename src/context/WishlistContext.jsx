@@ -1,7 +1,8 @@
 import { createContext, useContext, useState, useEffect, useCallback } from 'react'
 import { useAuth } from './AuthContext'
+import { API_BASE_URL } from '../lib/api'
 
-const API_URL = 'https://vanvas-an-uttarakhand-homestay.onrender.com/api/wishlist'
+const API_URL = `${API_BASE_URL}/api/wishlist`
 const WishlistContext = createContext()
 
 export function WishlistProvider({ children }) {
