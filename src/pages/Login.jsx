@@ -3,7 +3,8 @@ import { useNavigate } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { Input, Button, Toast } from '../components/ui'
 import { useAuth } from '../context/AuthContext'
-const API_BASE = 'https://vanvas-an-uttarakhand-homestay.onrender.com/api/auth'
+import { API_BASE_URL } from '../lib/api'
+const API_BASE = `${API_BASE_URL}/api/auth`
 export default function Login() {
   const { login, register, requestAdminOtp, verifyAdminOtp } = useAuth()
   const navigate = useNavigate()
