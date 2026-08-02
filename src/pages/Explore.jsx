@@ -3,7 +3,8 @@ import { useSearchParams } from 'react-router-dom'
 import HomestayCard from '../components/HomestayCard'
 import { Loader, Toast } from '../components/ui'
 import { socket } from '../lib/socket'
-const API_URL = 'https://vanvas-an-uttarakhand-homestay.onrender.com/api/stays'
+import { API_BASE_URL } from '../lib/api'
+const API_URL = `${API_BASE_URL}/api/stays`
 
 const FILTERS = ['All', 'Eco-certified', 'Under ₹1000', 'Mountain view', 'Forest', 'Farm stay']
 
