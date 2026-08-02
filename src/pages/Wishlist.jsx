@@ -3,8 +3,9 @@ import { useState, useEffect } from 'react'
 import HomestayCard from '../components/HomestayCard'
 import { useAuth } from '../context/AuthContext'
 import { Loader, Toast } from '../components/ui'
+import { API_BASE_URL } from '../lib/api'
 
-const API_URL = 'https://vanvas-an-uttarakhand-homestay.onrender.com/api/wishlist'
+const API_URL = `${API_BASE_URL}/api/wishlist`
 
 export default function Wishlist() {
   const { token } = useAuth()
