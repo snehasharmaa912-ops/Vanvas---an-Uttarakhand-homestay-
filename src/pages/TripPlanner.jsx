@@ -4,8 +4,9 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { Loader, Toast, Button } from '../components/ui'
 import { useAuth } from '../context/AuthContext'
 import { generateTripPDF } from '../lib/tripPdf'
+import { API_BASE_URL } from '../lib/api'
 
-const API_BASE = 'https://vanvas-an-uttarakhand-homestay.onrender.com/api'
+const API_BASE = `${API_BASE_URL}/api`
 const QUICK_REFINEMENTS = ['Make it cheaper', 'More eco-friendly options', 'A different region']
 
 export default function TripPlanner() {
