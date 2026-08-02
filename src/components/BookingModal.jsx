@@ -2,8 +2,9 @@ import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Modal, Button, Input } from './ui'
 import { useAuth } from '../context/AuthContext'
+import { API_BASE_URL } from '../lib/api'
 
-const API_URL = 'https://vanvas-an-uttarakhand-homestay.onrender.com/api/bookings'
+const API_URL = `${API_BASE_URL}/api/bookings`
 
 export default function BookingModal({ stay, isOpen, onClose }) {
   const { token } = useAuth()
