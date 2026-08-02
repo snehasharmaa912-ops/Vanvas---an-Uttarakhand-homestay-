@@ -299,7 +299,7 @@ When a booking is created or its status changes, the server emits directly to th
 
 | | |
 |---|---|
-| **Live frontend URL** | `https://<your-app>.vercel.app` — update after deploying |
+| **Live frontend URL** | `https://vanvas-an-uttarakhand-homestay.vercel.app' |
 | **Live backend URL**  | `https://vanvas-an-uttarakhand-homestay.onrender.com` |
 | **Tech stack**        | React + Vite (frontend, on Vercel) · Node/Express + Socket.io (backend, on Render) · MongoDB Atlas (database) · Gemini API (AI) |
 
