@@ -295,6 +295,39 @@ When a booking is created or its status changes, the server emits directly to th
 
 ---
 
+## 🚀 Deployment
+
+| | |
+|---|---|
+| **Live frontend URL** | `https://<your-app>.vercel.app` — update after deploying |
+| **Live backend URL**  | `https://vanvas-an-uttarakhand-homestay.onrender.com` |
+| **Tech stack**        | React + Vite (frontend, on Vercel) · Node/Express + Socket.io (backend, on Render) · MongoDB Atlas (database) · Gemini API (AI) |
+
+**Known limitations on free tier**
+- Render's free web service spins down after ~15 minutes of inactivity. The first request after being idle can take 30–60 seconds while it wakes back up — this is expected, not a bug.
+- MongoDB Atlas free tier has connection limits; if you see intermittent DB errors under load, check the Atlas metrics tab.
+
+**Environment variables**
+
+Frontend (`.env` locally / Vercel dashboard):
+```
+VITE_API_URL=https://vanvas-an-uttarakhand-homestay.onrender.com
+```
+
+Backend (`.env` locally / Render dashboard) — see `backend/.env.example` for the full list:
+```
+PORT=5000
+MONGO_URI=...
+JWT_SECRET=...
+FRONTEND_URL=https://<your-app>.vercel.app
+GOOGLE_CLIENT_ID=...
+GOOGLE_CLIENT_SECRET=...
+GOOGLE_CALLBACK_URL=https://vanvas-an-uttarakhand-homestay.onrender.com/api/auth/google/callback
+GEMINI_API_KEY=...
+```
+
+---
+
 <div align="center">
 
 **Built with ♥ in Dehradun** · SNEHA SHARMA
