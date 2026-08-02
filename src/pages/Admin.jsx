@@ -3,8 +3,9 @@ import { useNavigate } from 'react-router-dom'
 import { useState, useEffect } from 'react'
 import { Toast } from '../components/ui'
 import { socket } from '../lib/socket'
-const API_URL = 'https://vanvas-an-uttarakhand-homestay.onrender.com/api/stays'
-const HOSTS_URL = 'https://vanvas-an-uttarakhand-homestay.onrender.com/api/auth/hosts'
+import { API_BASE_URL } from '../lib/api'
+const API_URL = `${API_BASE_URL}/api/stays`
+const HOSTS_URL = `${API_BASE_URL}/api/auth/hosts`
 const EMPTY_FORM = {
   title: '', location: '', price: '', host: '', hostId: '',
   rating: '', reviews: '', eco: false, image: '', tags: ''
