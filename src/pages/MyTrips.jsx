@@ -3,8 +3,9 @@ import { Link } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
 import { Loader, Toast } from '../components/ui'
 import { generateTripPDF } from '../lib/tripPdf'
+import { API_BASE_URL } from '../lib/api'
 
-const API_URL = 'https://vanvas-an-uttarakhand-homestay.onrender.com/api/trips'
+const API_URL = `${API_BASE_URL}/api/trips`
 export default function MyTrips() {
   const { token } = useAuth()
   const [trips, setTrips] = useState([])
