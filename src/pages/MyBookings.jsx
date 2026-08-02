@@ -3,8 +3,9 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { useAuth } from '../context/AuthContext'
 import { socket } from '../lib/socket'
 import { Toast, Loader } from '../components/ui'
+import { API_BASE_URL } from '../lib/api'
 
-const API_URL = 'https://vanvas-an-uttarakhand-homestay.onrender.com/api/bookings'
+const API_URL = `${API_BASE_URL}/api/bookings`
 
 const STATUS_STYLES = {
   pending:   { label: 'Awaiting host response', dot: 'bg-amber-400', text: 'text-amber-600', bg: 'bg-amber-50' },
