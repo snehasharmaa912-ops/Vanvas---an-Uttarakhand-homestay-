@@ -57,7 +57,7 @@ Travelers get a curated, verified, and genuinely local experience — searchable
 
 ## 🎬 Demo Video
 
-📺 **Watch the 5-minute walkthrough:** [PASTE_YOUTUBE_UNLISTED_LINK_HERE](PASTE_YOUTUBE_UNLISTED_LINK_HERE)
+📺 **Watch the 5-minute walkthrough:** 
 
 The video covers: app introduction → register/login flow → core booking flow → AI Trip Planner in action → a brief code tour.
 
