@@ -6,6 +6,7 @@
 *Connecting rural homestay owners across Uttarakhand with eco-conscious travelers — in real time.*
 
 [![Live Demo](https://img.shields.io/badge/Live%20Demo-vanavas.vercel.app-2d7a4f?style=for-the-badge&logo=vercel&logoColor=white)](https://vanvas-an-uttarakhand-homestay.vercel.app)
+[![Demo Video](https://img.shields.io/badge/Demo%20Video-YouTube-FF0000?style=for-the-badge&logo=youtube&logoColor=white)](PASTE_YOUTUBE_UNLISTED_LINK_HERE)
 [![License](https://img.shields.io/badge/License-MIT-a96f2b?style=for-the-badge)](#license)
 
 ![React](https://img.shields.io/badge/React-18-61DAFB?style=flat-square&logo=react&logoColor=black)
@@ -24,16 +25,16 @@
 ## 📋 Table of Contents
 
 - [What it does](#-what-it-does)
-- [Feature Highlights](#-feature-highlights)
+- [Live Demo](#-live-demo)
+- [Demo Video](#-demo-video)
 - [Screenshots](#-screenshots)
-- [Architecture](#-architecture)
-- [Database Schema](#️-database-schema)
+- [Features](#-features)
 - [Tech Stack](#-tech-stack)
-- [Getting Started](#-getting-started)
-- [API Reference](#-api-reference)
-- [Security](#-security)
-- [Real-time Flow](#-real-time-flow)
-- [AI Features](#-ai-features)
+- [Setup Instructions](#-setup-instructions)
+- [API Documentation](#-api-documentation)
+- [Architecture / Folder Structure](#️-architecture--folder-structure)
+- [Known Limitations](#-known-limitations)
+- [Credits & Acknowledgements](#-credits--acknowledgements)
 
 ---
 
@@ -45,36 +46,20 @@ Travelers get a curated, verified, and genuinely local experience — searchable
 
 ---
 
-## ✨ Feature Highlights
+## 🚀 Live Demo
 
-<table>
-<tr>
-<td width="50%">
+**Frontend:** [https://vanvas-an-uttarakhand-homestay.vercel.app](https://vanvas-an-uttarakhand-homestay.vercel.app)
+**Backend API:** `https://vanvas-an-uttarakhand-homestay.onrender.com`
 
-**🔐 Secure Authentication**
-bcrypt-hashed passwords, JWT sessions, Google OAuth one-click sign-in, and a 6-digit email OTP flow for admin access
+> ⚠️ The backend is hosted on Render's free tier and spins down after ~15 minutes of inactivity. The first request after being idle can take 30–60 seconds to wake up — this is expected, not a bug (see [Known Limitations](#-known-limitations)).
 
-**🛡️ Protected Routes**
-API (`requireAuth` middleware) and frontend (`ProtectedRoute` component) routes both reject/redirect unauthenticated access
+---
 
-**⚡ Real-time Booking**
-Requests appear on the host's dashboard live via WebSocket — no refresh, no polling
+## 🎬 Demo Video
 
-</td>
-<td width="50%">
+📺 **Watch the 5-minute walkthrough:** [PASTE_YOUTUBE_UNLISTED_LINK_HERE](PASTE_YOUTUBE_UNLISTED_LINK_HERE)
 
-**🧑‍🌾 Role-based Experience**
-Traveler, host, and admin each get a tailored view and permission set
-
-**🎬 Polished Micro-interactions**
-Page transitions, scroll-reveal cards, animated wishlist hearts, spring nav indicators — built with Framer Motion
-
-**🚦 Rate Limiting & Validation**
-Zod schema validation on every auth endpoint, 5-attempts/15-min throttling
-
-</td>
-</tr>
-</table>
+The video covers: app introduction → register/login flow → core booking flow → AI Trip Planner in action → a brief code tour.
 
 ---
 
@@ -90,7 +75,194 @@ Zod schema validation on every auth endpoint, 5-attempts/15-min throttling
 
 ---
 
-## 🏗️ Architecture
+## ✨ Features
+
+<table>
+<tr>
+<td width="50%">
+
+**🔐 Secure Authentication**
+bcrypt-hashed passwords, JWT sessions, Google OAuth one-click sign-in, and a 6-digit email OTP flow for admin access
+
+**🛡️ Protected Routes**
+API (`requireAuth` middleware) and frontend (`ProtectedRoute` component) routes both reject/redirect unauthenticated access
+
+**⚡ Real-time Booking**
+Requests appear on the host's dashboard live via WebSocket — no refresh, no polling
+
+**🤖 AI Trip Planner**
+Traveler describes their ideal stay and AI recommends the top 3 homestays with a matching itinerary, streamed live and refinable ("cheaper", "more eco-friendly", etc.)
+
+</td>
+<td width="50%">
+
+**🧑‍🌾 Role-based Experience**
+Traveler, host, and admin each get a tailored view and permission set
+
+**🎬 Polished Micro-interactions**
+Page transitions, scroll-reveal cards, animated wishlist hearts, spring nav indicators — built with Framer Motion
+
+**🚦 Rate Limiting & Validation**
+Zod schema validation on every auth endpoint, 5-attempts/15-min throttling on auth, separate limiter on AI endpoints
+
+**🗺️ AI Listing Assistant**
+Hosts fill a simple Hindi form and AI generates a clean, English property description
+
+</td>
+</tr>
+</table>
+
+---
+
+## ⚡ Tech Stack
+
+| Layer          | Technology                                          |
+|----------------|------------------------------------------------------|
+| Frontend       | React.js + Tailwind CSS + Framer Motion              |
+| Routing        | React Router v6                                      |
+| Backend        | Node.js + Express.js                                 |
+| Real-time      | Socket.io                                             |
+| Database       | MongoDB (Atlas) + Mongoose                            |
+| Auth           | JWT (`jsonwebtoken`) + bcrypt + Passport.js (Google OAuth) |
+| Validation     | Zod                                                   |
+| Rate limiting  | express-rate-limit                                    |
+| Email (OTP)    | Resend API                                            |
+| AI             | Google Gemini API                                     |
+| Deploy         | Vercel (frontend) + Render (backend)                  |
+
+---
+
+## 🚀 Setup Instructions
+
+### 1. Clone the repo
+
+```bash
+git clone https://github.com/snehasharmaa912-ops/Vanvas---an-Uttarakhand-homestay-.git
+cd Vanvas---an-Uttarakhand-homestay-
+```
+
+### 2. Frontend
+
+```bash
+npm install
+npm run dev
+```
+Open [http://localhost:5173](http://localhost:5173)
+
+Create a `.env` in the repo root (see `.env.example`):
+```env
+VITE_API_URL=http://localhost:5000
+```
+
+### 3. Backend
+
+```bash
+cd backend
+npm install
+npm run dev
+```
+The API + Socket.io server runs at [http://localhost:5000](http://localhost:5000)
+
+Create a `backend/.env` (see `backend/.env.example` for the full list):
+
+```env
+PORT=5000
+MONGO_URI=mongodb+srv://username:password@cluster.mongodb.net/dbName
+JWT_SECRET=replace-with-a-long-random-string
+ADMIN_EMAIL=your-admin-email@example.com
+RESEND_API_KEY=replace-with-your-resend-api-key
+OTP_FROM_EMAIL=VanaVas <onboarding@resend.dev>
+FRONTEND_URL=http://localhost:5173
+GOOGLE_CLIENT_ID=replace-with-your-google-client-id
+GOOGLE_CLIENT_SECRET=replace-with-your-google-client-secret
+GOOGLE_CALLBACK_URL=http://localhost:5000/api/auth/google/callback
+GEMINI_API_KEY=replace-with-your-gemini-api-key
+```
+
+### 4. Seed sample data (optional)
+
+```bash
+cd backend
+node seed.js
+```
+
+---
+
+## 📡 API Documentation
+
+<details open>
+<summary><b>Stays</b></summary>
+
+| Method | Endpoint                | Auth | Description                    |
+|--------|--------------------------|:---:|---------------------------------|
+| GET    | `/api/stays`             | – | List all homestays              |
+| GET    | `/api/stays/search?q=`   | – | Search homestays by keyword     |
+| GET    | `/api/stays/mine`        | ✅ | Host's own listed stays         |
+| GET    | `/api/stays/:id`         | – | Get a single homestay by ID     |
+| POST   | `/api/stays`             | ✅ | Create a new homestay listing   |
+| PUT    | `/api/stays/:id`         | ✅ | Update an existing homestay     |
+| DELETE | `/api/stays/:id`         | ✅ | Delete a homestay               |
+
+**Example — `POST /api/stays`**
+```json
+// Request
+{ "title": "Riverside Cottage", "location": "Rishikesh", "price": 2200, "host": "Ravi" }
+
+// Response 201
+{ "_id": "665f...", "title": "Riverside Cottage", "location": "Rishikesh", "price": 2200, "hostId": "665e..." }
+```
+</details>
+
+<details>
+<summary><b>Auth</b></summary>
+
+| Method | Endpoint                       | Auth | Description                              |
+|--------|----------------------------------|:---:|--------------------------------------------|
+| POST   | `/api/auth/register`            | – | Register with bcrypt-hashed password       |
+| POST   | `/api/auth/login`                | – | Login, returns a signed JWT (7-day expiry) |
+| GET    | `/api/auth/me`                   | ✅ | Get the current logged-in user             |
+| GET    | `/api/auth/hosts`                | ✅ | List all host accounts (for admin linking) |
+| POST   | `/api/auth/admin/request-otp`    | – | Request a 6-digit OTP for admin sign-in    |
+| POST   | `/api/auth/admin/verify-otp`     | – | Verify OTP and receive a JWT               |
+| GET    | `/api/auth/google`               | – | Start Google OAuth flow                    |
+| GET    | `/api/auth/google/callback`      | – | Google OAuth callback                      |
+
+**Example — `POST /api/auth/login`**
+```json
+// Request
+{ "email": "traveler@example.com", "password": "••••••••" }
+
+// Response 200
+{ "token": "eyJhbGciOi...", "user": { "id": "665e...", "name": "Anita", "userType": "traveler" } }
+```
+</details>
+
+<details>
+<summary><b>Bookings</b> <i>(real-time via Socket.io)</i></summary>
+
+| Method | Endpoint                       | Auth | Description                                      |
+|--------|----------------------------------|:---:|-----------------------------------------------------|
+| POST   | `/api/bookings`                  | ✅ | Traveler sends a booking request → notifies host live |
+| GET    | `/api/bookings/mine`             | ✅ | Traveler's own bookings                            |
+| GET    | `/api/bookings/host`             | ✅ | Host's incoming booking requests                    |
+| PATCH  | `/api/bookings/:id/status`       | ✅ | Host confirms/declines, or guest cancels — notifies both sides live |
+</details>
+
+<details>
+<summary><b>AI</b></summary>
+
+| Method | Endpoint                             | Auth (optional) | Description                                   |
+|--------|----------------------------------------|:---:|---------------------------------------------------|
+| POST   | `/api/ai/trip-planner/picks`           | optional | Returns top 3 matching stays for a description |
+| POST   | `/api/ai/trip-planner/itinerary/stream`| optional | Streams a plain-text itinerary for the picks    |
+| POST   | `/api/ai/trip-planner/refine`          | optional | Re-ranks picks + itinerary based on a refinement request |
+</details>
+
+> Every `✅` route returns **401** if the `Authorization: Bearer <token>` header is missing or invalid.
+
+---
+
+## 🏗️ Architecture / Folder Structure
 
 ```mermaid
 flowchart LR
@@ -119,9 +291,27 @@ flowchart LR
     F -.-> J
 ```
 
----
+```
+Vanvas---an-Uttarakhand-homestay-/
+├── src/                     # Frontend (React + Vite)
+│   ├── components/          # Reusable UI (Navbar, BookingModal, ui/*)
+│   ├── context/              # AuthContext, ThemeContext, WishlistContext
+│   ├── hooks/                # useWishlist, etc.
+│   ├── lib/                  # api.js (fetch wrapper), socket.js, tripPdf.js
+│   ├── pages/                 # Route-level pages (Home, Explore, HostDashboard, ...)
+│   └── main.jsx / App.jsx
+├── backend/                  # Backend (Node + Express)
+│   ├── config/                # passport.js (Google OAuth)
+│   ├── middleware/            # auth, rateLimiter, validate
+│   ├── models/                 # User, Stay, Booking, Trip, Wishlist (Mongoose)
+│   ├── routes/                  # auth, bookings, ai, trips, wishlist
+│   ├── services/                # geminiService.js
+│   └── server.js                # Express + Socket.io entrypoint
+├── docs/screenshots/         # README screenshots
+└── README.md
+```
 
-## 🗄️ Database Schema
+Database schema:
 
 ```mermaid
 erDiagram
@@ -162,169 +352,28 @@ erDiagram
     }
 ```
 
----
+**Real-time flow:** the backend runs a Socket.io server alongside the Express API on the same port. A logged-in host joins room `host:{userId}` from the Host Dashboard; a logged-in guest joins `guest:{userId}` from My Bookings. When a booking is created or its status changes, the server emits directly to the relevant room(s).
 
-## ⚡ Tech Stack
-
-| Layer          | Technology                                          |
-|----------------|------------------------------------------------------|
-| Frontend       | React.js + Tailwind CSS + Framer Motion              |
-| Routing        | React Router v6                                      |
-| Backend        | Node.js + Express.js                                 |
-| Real-time      | Socket.io                                             |
-| Database       | MongoDB (Atlas) + Mongoose                            |
-| Auth           | JWT (`jsonwebtoken`) + bcrypt + Passport.js (Google OAuth) |
-| Validation     | Zod                                                   |
-| Rate limiting  | express-rate-limit                                    |
-| Email (OTP)    | Resend API                                            |
-| AI             | LLM API                                               |
-| Deploy         | Vercel (frontend) + Render (backend)                  |
+**Security:** passwords hashed with bcrypt (10 salt rounds); JWTs expire after 7 days; login/register rate-limited to 5 attempts per 15 minutes per IP; every auth request body validated with Zod; CORS locked to the deployed frontend origin(s) via `FRONTEND_URL`.
 
 ---
 
-## 🚀 Getting Started
+## ⚠️ Known Limitations
 
-### Frontend
-
-```bash
-git clone https://github.com/snehasharmaa912-ops/anavas.git
-cd vanavas
-npm install
-npm run dev
-```
-Open [http://localhost:5173](http://localhost:5173)
-
-### Backend
-
-```bash
-cd backend
-npm install
-npm run dev
-```
-The API + Socket.io server runs at [http://localhost:5000](http://localhost:5000)
-
-<details>
-<summary><b>Environment variables (<code>backend/.env</code>)</b> — click to expand</summary>
-
-```env
-PORT=5000
-MONGO_URI=mongodb+srv://username:password@cluster.mongodb.net/dbName
-JWT_SECRET=replace-with-a-long-random-string
-ADMIN_EMAIL=your-admin-email@example.com
-RESEND_API_KEY=replace-with-your-resend-api-key
-OTP_FROM_EMAIL=VanaVas <onboarding@resend.dev>
-FRONTEND_URL=http://localhost:5173
-GOOGLE_CLIENT_ID=replace-with-your-google-client-id
-GOOGLE_CLIENT_SECRET=replace-with-your-google-client-secret
-GOOGLE_CALLBACK_URL=http://localhost:5000/api/auth/google/callback
-```
-</details>
+- **Free-tier cold starts:** Render's free web service spins down after ~15 minutes of inactivity. The first request after being idle can take 30–60 seconds while it wakes back up.
+- **MongoDB Atlas free tier** has connection limits; if you see intermittent DB errors under load, check the Atlas metrics tab.
+- **AI features depend on the Gemini API quota** — if the free quota is exhausted, the Trip Planner and Listing Assistant will return a "temporarily unavailable" error until it resets.
+- **No automated test suite yet** — testing is currently manual (see Setup Instructions to run locally).
+- **Single currency/locale (INR, English/Hindi only)** — not yet localized further.
 
 ---
 
-## 📡 API Reference
+## 🙏 Credits & Acknowledgements
 
-<details open>
-<summary><b>Stays</b></summary>
-
-| Method | Endpoint                | Auth | Description                    |
-|--------|--------------------------|:---:|---------------------------------|
-| GET    | `/api/stays`             | – | List all homestays              |
-| GET    | `/api/stays/search?q=`   | – | Search homestays by keyword     |
-| GET    | `/api/stays/:id`         | – | Get a single homestay by ID     |
-| POST   | `/api/stays`             | ✅ | Create a new homestay listing   |
-| PUT    | `/api/stays/:id`         | ✅ | Update an existing homestay     |
-| DELETE | `/api/stays/:id`         | ✅ | Delete a homestay               |
-</details>
-
-<details>
-<summary><b>Auth</b></summary>
-
-| Method | Endpoint                       | Auth | Description                              |
-|--------|----------------------------------|:---:|--------------------------------------------|
-| POST   | `/api/auth/register`            | – | Register with bcrypt-hashed password       |
-| POST   | `/api/auth/login`                | – | Login, returns a signed JWT (7-day expiry) |
-| GET    | `/api/auth/me`                   | ✅ | Get the current logged-in user             |
-| GET    | `/api/auth/hosts`                | ✅ | List all host accounts (for admin linking) |
-| POST   | `/api/auth/admin/request-otp`    | – | Request a 6-digit OTP for admin sign-in    |
-| POST   | `/api/auth/admin/verify-otp`     | – | Verify OTP and receive a JWT               |
-| GET    | `/api/auth/google`               | – | Start Google OAuth flow                    |
-| GET    | `/api/auth/google/callback`      | – | Google OAuth callback                      |
-</details>
-
-<details>
-<summary><b>Bookings</b> <i>(real-time via Socket.io)</i></summary>
-
-| Method | Endpoint                       | Auth | Description                                      |
-|--------|----------------------------------|:---:|-----------------------------------------------------|
-| POST   | `/api/bookings`                  | ✅ | Traveler sends a booking request → notifies host live |
-| GET    | `/api/bookings/mine`             | ✅ | Traveler's own bookings                            |
-| GET    | `/api/bookings/host`             | ✅ | Host's incoming booking requests                    |
-| PATCH  | `/api/bookings/:id/status`       | ✅ | Host confirms/declines, or guest cancels — notifies both sides live |
-</details>
-
-> Every `✅` route returns **401** if the `Authorization: Bearer <token>` header is missing or invalid.
-
----
-
-## 🔐 Security
-
-- 🔒 Passwords hashed with **bcrypt** (10 salt rounds) — plaintext never stored or returned
-- 🔑 JWTs signed with a server-side secret, expire after **7 days**
-- 🚦 Login/register rate-limited to **5 attempts per 15 minutes** per IP
-- ✅ Every auth request body validated with **Zod** before touching the database
-- 🌐 CORS locked to the deployed frontend origin(s) via `FRONTEND_URL`
-
----
-
-## ⚡ Real-time Flow
-
-The backend runs a **Socket.io** server alongside the Express API on the same port. Clients join per-role "rooms":
-
-- A logged-in **host** joins `host:{userId}` from the Host Dashboard
-- A logged-in **guest** joins `guest:{userId}` from My Bookings
-
-When a booking is created or its status changes, the server emits directly to the relevant room(s) — a host sees a new request the instant it's sent, and a traveler sees a confirmation/decline the instant the host responds.
-
----
-
-## 🤖 AI Features
-
-1. **AI Trip Planner** — Traveler describes their ideal stay and AI recommends top 3 homestays with a 3-day itinerary
-2. **AI Listing Assistant** — Hosts fill a simple Hindi form and AI generates a clean English property description
-
----
-
-## 🚀 Deployment
-
-| | |
-|---|---|
-| **Live frontend URL** | `https://vanvas-an-uttarakhand-homestay.vercel.app' |
-| **Live backend URL**  | `https://vanvas-an-uttarakhand-homestay.onrender.com` |
-| **Tech stack**        | React + Vite (frontend, on Vercel) · Node/Express + Socket.io (backend, on Render) · MongoDB Atlas (database) · Gemini API (AI) |
-
-**Known limitations on free tier**
-- Render's free web service spins down after ~15 minutes of inactivity. The first request after being idle can take 30–60 seconds while it wakes back up — this is expected, not a bug.
-- MongoDB Atlas free tier has connection limits; if you see intermittent DB errors under load, check the Atlas metrics tab.
-
-**Environment variables**
-
-Frontend (`.env` locally / Vercel dashboard):
-```
-VITE_API_URL=https://vanvas-an-uttarakhand-homestay.onrender.com
-```
-
-Backend (`.env` locally / Render dashboard) — see `backend/.env.example` for the full list:
-```
-PORT=5000
-MONGO_URI=...
-JWT_SECRET=...
-FRONTEND_URL=https://vanvas-an-uttarakhand-homestay.vercel.app
-GOOGLE_CLIENT_ID=...
-GOOGLE_CLIENT_SECRET=...
-GOOGLE_CALLBACK_URL=https://vanvas-an-uttarakhand-homestay.onrender.com/api/auth/google/callback
-GEMINI_API_KEY=...
-```
+- **AI tools used during development:** Claude (Anthropic) and Google Gemini API (for the in-app AI Trip Planner & Listing Assistant features)
+- **Icons/badges:** [Shields.io](https://shields.io)
+- **Fonts & design inspiration:** Tailwind CSS documentation, Framer Motion examples
+- Built as part of the **TBI-GEU Full Stack Development Internship**, Week 1–10 capstone project
 
 ---
 
